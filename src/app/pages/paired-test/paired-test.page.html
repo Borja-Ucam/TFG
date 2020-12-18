@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>PairedTest</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="aligncenter justifycontent">
+
+    <div id="question-container" [class]="nomostrar">
+
+        <!--INFORMACION-->
+        <ion-text color="secondary">
+            <h2>{{enunciado}}</h2>
+        </ion-text>
+        <div class="imagenes img">
+            <img class="p" (click)="nextQuestionLeft()" [src]="urli">
+
+            <img class="p" (click)="nextQuestionRight()" [src]="urld">
+        </div>
+    </div>
+    <!--NEXT BUTTON-->
+    <div class="controls">
+        <ion-button id="start-btnP" class="start-btn btn" color="primary" (click)="presentLoading()">Comenzar</ion-button>
+    </div>
+
+</ion-content>

@@ -1,0 +1,34 @@
+<ion-app>
+ 
+<!--toolbar-->
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-button (click)="navigateBack()"> <ion-icon name="arrow-back-outline"></ion-icon> </ion-button>
+
+  </ion-buttons>
+  <ion-buttons slot="secondary">
+
+  </ion-buttons>
+  <ion-title [routerLink]="['/home']">Borja Sepulveda - TFG</ion-title>
+</ion-toolbar>
+
+<!--menu-->
+<ion-menu side="start" contentId="first">
+   <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title>Herramientas</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-item [routerLink]="['/pages/single-test']">Test-SingleTest</ion-item>
+            <ion-item [routerLink]="['/pages/paired-test']">Test-PairedTest</ion-item>
+            <ion-item>Formularios?</ion-item>
+           
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+  <ion-router-outlet id="first"></ion-router-outlet>
+</ion-app>

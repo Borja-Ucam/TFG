@@ -1,0 +1,58 @@
+:root {
+  --hue-neutral: 200;
+  --hue-wrong: 0;
+  --hue-correct: 145;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: Gotham Rounded;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  .aligncenter {
+    text-align: center;  
+
+}
+
+.controls {
+  padding-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  --hue: var(--hue-neutral);
+  border: 1px solid hsl(var(--hue), 100%, 30%);
+  background-color: hsl(var(--hue), 100%, 50%);
+  border-radius: 5px;
+  color: white;
+  outline: none;
+}
+.btn:hover {
+  border-color: black;
+}
+.start-btn, .next-btn {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.justifycontent{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hide {
+  display: none;
+}
+
+.p {
+  margin: 150px 100px 75px 150px;
+}
