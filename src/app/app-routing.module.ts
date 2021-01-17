@@ -20,10 +20,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/paired-test/paired-test.module').then( m => m.PairedTestPageModule)
   },
   {
+    path: 'pages/formularios',
+    loadChildren: () => import('./pages/formularios/formularios.module').then( m => m.FormulariosPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
   },
+ 
+ 
   
 ];
 

@@ -1,3 +1,4 @@
+import { ImagesService } from './Services/images.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -31,7 +32,7 @@ import { PreguntasService } from './Services/preguntas.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    PreguntasService
+    PreguntasService, ImagesService
   ],
   bootstrap: [AppComponent]
 })

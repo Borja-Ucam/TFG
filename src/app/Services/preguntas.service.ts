@@ -1,3 +1,4 @@
+import { AngularFireList } from '@angular/fire/database';
 import { Injectable } from '@angular/core'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from "rxjs/operators";
@@ -16,7 +17,7 @@ export class PreguntasService {
 
 
     }
-
+    
     getText() {
 
         return this.db.collection('Preguntas').snapshotChanges().pipe(map(quest => {

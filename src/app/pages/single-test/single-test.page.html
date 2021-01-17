@@ -8,19 +8,21 @@
 </ion-header>
 
 <ion-content class="justifycontent">
-
+<div *ngIf = "!fin">
+<div *ngIf = '!descanso; else descansoPlantilla'>
   <!--CONTENEDOR PREGUNTA Y FOTO-->
-<div id="question-container" class="hide" >
-<ion-text id="question-ion" class="ion-text-center" [color]="color" *ngFor = "let preg of preguntasArr" >
-  <h2>{{preg.text}}</h2>
+<div id="question-container" *ngIf = 'showQuestion' >
+<ion-text id="question-ion" class="ion-text-center" [color]="color">
+  <h1>{{pregunta}}</h1>
 </ion-text>
+
 <div class="justifycontent">
 <img id= "image" [src]="url">
  </div>
     <div class="center" >
     <!--BARRA RANGO-->
      <ion-item>
-          <ion-range id="range" [value]="value" min="0" max="100" pin color="primary">
+          <ion-range id="range" [(ngModel)]="value" min="0" max="100" pin color="primary">
             <ion-text slot="start" size="small">dont want</ion-text>
             <ion-text slot="end" size="small">want</ion-text>
           </ion-range>
@@ -30,13 +32,47 @@
 
   <!--CONTROL BUTTONS-->
 <div class="controls">
-<ion-button id="start-btn" class="start-btn btn"color="primary" (click)="presentLoading()">Comenzar</ion-button>
-
-<ion-button id="next-btn" class="next-btn btn hide" color="primary" (click)="nextQuestion()">Siguiente</ion-button>
-
+<ion-button id="start-btn" class="start-btn btn"color="primary" *ngIf = 'hideButtonComenzar' (click)="presentLoading()">Comenzar</ion-button>
+<ion-button id="next-btn" class="next-btn btn" color="primary" *ngIf = 'hideButton' (click)="nextQuestion()">Siguiente</ion-button>
+</div>
 
 </div>
 
+
+<ng-template #descansoPlantilla>
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Tomate tu tiempo</ion-card-subtitle>
+    <ion-card-title>Necesitas un descanso?</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+              <ion-label>Default at 50%</ion-label>
+
+<ion-progress-bar value="0.5"></ion-progress-bar>
+<ion-button id="continue-btn" class=" btn" color="primary" (click)="continuar()">Continuar</ion-button>
+  </ion-card-content>
+</ion-card>
+</ng-template>
+
+</div>
+
+
+<div *ngIf = "fin">
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>LLama al tutor</ion-card-subtitle>
+    <ion-card-title>Final del test</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+              <ion-label>Final del test 100%</ion-label>
+
+<ion-progress-bar value="1"></ion-progress-bar>
+<ion-button id="continue-btn" class=" btn" color="primary" (click)="salir()">Salir</ion-button>
+  </ion-card-content>
+</ion-card>
+</div>
 
 
 </ion-content>

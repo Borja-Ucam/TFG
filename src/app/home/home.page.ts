@@ -19,4 +19,7 @@ export class HomePage {
   openModuleP(){
     this.router.navigateByUrl("/pages/paired-test");
   }
+  openModuleF(){
+    this.router.navigateByUrl("/pages/formularios");
+  }
 }
