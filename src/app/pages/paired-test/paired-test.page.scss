@@ -1,12 +1,14 @@
 :root {
-  --hue-neutral: 200;
-  --hue-wrong: 0;
-  --hue-correct: 145;
+    --hue-neutral: 200;
+    --hue-wrong: 0;
+    --hue-correct: 145;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  font-family: Gotham Rounded;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: Gotham Rounded;
 }
 
 .center {
@@ -14,45 +16,77 @@
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-  }
+}
 
-  .aligncenter {
-    text-align: center;  
-
+.aligncenter {
+    text-align: center;
 }
 
 .controls {
-  padding-top: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.btn {
-  --hue: var(--hue-neutral);
-  border: 1px solid hsl(var(--hue), 100%, 30%);
-  background-color: hsl(var(--hue), 100%, 50%);
-  border-radius: 5px;
-  color: white;
-  outline: none;
-}
-.btn:hover {
-  border-color: black;
-}
-.start-btn, .next-btn {
-  font-size: 1.5rem;
-  font-weight: bold;
+    padding-top: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.justifycontent{
-  display:flex;
-  justify-content: center;
-  align-items: center;
+.btn {
+    --hue: var(--hue-neutral);
+    border: 1px solid hsl(var(--hue), 100%, 30%);
+    background-color: hsl(var(--hue), 100%, 50%);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+.start-btn,
+.next-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: auto;
+    margin-bottom: auto;
+    //top: 50%;
+}
+
+.justifycontent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 .p {
-  margin: 150px 100px 75px 150px;
+    max-width: 100%;
+    height: auto;
+    //display: block;
+    margin-left: auto;
+    margin-right: auto;
+    //margin-top: 10%;
+    border: 1px solid #ddd;
+}
+
+.imagenes {
+    width: auto;
+    height: auto;
+    position: relative;
+    border: 3px solid green;
+    top: 50%;
+    margin-top: 10%;
+}
+
+.imagenes .btn {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 50%;
+    //position: relative;
+    border: 3px solid green;
 }

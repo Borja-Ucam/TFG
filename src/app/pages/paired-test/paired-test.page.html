@@ -12,15 +12,22 @@
         <ion-text color="secondary">
             <h2>{{enunciado}}</h2>
         </ion-text>
-        <div class="imagenes img">
-            <img class="p" (click)="nextQuestionLeft()" (click)="startTimer()" [src]="urli">
 
+        <ion-grid class="imagenes"><ion-col>            <img class="p" (click)="nextQuestionLeft()" (click)="startTimer()" [src]="urli">
+</ion-col> 
+<ion-col>
+        <ion-button id="next-btn" class="next-btn btn" color="primary" *ngIf = 'showButtonNext' (click)="Next()">Siguiente</ion-button>
 
+</ion-col> 
+<ion-col>
             <img class="p" (click)="nextQuestionRight()" (click)="startTimer()" [src]="urld">
-        </div>
+
+</ion-col>
+</ion-grid>
+       
     </div>
     <!--NEXT BUTTON-->
     <div class="controls">
-        <ion-button id="start-btnP" class="start-btn btn" color="primary" (click)="presentLoading()">Comenzar</ion-button>
+        <ion-button id="start-btnP" class="start-btn btn" color="primary" *ngIf = 'hideButtonComenzar' (click)="presentLoading()">Comenzar</ion-button>
     </div>
 </ion-content>

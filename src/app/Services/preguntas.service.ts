@@ -24,6 +24,8 @@ export class PreguntasService {
             return quest.map(a => {
                 const data = a.payload.doc.data() as preg;
                 data.id = a.payload.doc.id;
+                
+
                 return data;
             })
 
