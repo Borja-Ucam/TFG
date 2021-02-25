@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Alergenos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card>
+      <ion-card-title>HFSA</ion-card-title>
+
+      <ion-item *ngFor="let itemHFSA of imageArrHFSA;">
+        <ion-label>{{itemHFSA.id}}</ion-label>
+        <ion-checkbox [(ngModel)]="itemHFSA.available"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-title>HFSW</ion-card-title>
+
+      <ion-item *ngFor="let itemHFSW of imageArrHFSW;">
+        <ion-label>{{itemHFSW.id}}</ion-label>
+        <ion-checkbox [(ngModel)]="itemHFSW.available"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-title>LFSA</ion-card-title>
+
+      <ion-item *ngFor="let itemLFSA of imageArrLFSA;">
+        <ion-label>{{itemLFSA.id}}</ion-label>
+        <ion-checkbox [(ngModel)]="itemLFSA.available"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-card-title>LFSW</ion-card-title>
+
+      <ion-item *ngFor="let itemLFSW of imageArrLFSW;">
+        <ion-label>{{itemLFSW.id}}</ion-label>
+        <ion-checkbox  [(ngModel)]="itemLFSW.available"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+  <center>
+      <button class="bt1" type="submit" value="Enviar" (click)="contar()">
+        Guardar configuracion
+      </button>
+    </center>
+</ion-content>

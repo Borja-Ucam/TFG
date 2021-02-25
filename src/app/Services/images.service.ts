@@ -11,6 +11,7 @@ export interface image {
 export interface food {
     id: string
     url: string
+    available: boolean
 
 }
 class Respuesta {

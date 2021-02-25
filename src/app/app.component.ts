@@ -42,6 +42,11 @@ export class AppComponent {
     this._location.back();
     
   }
+  closeSession(){
+    this.router.navigateByUrl("");
+
+    sessionStorage.clear();
+  }
 
   
   

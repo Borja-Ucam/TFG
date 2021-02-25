@@ -1,33 +1,56 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>PairedTest</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>PairedTest</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="aligncenter justifycontent">
+  <div id="question-container" [class]="nomostrar">
+    <!--INFORMACION-->
+    <ion-text color="secondary">
+      <h2>{{enunciado}}</h2>
+    </ion-text>
 
-    <div id="question-container" [class]="nomostrar">
-
-        <!--INFORMACION-->
-        <ion-text color="secondary">
-            <h2>{{enunciado}}</h2>
-        </ion-text>
-
-        <ion-grid class="imagenes"><ion-col>            <img class="p" (click)="nextQuestionLeft()" (click)="startTimer()" [src]="urli">
-</ion-col> 
-<ion-col>
-        <ion-button id="next-btn" class="next-btn btn" color="primary" *ngIf = 'showButtonNext' (click)="Next()">Siguiente</ion-button>
-
-</ion-col> 
-<ion-col>
-            <img class="p" (click)="nextQuestionRight()" (click)="startTimer()" [src]="urld">
-
-</ion-col>
-</ion-grid>
-       
-    </div>
-    <!--NEXT BUTTON-->
-    <div class="controls">
-        <ion-button id="start-btnP" class="start-btn btn" color="primary" *ngIf = 'hideButtonComenzar' (click)="presentLoading()">Comenzar</ion-button>
-    </div>
+    <ion-grid class="imagenes"
+      ><ion-col>
+        <img
+          class="p"
+          (click)="nextQuestionLeft()"
+          (click)="startTimer()"
+          *ngIf="urli"
+          [src]="urli"
+        />
+      </ion-col>
+      <ion-col>
+        <ion-button
+          id="next-btn"
+          class="next-btn btn"
+          color="primary"
+          *ngIf="showButtonNext"
+          (click)="Next()"
+          >Siguiente</ion-button
+        >
+      </ion-col>
+      <ion-col>
+        <img
+          class="p"
+          (click)="nextQuestionRight()"
+          (click)="startTimer()"
+          *ngIf="urld"
+          [src]="urld"
+        />
+      </ion-col>
+    </ion-grid>
+  </div>
+  <!--NEXT BUTTON-->
+  <div class="controls">
+    <ion-button
+      id="start-btnP"
+      class="start-btn btn"
+      color="primary"
+      *ngIf="hideButtonComenzar"
+      (click)="presentLoading()"
+      >Comenzar</ion-button
+    >
+  </div>
 </ion-content>

@@ -7,11 +7,17 @@
       <ion-button (click)="navigateBack()"> <ion-icon name="arrow-back-outline"></ion-icon> </ion-button>
 
   </ion-buttons>
-  <ion-buttons slot="secondary">
+  
 
-  </ion-buttons>
-  <ion-title [routerLink]="['/home']">Borja Sepulveda - TFG</ion-title>
+  <ion-label [routerLink]="['/home']">Borja Sepulveda - TFG</ion-label>
+
+  <ion-buttons slot="secondary">
+      <ion-button (click)="closeSession()"> <ion-icon name="close-outline"></ion-icon> </ion-button>
+</ion-buttons>
+
 </ion-toolbar>
+
+
 
 <!--menu-->
 <ion-menu side="start" contentId="first">

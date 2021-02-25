@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> Blank </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,10 +12,23 @@
   </ion-header>
 
   <div id="container">
+    <ion-button (click)="openTest()" color="primary">Comenzar Test</ion-button>
     <ion-button (click)="openModuleS()" color="primary">SINGLE TEST</ion-button>
     <ion-button (click)="openModuleP()" color="primary">PAIRED TEST</ion-button>
     <ion-button (click)="openModuleF()" color="primary">FORMULARIOS</ion-button>
+    <ion-button (click)="openModuleC()" color="primary"
+      >Configuración Test</ion-button
+    >
 
-    <p>Start <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+    <p>
+      Start
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://ionicframework.com/docs/components"
+        >UI Components</a
+      >
+    </p>
   </div>
 </ion-content>

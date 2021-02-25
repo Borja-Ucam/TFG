@@ -1,32 +1,49 @@
-<body>
+<ion-content>
+  <ion-fab (click)="cerrar()" horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button color="danger">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <h1 id="header_1" class="form-header" data-component="header">
-    YFAS 2.O (español)
+    SINGLE-PAIRED
   </h1>
   <div id="subHeader_1" class="form-subHeader">
-    Esta encuesta pregunta sobre sus hábitos alimentarios durante este último año. Las personas a veces tienen
-    dificultad para controlar la cantidad que comen de ciertos alimentos, tales como:- Dulces como el helado, chocolate,
-    bollería, galletas, pasteles, chucherías.- Hidratos de carbono tales como el pan blanco, panecillos, pasta y arroz-
-    Snacks salados como las patatas chips, aperitivos y galletas saladas- Alimentos ricos en grasa, tales como el filete
-    de carne, panceta o bacon, hamburguesas, pizza y patatas fritas.- Bebidas azucaradas como refrescos con gas,
-    limonada, bebidas isotónicas y bebidas energéticas.Cuando las siguientes preguntas se refieran a “CIERTOS
-    ALIMENTOS”, por favor piense en CUALQUIER alimento o bebida similar a los citados anteriormente o CUALQUIER OTRO
-    alimento con el que usted haya tenido problemas en el último año.
+    Por favor, antes de contestar a esta pregunta, lea con detenimiento la
+    información acerca de la privacidad y protección de datos de este estudio,
+    accesible desde el siguiente enlace:
   </div>
+
+  <ion-button id="continue-btn" class="btn" color="primary" (click)="enlace()"
+    >Enlace</ion-button
+  >
 
   <h1 id="header_1" class="form-header" data-component="header">
     Ley de Protección de Datos (LOPD)
   </h1>
   <div id="subHeader_1" class="form-subHeader">
-    Aquí se pondrá toda la información sobre la LOPD.
-
+    Aquí se pondrá toda la información sobre la LOPD. BLABLA
   </div>
-  <form action="FormularioResponsive.html" method="get">
 
-    <p class="textoForm">Acepto que la UCAM recoja mis datos: <input type="checkbox" name="verificacion" required></p>
-    <p class="textoForm">Correo electrónico: <input type="email" name="email" size="40" required></p>
-    <center> <button class="bt1" type="submit" value="Enviar">Empezar</button> </center>
-    
-  </form>
 
-</body>
+    <ion-label>Acepto terminos blabla</ion-label>
+        <ion-checkbox [(ngModel)]="aceptado" color="primary" ></ion-checkbox>
+
+    <ion-text color="dark" class="textoForm">
+      <h5>
+        Correo electrónico:
+        <input [(ngModel)]="idUser" type="email" name="email" size="50"/>
+      </h5>
+    </ion-text>
+
+<pre>Valor de variable: {{idUser}}</pre>
+
+    <center>
+      <button *ngIf='idUser' class="bt1" type="submit" value="Enviar" (click)="dismiss()">
+        Empezar
+      </button>
+    </center>
+
+
+
+</ion-content>
