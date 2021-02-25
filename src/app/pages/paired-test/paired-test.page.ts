@@ -46,16 +46,50 @@ export class PairedTestPage implements OnInit {
  
   ngOnInit() {
     
-    /*
-    this.imagenes.getImage().subscribe(food => {
-      this.imageArrHFSA = food.find(element => element.id == 'hfsa');
-      this.imageArrLFSW = food.find(element => element.id == 'lfsw');
-      this.imageArrHFSW = food.find(element => element.id == 'hfsw');
-      this.imageArrLFSA = food.find(element => element.id == 'lfsa');
-      console.log('aquiiuiuiui:'+JSON.stringify(this.imageArrHFSA));
-      console.log('aquiiuiuiui:'+JSON.stringify(this.imageArrLFSW));
+    if (sessionStorage.getItem("imageArrHFSA")) {
+      this.imageArrHFSA = JSON.parse(sessionStorage.getItem("imageArrHFSA"));
+      this.imageArrHFSA = this.imageArrHFSA.filter(
+        (element) => element.available
+      );
+    } else {
+      this.imagenes.getImageHFSA().subscribe((food) => {
+        this.imageArrHFSA = food.filter((element) => element.available);
+        console.log("hfsa: " + JSON.stringify(this.imageArrHFSA));
+      });
+    }
 
-    })*/
+    if (sessionStorage.getItem("imageArrHFSW")) {
+      this.imageArrHFSW = JSON.parse(sessionStorage.getItem("imageArrHFSW"));
+      this.imageArrHFSW = this.imageArrHFSW.filter(
+        (element) => element.available
+      );
+    } else {
+      this.imagenes.getImageHFSW().subscribe((food) => {
+        this.imageArrHFSW = food.filter((element) => element.available);
+      });
+    }
+
+    if (sessionStorage.getItem("imageArrLFSA")) {
+      this.imageArrLFSA = JSON.parse(sessionStorage.getItem("imageArrLFSA"));
+      this.imageArrLFSA = this.imageArrLFSA.filter(
+        (element) => element.available
+      );
+    } else {
+      this.imagenes.getImageLFSA().subscribe((food) => {
+        this.imageArrLFSA = food.filter((element) => element.available);
+      });
+    }
+
+    if (sessionStorage.getItem("imageArrLFSW")) {
+      this.imageArrLFSW = JSON.parse(sessionStorage.getItem("imageArrLFSW"));
+      this.imageArrLFSW = this.imageArrLFSW.filter(
+        (element) => element.available
+      );
+    } else {
+      this.imagenes.getImageLFSW().subscribe((food) => {
+        this.imageArrLFSW = food.filter((element) => element.available);
+      });
+    }
   }
   nomostrar = 'hide';
   enunciado = '';
@@ -74,6 +108,9 @@ export class PairedTestPage implements OnInit {
 
   randomI:number;
   randomD:number;
+  idImagenI: string = "";
+  idImagenD: string = "";
+
 
 
   mapHFSA = new Map();
@@ -112,6 +149,7 @@ export class PairedTestPage implements OnInit {
     this.startTimer();
     //console.time("t1");
   }
+
   startTimer(){
     this.before2 = null
     this.before2 = Date.now();
@@ -137,6 +175,8 @@ export class PairedTestPage implements OnInit {
     console.log(this.tiempo);
     console.log("tiempooo DERECC: " +this.tiempo);
 
+    
+
   }
 
   Next(){
@@ -154,16 +194,20 @@ export class PairedTestPage implements OnInit {
   calculateImage(){
 
  //añadir imagen al html  ((izquierda))
- let randomI:number = Math.floor((Math.random()*(Object.keys(this.imageArrHFSA).length-1)))+1;
- this.mapHFSA.set(this.imageArrHFSA['imagen'+randomI],this.imageArrHFSA['imagen'+randomI]);
- //console.log(JSON.stringify('aaaaaaa: '+this.selectedHFSA))
- this.urli = this.imageArrHFSA['imagen'+randomI];
+ let randomI:number = Math.floor((Math.random()*(Object.keys(this.imageArrHFSA).length)));
+ this.mapHFSA.set(this.imageArrHFSA[randomI],this.imageArrHFSA[randomI]);
+ console.log(JSON.stringify('aaaaaaa: '+ JSON.stringify(this.imageArrHFSA[randomI].url)))
+ this.urli = this.imageArrHFSA[randomI].url;
+ this.idImagenI = this.imageArrHFSA[randomI].id;
+
 
  //añadir imagen al html  ((derecha))
- let randomD:number = Math.floor((Math.random()*(Object.keys(this.imageArrLFSW).length-1)))+1;
- this.mapHFSA.set(this.imageArrLFSW['imagen'+randomD],this.imageArrLFSW['imagen'+randomD]);
+ let randomD:number = Math.floor((Math.random()*(Object.keys(this.imageArrLFSW).length)));
+ this.mapHFSA.set(this.imageArrLFSW[randomD],this.imageArrLFSW[randomD]);
  //console.log(JSON.stringify('aaaaaaa: '+this.selectedHFSA))
- this.urld = this.imageArrLFSW['imagen'+randomD];
+ this.urld = this.imageArrLFSW[randomD].url;
+ this.idImagenD = this.imageArrHFSA[randomD].id;
+
   }
 
 
