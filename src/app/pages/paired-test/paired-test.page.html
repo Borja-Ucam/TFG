@@ -5,52 +5,113 @@
 </ion-header>
 
 <ion-content class="aligncenter justifycontent">
-  <div id="question-container" [class]="nomostrar">
-    <!--INFORMACION-->
-    <ion-text color="secondary">
-      <h2>{{enunciado}}</h2>
-    </ion-text>
+  <div *ngIf="!fin">
+    <div
+      id="question-container"
+      [class]="nomostrar"
+      *ngIf="!descanso; else descansoPlantilla"
+    >
+      <!--INFORMACION-->
 
-    <ion-grid class="imagenes"
-      ><ion-col>
-        <img
-          class="p"
-          (click)="nextQuestionLeft()"
-          (click)="startTimer()"
-          *ngIf="urli"
-          [src]="urli"
-        />
-      </ion-col>
-      <ion-col>
+      <div class="cambioPreg" id="text-container" *ngIf="showNext">
+        <ion-text class="next-txt" color="secondary">
+          <h2>{{enunciado}}</h2>
+        </ion-text>
+
         <ion-button
           id="next-btn"
           class="next-btn btn"
           color="primary"
           *ngIf="showButtonNext"
-          (click)="Next()"
-          >Siguiente</ion-button
-        >
-      </ion-col>
-      <ion-col>
-        <img
-          class="p"
-          (click)="nextQuestionRight()"
-          (click)="startTimer()"
-          *ngIf="urld"
-          [src]="urld"
-        />
-      </ion-col>
-    </ion-grid>
+          (click)="loadingImages()"
+          >O
+        </ion-button>
+      </div>
+
+      <ion-grid *ngIf="showImagenes" class="imagenes" id="image-container"
+        ><ion-col>
+          <img
+            class="p"
+            (click)="nextQuestionLeft()"
+            (click)="startTimer()"
+            *ngIf="urli"
+            [src]="urli"
+          />
+        </ion-col>
+
+        <ion-col>
+          <img
+            class="p"
+            (click)="nextQuestionRight()"
+            (click)="startTimer()"
+            *ngIf="urld"
+            [src]="urld"
+          />
+        </ion-col>
+      </ion-grid>
+    </div>
+
+    <div>
+      <ng-template #descansoPlantilla>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Tomate tu tiempo</ion-card-subtitle>
+            <ion-card-title>Necesitas un descanso?</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-label>Default at 50%</ion-label>
+
+            <ion-progress-bar value="0.5"></ion-progress-bar>
+            <ion-button
+              id="continue-btn"
+              class="btn"
+              color="primary"
+              (click)="continuar()"
+              >Continuar</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </div>
+    <!--NEXT BUTTON-->
+    <div class="controls" *ngIf="hideButtonComenzar">
+      <ion-button
+        id="start-btnP"
+        class="start-btn btn"
+        color="primary"
+        (click)="presentLoading()"
+        >Comenzar</ion-button
+      >
+    </div>
   </div>
-  <!--NEXT BUTTON-->
-  <div class="controls">
-    <ion-button
-      id="start-btnP"
-      class="start-btn btn"
-      color="primary"
-      *ngIf="hideButtonComenzar"
-      (click)="presentLoading()"
-      >Comenzar</ion-button
-    >
+  
+  <div *ngIf="fin">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>LLama al tutor</ion-card-subtitle>
+        <ion-card-title>Final del test</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-label>Final del test 100%</ion-label>
+
+        <ion-progress-bar value="1"></ion-progress-bar>
+        <ion-button
+          id="continue-btn"
+          class="btn"
+          color="primary"
+          (click)="save()"
+          >Guardar</ion-button
+        >
+        <ion-button
+          id="continue-btn"
+          class="btn"
+          color="primary"
+          (click)="salir()"
+          >Salir</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

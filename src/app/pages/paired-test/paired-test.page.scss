@@ -20,6 +20,7 @@
 
 .aligncenter {
     text-align: center;
+    position: relative;
 }
 
 .controls {
@@ -49,6 +50,9 @@
     margin-top: auto;
     margin-bottom: auto;
     //top: 50%;
+    position: relative;
+    top: 40%;
+    align-content: center;
 }
 
 .justifycontent {
@@ -63,21 +67,28 @@
 
 .p {
     max-width: 100%;
+    width: 420px;
     height: auto;
     //display: block;
     margin-left: auto;
     margin-right: auto;
     //margin-top: 10%;
-    border: 1px solid #ddd;
+    //border: 1px solid #ddd;
 }
 
 .imagenes {
     width: auto;
     height: auto;
     position: relative;
-    border: 3px solid green;
     top: 50%;
-    margin-top: 10%;
+    // margin-top: 10%;
+    //border: 1px solid #999;
+    margin: 7% 0 0 0;
+    //padding: 2%;
+}
+
+ion-col {
+    padding: 100px
 }
 
 .imagenes .btn {
@@ -85,8 +96,28 @@
     margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
-    position: absolute;
+    //position: absolute;
     top: 50%;
     //position: relative;
     border: 3px solid green;
+}
+
+.cambioPreg {
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top: 40%;
+    //align-items: center;
+}
+
+.next-txt {
+    margin-top: 0;
+    //margin-bottom: auto;
+    position: relative;
+    text-align: center;
+    //vertical-align: text-top;
+}
+
+.next-btn {
+    //position: absolute;
 }

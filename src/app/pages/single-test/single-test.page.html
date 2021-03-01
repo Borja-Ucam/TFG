@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="justifycontent">
+<ion-content class="justifycontent aligncenter">
 
 
   <div *ngIf="!fin">
@@ -94,6 +94,13 @@
         <ion-label>Final del test 100%</ion-label>
 
         <ion-progress-bar value="1"></ion-progress-bar>
+         <ion-button
+          id="continue-btn"
+          class="btn"
+          color="primary"
+          (click)="save()"
+          >Guardar</ion-button
+        >
         <ion-button
           id="continue-btn"
           class="btn"

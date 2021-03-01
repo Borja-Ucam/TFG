@@ -19,6 +19,7 @@ import {
 import { PreguntasService, preg } from "../../Services/preguntas.service";
 import { ImagesService, image } from "../../Services/images.service";
 import { identifierModuleUrl } from "@angular/compiler";
+import { RespuestaGeneral } from "src/app/Classes/RespuestaGeneral";
 
 @NgModule({
   imports: [FormsModule],
@@ -73,11 +74,9 @@ export class SingleTestPage implements OnInit, OnDestroy {
       this.preguntasArr = pregunta;
     });
 
-//USUARIO QUE VIENE DEL MODAL DE INICIOOOOO
-  //this.idUser = sessionStorage.getItem("idUser");
+    //USUARIO QUE VIENE DEL MODAL DE INICIOOOOO
+    //this.idUser = sessionStorage.getItem("idUser");
     //console.log("USUARIO DEL ID JEJEJE: "+this.idUser);
-
-
 
     if (sessionStorage.getItem("imageArrHFSA")) {
       this.imageArrHFSA = JSON.parse(sessionStorage.getItem("imageArrHFSA"));
@@ -129,6 +128,38 @@ export class SingleTestPage implements OnInit, OnDestroy {
   idPregunta: string = "";
   idImagen: string = "";
   url: string = "";
+  tipo: string = "";
+
+
+  //CALCULOS NUEVOS
+  sumaGustoHFSA: number = 0;
+  sumaGustoHFSW: number = 0;
+  sumaGustoLFSA: number = 0;
+  sumaGustoLFSW: number = 0;
+
+  sumaDeseoHFSA: number = 0;
+  sumaDeseoHFSW: number = 0;
+  sumaDeseoLFSA: number = 0;
+  sumaDeseoLFSW: number = 0;
+
+  mediaGustoHFSA: number = 0;
+  mediaGustoHFSW: number = 0;
+  mediaGustoLFSA: number = 0;
+  mediaGustoLFSW: number = 0;
+
+  mediaDeseoHFSA: number = 0;
+  mediaDeseoHFSW: number = 0;
+  mediaDeseoLFSA: number = 0;
+  mediaDeseoLFSW: number = 0;
+
+
+  //CALCULOS ANTES
+  sumaGusto: number = 0;
+  sumaDeseo: number = 0;
+
+  mediaGusto: number = 0;
+  mediaDeseo: number = 0;
+
   color: string = "";
   value: number = 50;
   showButton = true;
@@ -140,6 +171,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
   a: number = 0;
   descanso: boolean = false;
   fin: boolean = false;
+  checkClose: boolean = false;
 
   random: number;
 
@@ -149,6 +181,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
   mapLFSA = new Map();
 
   respuestas: Respuesta[];
+  respuestasGen: RespuestaGeneral[];
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -168,6 +201,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
   startTest() {
     console.log("Test started!");
     this.respuestas = new Array();
+    this.respuestasGen = new Array();
+
     //console.log(JSON.stringify(this.preguntasArr[this.contadorPreg].text))
 
     //añadir pregunta al html
@@ -175,31 +210,19 @@ export class SingleTestPage implements OnInit, OnDestroy {
     this.pregunta = this.preguntasArr[this.contadorPreg].text;
 
     //añadir imagen al html
-    let random: number =
-      Math.floor(Math.random() * (Object.keys(this.imageArrHFSA).length));
+    let random: number = Math.floor(
+      Math.random() * Object.keys(this.imageArrHFSA).length
+    );
     this.mapHFSA.set(this.imageArrHFSA[random], this.imageArrHFSA[random]);
     console.log(
-      JSON.stringify("QUE HAY DENTRO: " + this.imageArrHFSA[random].url)
+      //JSON.stringify("QUE HAY DENTRO: " + this.imageArrHFSA[random].url)
     );
-    console.log(
-      JSON.stringify(
-        "0 QUE HAY DENTRO: " + JSON.stringify(this.imageArrHFSA[0].url)
-      )
-    );
-    console.log(
-      JSON.stringify(
-        "1 QUE HAY DENTRO: " + JSON.stringify(this.imageArrHFSA[1].url)
-      )
-    );
-    console.log(
-      JSON.stringify(
-        "2 QUE HAY DENTRO: " + JSON.stringify(this.imageArrHFSA[2].url)
-      )
-    );
+    
+    
 
     this.url = this.imageArrHFSA[random].url;
     this.idImagen = this.imageArrHFSA[random].id;
-
+    this.tipo = this.imageArrHFSA[random].tipo;
     //this.imageArrHFSA['imagen'+random]=null;
     //this.contadorHFSA++;
 
@@ -238,6 +261,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
     this.contadorPreg++;
 
     //let pregunta=this.contadorPreg % 2 == 0?'deseo':'gusto';
+    //Sacar todas las respuestas
     this.respuestas.push(
       new Respuesta(
         this.idImagen,
@@ -247,6 +271,9 @@ export class SingleTestPage implements OnInit, OnDestroy {
       )
     );
     console.log("ESTO ES LA SALIDA: " + JSON.stringify(this.respuestas));
+
+    this.sumaValue();
+    
 
     if (this.contadorPreg == 16) {
       console.log("quieres parar loco?");
@@ -261,6 +288,9 @@ export class SingleTestPage implements OnInit, OnDestroy {
     console.log("CONTADOR ANTES BREAK: " + this.contadorPreg);
     if (this.contadorPreg == 32) {
       console.log("El fin? meh oki ");
+
+      this.calcularMedia();
+
       //this.descanso= false;
       this.fin = true;
       //console.log("fin: "+ this.fin)
@@ -274,8 +304,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
     switch (this.contadorPreg % 4) {
       case 0:
         console.log("holaacase 0");
-
-        //AQUI IBA LO DE <16 Y ==32
 
         //preguntas
         this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
@@ -302,6 +330,9 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrHFSA[random].url;
           this.idImagen = this.imageArrHFSA[random].id;
+          this.tipo = this.imageArrHFSA[random].tipo;
+
+
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSA).length
@@ -319,6 +350,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrLFSW[random].url;
           this.idImagen = this.imageArrLFSW[random].id;
+          this.tipo = this.imageArrLFSW[random].tipo;
+
         }
 
         break;
@@ -348,6 +381,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrLFSW[random].url;
           this.idImagen = this.imageArrLFSW[random].id;
+          this.tipo = this.imageArrLFSW[random].tipo;
+
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSA).length
@@ -365,6 +400,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrHFSA[random].url;
           this.idImagen = this.imageArrHFSA[random].id;
+          this.tipo = this.imageArrHFSA[random].tipo;
+
         }
         break;
 
@@ -390,6 +427,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrLFSA[random].url;
           this.idImagen = this.imageArrLFSA[random].id;
+          this.tipo = this.imageArrLFSA[random].tipo;
+
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSW).length
@@ -407,6 +446,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrHFSW[random].url;
           this.idImagen = this.imageArrHFSW[random].id;
+          this.tipo = this.imageArrHFSW[random].tipo;
+
         }
         break;
 
@@ -432,6 +473,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrHFSW[random].url;
           this.idImagen = this.imageArrHFSW[random].id;
+          this.tipo = this.imageArrHFSW[random].tipo;
+
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrLFSA).length
@@ -449,6 +492,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
           );
           this.url = this.imageArrLFSA[random].url;
           this.idImagen = this.imageArrLFSA[random].id;
+          this.tipo = this.imageArrLFSA[random].tipo;
+
         }
         break;
 
@@ -468,7 +513,98 @@ export class SingleTestPage implements OnInit, OnDestroy {
       this.changeQuestion = 0;
     } //end else
 
+
     this.value = 50;
+  }
+
+
+  sumaValue(){
+
+    if (this.idPregunta == "preg1" && this.tipo == "HFSA") {
+      //gusto
+      this.sumaGustoHFSA += this.value;
+      console.log("SUMA GUSTO: " + this.sumaGustoHFSA);
+      console.log("HOLA JEJEJE");
+    } else if(this.idPregunta == "preg2" && this.tipo == "HFSA"){
+      //deseo
+      this.sumaDeseoHFSA += this.value;
+      //this.sumaDeseo += this.value;
+      console.log("SUMA DESEO: " + this.sumaDeseoHFSA);
+    }
+
+    if (this.idPregunta == "preg1" && this.tipo == "HFSW") {
+      //gusto
+      this.sumaGustoHFSW += this.value;
+      console.log("SUMA GUSTO: " + this.sumaGustoHFSW);
+      console.log("HOLA JEJEJE");
+    } else if(this.idPregunta == "preg2" && this.tipo == "HFSW"){
+      //deseo
+      this.sumaDeseoHFSW += this.value;
+      //this.sumaDeseo += this.value;
+      console.log("SUMA DESEO: " + this.sumaDeseoHFSW);
+    }
+
+    if (this.idPregunta == "preg1" && this.tipo == "LFSA") {
+      //gusto
+      this.sumaGustoLFSA += this.value;
+      console.log("SUMA GUSTO: " + this.sumaGustoLFSA);
+      console.log("HOLA JEJEJE");
+    } else if(this.idPregunta == "preg2" && this.tipo == "LFSA"){
+      //deseo
+      this.sumaDeseoLFSA += this.value;
+      //this.sumaDeseo += this.value;
+      console.log("SUMA DESEO: " + this.sumaDeseoLFSA);
+    }
+
+    if (this.idPregunta == "preg1" && this.tipo == "LFSW") {
+      //gusto
+      this.sumaGustoLFSW += this.value;
+      console.log("SUMA GUSTO: " + this.sumaGustoLFSW);
+      console.log("HOLA JEJEJE");
+    } else if(this.idPregunta == "preg2" && this.tipo == "LFSW"){
+      //deseo
+      this.sumaDeseoLFSW += this.value;
+      //this.sumaDeseo += this.value;
+      console.log("SUMA DESEO: " + this.sumaDeseoLFSW);
+    }
+
+  }
+
+
+  calcularMedia() {
+    this.mediaGustoHFSA = this.sumaGustoHFSA / 4;
+    this.mediaGustoHFSW = this.sumaGustoHFSW / 4;
+    this.mediaGustoLFSA = this.sumaGustoLFSA / 4;
+    this.mediaGustoLFSW = this.sumaGustoLFSW / 4;
+
+    this.mediaDeseoHFSA = this.sumaDeseoHFSA / 4;
+    this.mediaDeseoHFSW = this.sumaDeseoHFSW / 4;
+    this.mediaDeseoLFSA = this.sumaDeseoLFSA / 4;
+    this.mediaDeseoLFSW = this.sumaDeseoLFSW / 4;
+    //this.mediaGusto = this.sumaGusto / 16;
+    //this.mediaDeseo = this.sumaDeseo / 16;
+
+    //Sacar media respuesta
+    this.respuestasGen.push(
+      new RespuestaGeneral(
+        this.mediaGustoHFSA.toFixed(2).toString(),
+        this.mediaGustoHFSW.toFixed(2).toString(),
+        this.mediaGustoLFSA.toFixed(2).toString(),
+        this.mediaGustoLFSW.toFixed(2).toString(),
+
+        this.mediaDeseoHFSA.toFixed(2).toString(),
+        this.mediaDeseoHFSW.toFixed(2).toString(),
+        this.mediaDeseoLFSA.toFixed(2).toString(),
+        this.mediaDeseoLFSW.toFixed(2).toString()
+      )
+    );
+    console.log(
+      "ESTO ES LA SALIDA GENERAL: " + JSON.stringify(this.respuestasGen)
+    );
+  }
+
+  desviacionEstandar() {
+    //this.mediaGusto = Math.abs
   }
 
   continuar() {
@@ -477,6 +613,21 @@ export class SingleTestPage implements OnInit, OnDestroy {
   }
 
   salir() {
-    this.router.navigateByUrl("home");
+    if (this.checkClose) {
+      this.router.navigateByUrl("home");
+      sessionStorage.clear();
+    } else {
+      if (
+        window.confirm(
+          'No has guardado los cambios, si deseas salir vuelve a clicar en el botón "Salir".'
+        )
+      ) {
+        this.checkClose = true;
+      }
+    }
+  }
+
+  save() {
+    this.checkClose = true;
   }
 }
