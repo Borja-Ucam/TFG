@@ -12,6 +12,8 @@ import {
 import { PreguntasService, preg } from "../../Services/preguntas.service";
 import { ImagesService, image, food } from "../../Services/images.service";
 import { Router } from "@angular/router";
+import { boolean } from "mathjs";
+import { RespuestaPaired } from "src/app/Classes/RespuestaPaired";
 
 @NgModule({
   imports: [FormsModule],
@@ -26,6 +28,17 @@ export class PairedTestPage implements OnInit {
   public imageArrHFSW: any = [];
   public imageArrLFSA: any = [];
   public imageArrLFSW: any = [];
+
+  respuestaMap: Map<String, number>;
+
+  respuestas: Array<RespuestaPaired>;
+
+  mapHFSA = new Map();
+  mapLFSW = new Map();
+  mapHFSW = new Map();
+  mapLFSA = new Map();
+
+
 
   constructor(
     public loadingController: LoadingController,
@@ -44,6 +57,9 @@ export class PairedTestPage implements OnInit {
   }
 
   ngOnInit() {
+    this.respuestas = new Array<RespuestaPaired>();
+    this.respuestaMap = new Map<String, number>();
+
     if (sessionStorage.getItem("imageArrHFSA")) {
       this.imageArrHFSA = JSON.parse(sessionStorage.getItem("imageArrHFSA"));
       this.imageArrHFSA = this.imageArrHFSA.filter(
@@ -89,6 +105,7 @@ export class PairedTestPage implements OnInit {
       });
     }
   }
+
   nomostrar = "hide";
   enunciado = "";
   urli = "";
@@ -102,7 +119,7 @@ export class PairedTestPage implements OnInit {
   fin: boolean = false;
   checkClose: boolean = false;
 
-  contadorPreg: number = 94;
+  contadorPreg: number = 0;
 
   //mediciones de tiempo
   //before=null;
@@ -117,11 +134,6 @@ export class PairedTestPage implements OnInit {
   randomD: number;
   idImagenI: string = "";
   idImagenD: string = "";
-
-  mapHFSA = new Map();
-  mapLFSW = new Map();
-  mapHFSW = new Map();
-  mapLFSA = new Map();
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -147,7 +159,7 @@ export class PairedTestPage implements OnInit {
     this.hideButtonComenzar = false;
     this.showButtonNext = true;
 
-    this.calculateImage();
+    //this.calculateImage();
 
     this.startTimer();
     //console.time("t1");
@@ -246,8 +258,12 @@ export class PairedTestPage implements OnInit {
       this.router.navigateByUrl("home");
       sessionStorage.clear();
     } else {
-      if(window.confirm('No ha guardado los cambios, ¿Está seguro que quiere salir?')){
-        this.checkClose = true
+      if (
+        window.confirm(
+          "No ha guardado los cambios, ¿Está seguro que quiere salir?"
+        )
+      ) {
+        this.checkClose = true;
         sessionStorage.clear();
         this.router.navigateByUrl("");
       }
@@ -258,34 +274,125 @@ export class PairedTestPage implements OnInit {
     this.checkClose = true;
   }
 
-
-// no se que es esto
+  // no se que es esto
   focusInput(input) {
     input.setFocus();
   }
 
   calculateImage() {
-    //añadir imagen al html  ((izquierda))
-    let randomI: number = Math.floor(
-      Math.random() * Object.keys(this.imageArrHFSA).length
-    );
-    this.mapHFSA.set(this.imageArrHFSA[randomI], this.imageArrHFSA[randomI]);
-    console.log(
-      JSON.stringify(
-        "aaaaaaa: " + JSON.stringify(this.imageArrHFSA[randomI].url)
-      )
-    );
-    this.urli = this.imageArrHFSA[randomI].url;
-    this.idImagenI = this.imageArrHFSA[randomI].id;
+  
+    let recalculate: boolean = true;
+    let randomGrupoIzq: number;
+    let randomGrupoDer: number;
 
-    //añadir imagen al html  ((derecha))
-    let randomD: number = Math.floor(
-      Math.random() * Object.keys(this.imageArrLFSW).length
-    );
-    this.mapHFSA.set(this.imageArrLFSW[randomD], this.imageArrLFSW[randomD]);
-    //console.log(JSON.stringify('aaaaaaa: '+this.selectedHFSA))
-    this.urld = this.imageArrLFSW[randomD].url;
-    this.idImagenD = this.imageArrHFSA[randomD].id;
+    let randomImagenIzq: number;
+    let randomImagenDer: number;
+
+    let urli: string;
+    let urld: string;
+
+    while (recalculate) {
+      
+      randomGrupoIzq = Math.floor(Math.random() * 4);
+      randomImagenIzq = Math.floor(Math.random() * 4);
+      this.urli = "";
+      this.urld = "";
+      //console.log("calculando random IZQUIERDA...." + randomGrupoIzq);
+
+
+      randomGrupoDer = Math.floor(Math.random() * 4);
+      randomImagenDer = Math.floor(Math.random() * 4);
+      //console.log("calculando random DERECHA...." + randomGrupoDer);
+
+      while (randomGrupoDer == randomGrupoIzq) {
+        randomGrupoDer = Math.floor(Math.random() * 4);
+
+        console.log("calculando random DENTRO DERECHA...." + randomGrupoDer);
+
+      }
+      console.log("Random DENTRO DERECHA...." + randomGrupoDer);
+
+      switch (randomGrupoIzq) {
+        //HFSA
+        //HFSW
+        //LFSA
+        //LFSW
+        case 0: {
+          urli = this.imageArrHFSA[randomImagenIzq].url;
+          console.log("Array mostrado izq: "+ JSON.stringify(this.imageArrHFSA[randomImagenIzq].id));
+          break;
+        }
+        case 1: {
+          urli = this.imageArrHFSW[randomImagenIzq].url;
+          console.log("Array mostrado izq: "+ JSON.stringify(this.imageArrHFSW[randomImagenIzq].id));
+
+          break;
+
+        }
+        case 2: {
+          urli = this.imageArrLFSA[randomImagenIzq].url;
+          console.log("Array mostrado izq: "+ JSON.stringify(this.imageArrLFSA[randomImagenIzq].id));
+
+          break;
+
+        }
+        case 3: {
+          urli = this.imageArrLFSW[randomImagenIzq].url;
+          console.log("Array mostrado izq: "+ JSON.stringify(this.imageArrLFSW[randomImagenIzq].id));
+
+          break;
+
+        }
+      }
+     
+
+      switch (randomGrupoDer) {
+
+        case 0: {
+          urld = this.imageArrHFSA[randomImagenDer].url;
+          console.log("Array mostrado der: "+ JSON.stringify(this.imageArrHFSA[randomImagenDer].id));
+          break;
+
+        }
+        case 1: {
+          urld = this.imageArrHFSW[randomImagenDer].url;
+          console.log("Array mostrado der: "+ JSON.stringify(this.imageArrHFSW[randomImagenDer].id));
+
+          break;
+
+        }
+        case 2: {
+          urld = this.imageArrLFSA[randomImagenDer].url;
+          console.log("Array mostrado der: "+ JSON.stringify(this.imageArrLFSA[randomImagenDer].id));
+
+          break;
+
+        }
+        case 3: {
+          urld = this.imageArrLFSW[randomImagenDer].url;
+          console.log("Array mostrado der: "+ JSON.stringify(this.imageArrLFSW[randomImagenDer].id));
+
+          break;
+
+        }
+      }
+
+      if(this.respuestaMap.get(urli+urld) != undefined || this.respuestaMap.get(urld+urli) != undefined){
+        recalculate = true;
+        console.log("rECALCULATE TRUE: ");
+        continue;
+
+
+      }else{
+        console.log("rECALCULATE fALSE: ");
+
+        this.respuestaMap.set(urli+urld,1);
+        recalculate = false;
+        this.urli = urli;
+        this.urld = urld;
+        return;
+      }
+    }
   }
 
   async loadingImages() {

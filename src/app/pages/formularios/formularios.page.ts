@@ -1,38 +1,34 @@
-import { Component, OnInit } from "@angular/core";
+import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
+import { Component, LOCALE_ID, NgModule, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
+
+import localeEs from 'node_modules/@angular/common/locales/es';
+registerLocaleData(localeEs, 'es');
 
 @Component({
   selector: "app-formularios",
   templateUrl: "./formularios.page.html",
   styleUrls: ["./formularios.page.scss"],
 })
-export class FormulariosPage implements OnInit {
+@NgModule({
+  providers: [{provide: LOCALE_ID, useValue: 'es'}]
 
+})
+export class FormulariosPage implements OnInit {
   submitted = false;
 
   checked: Boolean;
 
   aceptado: Boolean;
   idUser: string = null;
+  today: string = null;
 
-
-  constructor(
-    private modalController: ModalController,
-    
-  ) {
-    
-
-  }
+  constructor(private modalController: ModalController) {}
 
   ngOnInit() {
     this.aceptado = false;
-   
   }
 
-  
-
-
- 
   enlace() {
     window.open(
       "https://drive.google.com/file/d/1R115VmbKofXSOw6fqMdTneMvo0bQpNx7/view?usp=sharing",
@@ -41,22 +37,29 @@ export class FormulariosPage implements OnInit {
   }
 
   dismiss() {
+    //this.today = new Date();
 
-    console.log(this.aceptado)
-    if(this.aceptado){
+    console.log(this.aceptado);
 
-      sessionStorage.setItem("idUser",JSON.stringify(this.idUser));
+    if (this.aceptado) {
+      sessionStorage.setItem("idUser",this.idUser);
+      
+      //let dateFormat = require("dateformat");
+      let now = new Date();
+      this.today = formatDate(now, "dd/MM/yyyy h:mm:ss", 'es');
+      //console.log(this.today);
+      //console.log(now.toString());
+
+      sessionStorage.setItem("date", this.today);
+      //console.log("date " + sessionStorage.getItem("date"));
+
       this.modalController.dismiss({
         dismissed: true,
         resultado: true,
-        
       });
-
-    }else{
-
-      alert('Debe aceptar los terminos y condiciones.');
+    } else {
+      alert("Debe aceptar los terminos y condiciones.");
     }
-    
   }
 
   cerrar() {

@@ -1,3 +1,4 @@
+import { FirebaseUploadService } from './../../Services/firebaseUpload.service';
 import { food } from "./../../Services/images.service";
 import { Respuesta } from "./../../Classes/Respuesta";
 import { Router } from "@angular/router";
@@ -20,6 +21,8 @@ import { PreguntasService, preg } from "../../Services/preguntas.service";
 import { ImagesService, image } from "../../Services/images.service";
 import { identifierModuleUrl } from "@angular/compiler";
 import { RespuestaGeneral } from "src/app/Classes/RespuestaGeneral";
+import * as math from "mathjs";
+
 
 @NgModule({
   imports: [FormsModule],
@@ -37,32 +40,44 @@ export class SingleTestPage implements OnInit, OnDestroy {
   public imageArrLFSA: any = [];
   public imageArrLFSW: any = [];
 
-  public selectedHFSA: any[] = [];
-  public selectedHFSW: any[] = [];
-  public selectedLFSA: any[] = [];
-  public selectedLFSW: any[] = [];
+  public sumaGustoHFSA: any[] = [];
+  public sumaGustoHFSW: any[] = [];
+  public sumaGustoLFSA: any[] = [];
+  public sumaGustoLFSW: any[] = [];
+
+  public sumaDeseoHFSA: any[] = [];
+  public sumaDeseoHFSW: any[] = [];
+  public sumaDeseoLFSA: any[] = [];
+  public sumaDeseoLFSW: any[] = [];
 
   public aaaa: food[] = new Array();
 
   public idUser: string = null;
-
+  public fecha: string = null;
   constructor(
     public loadingController: LoadingController,
     public angularFirestore: AngularFirestore,
     private db: AngularFireDatabase,
     public preguntas: PreguntasService,
     public imagenes: ImagesService,
-    private router: Router
+    private router: Router,
+    public firebaseUpload: FirebaseUploadService
   ) {
     this.imageArrHFSA = new Array();
     this.imageArrHFSW = new Array();
     this.imageArrLFSA = new Array();
     this.imageArrLFSW = new Array();
 
-    this.selectedHFSA = new Array();
-    this.selectedHFSW = new Array();
-    this.selectedLFSA = new Array();
-    this.selectedLFSW = new Array();
+    this.sumaGustoHFSA = new Array();
+    this.sumaGustoHFSW = new Array();
+    this.sumaGustoLFSA = new Array();
+    this.sumaGustoLFSW = new Array();
+
+    this.sumaDeseoHFSA = new Array();
+    this.sumaDeseoHFSW = new Array();
+    this.sumaDeseoLFSA = new Array();
+    this.sumaDeseoLFSW = new Array();
+
   }
   ngOnDestroy(): void {
     //throw new Error('Method not implemented.');
@@ -75,8 +90,11 @@ export class SingleTestPage implements OnInit, OnDestroy {
     });
 
     //USUARIO QUE VIENE DEL MODAL DE INICIOOOOO
-    //this.idUser = sessionStorage.getItem("idUser");
-    //console.log("USUARIO DEL ID JEJEJE: "+this.idUser);
+    this.idUser = sessionStorage.getItem("idUser");
+    console.log("USUARIO DEL ID JEJEJE: "+this.idUser);
+
+    this.fecha = sessionStorage.getItem("date");
+    console.log("Fecha session: "+this.fecha);
 
     if (sessionStorage.getItem("imageArrHFSA")) {
       this.imageArrHFSA = JSON.parse(sessionStorage.getItem("imageArrHFSA"));
@@ -132,6 +150,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
 
   //CALCULOS NUEVOS
+  /*
   sumaGustoHFSA: number = 0;
   sumaGustoHFSW: number = 0;
   sumaGustoLFSA: number = 0;
@@ -141,7 +160,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
   sumaDeseoHFSW: number = 0;
   sumaDeseoLFSA: number = 0;
   sumaDeseoLFSW: number = 0;
-
+*/
+  //media
   mediaGustoHFSA: number = 0;
   mediaGustoHFSW: number = 0;
   mediaGustoLFSA: number = 0;
@@ -151,6 +171,17 @@ export class SingleTestPage implements OnInit, OnDestroy {
   mediaDeseoHFSW: number = 0;
   mediaDeseoLFSA: number = 0;
   mediaDeseoLFSW: number = 0;
+
+  //desviacion estandar
+  stdGustoHFSA: number = 0;
+  stdGustoHFSW: number = 0;
+  stdGustoLFSA: number = 0;
+  stdGustoLFSW: number = 0;
+
+  stdDeseoHFSA: number = 0;
+  stdDeseoHFSW: number = 0;
+  stdDeseoLFSA: number = 0;
+  stdDeseoLFSW: number = 0;
 
 
   //CALCULOS ANTES
@@ -181,7 +212,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
   mapLFSA = new Map();
 
   respuestas: Respuesta[];
-  respuestasGen: RespuestaGeneral[];
+  respuestasGen: Object;
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -201,7 +232,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
   startTest() {
     console.log("Test started!");
     this.respuestas = new Array();
-    this.respuestasGen = new Array();
 
     //console.log(JSON.stringify(this.preguntasArr[this.contadorPreg].text))
 
@@ -290,6 +320,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
       console.log("El fin? meh oki ");
 
       this.calcularMedia();
+      //this.calcularSTD();
 
       //this.descanso= false;
       this.fin = true;
@@ -522,89 +553,155 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
     if (this.idPregunta == "preg1" && this.tipo == "HFSA") {
       //gusto
-      this.sumaGustoHFSA += this.value;
-      console.log("SUMA GUSTO: " + this.sumaGustoHFSA);
-      console.log("HOLA JEJEJE");
+      this.sumaGustoHFSA.push(this.value);
+      //this.sumaGustoHFSA += this.value;
+      //console.log("SUMA GUSTO: " + this.sumaGustoHFSA);
+      console.log("ARRAY SUMA GUSTO: " + this.sumaGustoHFSA);
+
     } else if(this.idPregunta == "preg2" && this.tipo == "HFSA"){
       //deseo
-      this.sumaDeseoHFSA += this.value;
+      this.sumaDeseoHFSA.push(this.value);
+
+      //this.sumaDeseoHFSA += this.value;
       //this.sumaDeseo += this.value;
-      console.log("SUMA DESEO: " + this.sumaDeseoHFSA);
+      //console.log("SUMA DESEO: " + this.sumaDeseoHFSA);
     }
 
     if (this.idPregunta == "preg1" && this.tipo == "HFSW") {
       //gusto
-      this.sumaGustoHFSW += this.value;
-      console.log("SUMA GUSTO: " + this.sumaGustoHFSW);
-      console.log("HOLA JEJEJE");
+      this.sumaGustoHFSW.push(this.value);
+      //console.log("SUMA GUSTO: " + this.sumaGustoHFSW);
     } else if(this.idPregunta == "preg2" && this.tipo == "HFSW"){
       //deseo
-      this.sumaDeseoHFSW += this.value;
+      this.sumaDeseoHFSW.push(this.value);
+      //this.sumaDeseoHFSW += this.value;
       //this.sumaDeseo += this.value;
-      console.log("SUMA DESEO: " + this.sumaDeseoHFSW);
+      //console.log("SUMA DESEO: " + this.sumaDeseoHFSW);
     }
 
     if (this.idPregunta == "preg1" && this.tipo == "LFSA") {
       //gusto
-      this.sumaGustoLFSA += this.value;
-      console.log("SUMA GUSTO: " + this.sumaGustoLFSA);
-      console.log("HOLA JEJEJE");
+      this.sumaGustoLFSA.push(this.value);
+      //this.sumaGustoLFSA += this.value;
+      //console.log("SUMA GUSTO: " + this.sumaGustoLFSA);
     } else if(this.idPregunta == "preg2" && this.tipo == "LFSA"){
       //deseo
-      this.sumaDeseoLFSA += this.value;
+      this.sumaDeseoLFSA.push(this.value);
+      //this.sumaDeseoLFSA += this.value;
       //this.sumaDeseo += this.value;
-      console.log("SUMA DESEO: " + this.sumaDeseoLFSA);
+      //console.log("SUMA DESEO: " + this.sumaDeseoLFSA);
     }
 
     if (this.idPregunta == "preg1" && this.tipo == "LFSW") {
       //gusto
-      this.sumaGustoLFSW += this.value;
-      console.log("SUMA GUSTO: " + this.sumaGustoLFSW);
-      console.log("HOLA JEJEJE");
+      this.sumaGustoLFSW.push(this.value);
+      //this.sumaGustoLFSW += this.value;
+      //console.log("SUMA GUSTO: " + this.sumaGustoLFSW);
     } else if(this.idPregunta == "preg2" && this.tipo == "LFSW"){
       //deseo
-      this.sumaDeseoLFSW += this.value;
+      this.sumaDeseoLFSW.push(this.value);
+      //this.sumaDeseoLFSW += this.value;
       //this.sumaDeseo += this.value;
-      console.log("SUMA DESEO: " + this.sumaDeseoLFSW);
+      //console.log("SUMA DESEO: " + this.sumaDeseoLFSW);
     }
 
   }
 
 
   calcularMedia() {
-    this.mediaGustoHFSA = this.sumaGustoHFSA / 4;
-    this.mediaGustoHFSW = this.sumaGustoHFSW / 4;
-    this.mediaGustoLFSA = this.sumaGustoLFSA / 4;
-    this.mediaGustoLFSW = this.sumaGustoLFSW / 4;
+    
+      this.mediaGustoHFSA = math.mean(this.sumaGustoHFSA);
+      this.mediaGustoHFSW = math.mean(this.sumaGustoHFSW);
+      this.mediaGustoLFSA = math.mean(this.sumaGustoLFSA);
+      this.mediaGustoLFSW = math.mean(this.sumaGustoLFSW);
+  
+      this.mediaDeseoHFSA = math.mean(this.sumaDeseoHFSA);
+      this.mediaDeseoHFSW = math.mean(this.sumaDeseoHFSW);
+      this.mediaDeseoLFSA = math.mean(this.sumaDeseoLFSA);
+      this.mediaDeseoLFSW = math.mean(this.sumaDeseoLFSW);
+      this.calcularSTD();
 
-    this.mediaDeseoHFSA = this.sumaDeseoHFSA / 4;
-    this.mediaDeseoHFSW = this.sumaDeseoHFSW / 4;
-    this.mediaDeseoLFSA = this.sumaDeseoLFSA / 4;
-    this.mediaDeseoLFSW = this.sumaDeseoLFSW / 4;
-    //this.mediaGusto = this.sumaGusto / 16;
-    //this.mediaDeseo = this.sumaDeseo / 16;
+
+    this.respuestasGen = new RespuestaGeneral(
+      this.idUser,
+      this.fecha,
+      this.mediaGustoHFSA.toFixed(2).toString(),
+      this.stdGustoHFSA.toFixed(2).toString(),
+
+      this.mediaGustoHFSW.toFixed(2).toString(),
+      this.stdGustoHFSW.toFixed(2).toString(),
+
+      this.mediaGustoLFSA.toFixed(2).toString(),
+      this.stdGustoLFSA.toFixed(2).toString(),
+
+      this.mediaGustoLFSW.toFixed(2).toString(),
+      this.stdGustoLFSW.toFixed(2).toString(),
+
+
+      this.mediaDeseoHFSA.toFixed(2).toString(),
+      this.stdDeseoHFSA.toFixed(2).toString(),
+
+      this.mediaDeseoHFSW.toFixed(2).toString(),
+      this.stdDeseoHFSW.toFixed(2).toString(),
+
+      this.mediaDeseoLFSA.toFixed(2).toString(),
+      this.stdDeseoLFSA.toFixed(2).toString(),
+
+      this.mediaDeseoLFSW.toFixed(2).toString(),
+      this.stdDeseoLFSW.toFixed(2).toString()
+      );
 
     //Sacar media respuesta
-    this.respuestasGen.push(
+    /*this.respuestasGen.push(
       new RespuestaGeneral(
+        this.idUser,
+        this.fecha,
         this.mediaGustoHFSA.toFixed(2).toString(),
+        this.stdGustoHFSA.toFixed(2).toString(),
+
         this.mediaGustoHFSW.toFixed(2).toString(),
+        this.stdGustoHFSW.toFixed(2).toString(),
+
         this.mediaGustoLFSA.toFixed(2).toString(),
+        this.stdGustoLFSA.toFixed(2).toString(),
+
         this.mediaGustoLFSW.toFixed(2).toString(),
+        this.stdGustoLFSW.toFixed(2).toString(),
+
 
         this.mediaDeseoHFSA.toFixed(2).toString(),
+        this.stdDeseoHFSA.toFixed(2).toString(),
+
         this.mediaDeseoHFSW.toFixed(2).toString(),
+        this.stdDeseoHFSW.toFixed(2).toString(),
+
         this.mediaDeseoLFSA.toFixed(2).toString(),
-        this.mediaDeseoLFSW.toFixed(2).toString()
+        this.stdDeseoLFSA.toFixed(2).toString(),
+
+        this.mediaDeseoLFSW.toFixed(2).toString(),
+        this.stdDeseoLFSW.toFixed(2).toString(),
+
+
       )
-    );
+    );*/
+    this.firebaseUpload.setRespuestas(this.respuestasGen);
+    //this.firebaseUpload.getRespuestas();
     console.log(
-      "ESTO ES LA SALIDA GENERAL: " + JSON.stringify(this.respuestasGen)
+      "ESTO ES LA SALIDA GENERAL 2.0: " + JSON.stringify(this.respuestasGen)
     );
   }
 
-  desviacionEstandar() {
-    //this.mediaGusto = Math.abs
+  calcularSTD() {
+
+    this.stdGustoHFSA = math.std(this.sumaGustoHFSA);
+    this.stdGustoHFSW = math.std(this.sumaGustoHFSW);
+    this.stdGustoLFSA = math.std(this.sumaGustoLFSA);
+    this.stdGustoLFSW = math.std(this.sumaGustoLFSW);
+
+    this.stdDeseoHFSA = math.std(this.sumaDeseoHFSA);
+    this.stdDeseoHFSW = math.std(this.sumaDeseoHFSW);
+    this.stdDeseoLFSA = math.std(this.sumaDeseoLFSA);
+    this.stdDeseoLFSW = math.std(this.sumaDeseoLFSW);
   }
 
   continuar() {
