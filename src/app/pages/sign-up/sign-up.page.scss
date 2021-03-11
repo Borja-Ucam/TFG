@@ -1,0 +1,165 @@
+.displayTable {
+    display: table;
+    width: 100%;
+    height: 100%;
+    background: #3F51B5;
+}
+
+.displayTableCell {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+.authBlock {
+    margin: 0 auto;
+    max-width: 400px;
+    background: white;
+    padding: 30px 40px 10px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, .04);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .04);
+}
+
+.formGroup {
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+}
+
+.formControl {
+    width: 100%;
+    display: block;
+    padding: 15px 15px 14px;
+    border: 2px solid #e7e7e7;
+    outline: none;
+    font-size: 15px;
+    color: #444444;
+    background: #fcfcfc;
+}
+
+.formControl:focus {
+    border: 2px solid #d3d3d6
+}
+
+.displayTable .btn {
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px 0;
+    background: #15CD72;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+.displayTable .btn:hover {
+    opacity: .88;
+}
+
+.displayTable .btnSecondary {
+    background: #EEEEEE;
+    color: #404040;
+}
+
+.displayTable .googleBtn {
+    background: #eb5e4c;
+}
+
+.displayTable .facebookBtn {
+    background: #5d82d1;
+}
+
+.or {
+    text-align: center;
+    display: block;
+    color: #a0a0a0;
+    background: white;
+    position: relative;
+    margin: 5px 0 0px;
+}
+
+.orInner {
+    background: white;
+    display: inline-block;
+    z-index: 4;
+    position: relative;
+    padding: 0 12px;
+}
+
+.or:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 11px;
+    width: 100%;
+    height: 1px;
+    background: #e2e2e2;
+}
+
+.grid1 {
+    height: 100%;
+    padding: 0px;
+}
+
+.container-login {
+    width: fit-content;
+    padding: 10px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+}
+
+.row1 {
+    height: 50%;
+    background: -moz-linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    background: -webkit-linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    background: linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+}
+
+.row2 {
+    padding: 10px;
+    height: 50%;
+    background: -moz-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    background: -webkit-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    background: linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+}
+
+ion-icon {
+    margin-right: 15px;
+}
+
+ion-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #004379;
+}
+
+ion-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute !important;
+    top: 0px !important;
+}
+
+.img-container {
+    //height: 20px;
+    //width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //this only if you want to vertical align it to the center too
+}
+
+.forget {
+    cursor: pointer;
+}

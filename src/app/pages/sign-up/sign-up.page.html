@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>sign-up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="grid1">
+    <ion-row class="row1">
+      <ion-col class="img-container">
+        <!---<ion-img [src]="img"></ion-img> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row2">
+      <ion-col> </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-slide>
+    <div class="container-login">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h1>Registro</h1>
+          </ion-col>
+        </ion-row>
+        <form>
+          <ion-row>
+            <ion-col>
+              <ion-list>
+                <ion-item>
+                  <ion-icon name="person" class="icon-login"></ion-icon>
+
+                  
+                  <ion-input
+                    name="user"
+                    type="text"
+                    #userEmail
+                    required
+                    placeholder="Email"
+                  ></ion-input>
+                </ion-item>
+                <br />
+                <ion-item>
+                  <ion-icon
+                    name="lock-closed-outline"
+                    class="icon-login"
+                  ></ion-icon>
+                  <ion-input
+                    name="password"
+                    type="password"
+
+                    #userPwd
+                    required
+                    placeholder="Contraseña"
+                  ></ion-input>
+                <br />
+
+                  
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button
+                (click)="authService.SignUp(userEmail.value, userPwd.value)"
+                type="submit"
+                fill="solid"
+                expand="full"
+              >
+                Registrarse
+              </ion-button>
+
+              <div class="redirectToLogin">
+                <span class="or"><span class="orInner">O</span></span>
+
+                <span>
+                  <ion-button
+                    color="danger"
+                    type="submit"
+                    fill="solid"
+                    expand="block"
+                    routerLink="/login"
+                  >
+                    Entrar
+                  </ion-button></span
+                >
+              </div>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-grid>
+    </div>
+  </ion-slide>
+
+</ion-content>

@@ -1,0 +1,9 @@
+{
+    "HOLA": "Hola {{ value }}",
+    "IDIOMA": "Idioma",
+    "BIENVENIDO": "Bienvenido",
+    "COMENZAR TEST": "Comenzar Test",
+    "CONFIGURACION": "Configuracion Test"
+
+
+}

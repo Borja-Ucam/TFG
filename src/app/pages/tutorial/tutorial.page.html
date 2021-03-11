@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tutorial</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="justifycontent aligncenter">
+
+  <div >
+    <div >
+      <!--CONTENEDOR PREGUNTA Y FOTO-->
+      <div class="question-container" id="question-container" *ngIf="showQuestion">
+        <ion-text id="question-ion" class="ion-text-center" [color]="color">
+          <h1>{{pregunta}}</h1>
+        </ion-text>
+        
+
+        <div class="justifycontent">
+          <img id="image" [src]="url" />
+        </div>
+          <!--BARRA RANGO-->
+            <ion-range
+              id="range"
+              [(ngModel)]="value"
+              min="0"
+              max="100"
+              class="slider"
+              pin
+              color="primary"
+            >
+              <ion-text class="text-range" slot="start" size="big">No demasiado</ion-text>
+              <ion-text class="text-range" slot="end" size="big">Extremadamente</ion-text>
+            </ion-range>
+      </div>
+
+      <!--CONTROL BUTTONS-->
+      <div class="controls">
+        <ion-button
+          id="start-btn"
+          class="start-btn btn"
+          color="primary"
+          *ngIf="hideButtonComenzar"
+          (click)="startTest()"
+          >Comenzar</ion-button
+        >
+        <ion-button
+          id="next-btn"
+          class="next-btn btn"
+          color="primary"
+          *ngIf="hideButton"
+          (click)="nextQuestion()"
+          >Siguiente</ion-button
+        >
+      </div>
+    </div>
+
+    
+  </div>
+
+ 
+
+</ion-content>
