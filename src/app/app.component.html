@@ -14,6 +14,10 @@
   <ion-buttons slot="secondary">
       <ion-button (click)="closeSession()"> <ion-icon name="close-outline"></ion-icon> </ion-button>
 </ion-buttons>
+ <ion-buttons *ngIf="authService.isLoggedIn;" slot="secondary">
+      <ion-button (click)="authService.SignOut()"> <ion-icon name="log-out-outline"></ion-icon> </ion-button>
+</ion-buttons>
+
 
 </ion-toolbar>
 

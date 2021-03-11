@@ -11,7 +11,8 @@ registerLocaleData(localeEs, 'es');
   styleUrls: ["./formularios.page.scss"],
 })
 @NgModule({
-  providers: [{provide: LOCALE_ID, useValue: 'es'}]
+  providers: [{provide: LOCALE_ID, useValue: 'es'}],
+  exports: []
 
 })
 export class FormulariosPage implements OnInit {
@@ -23,7 +24,7 @@ export class FormulariosPage implements OnInit {
   idUser: string = null;
   today: string = null;
 
-  constructor(private modalController: ModalController) {}
+  constructor(public modalController: ModalController) {}
 
   ngOnInit() {
     this.aceptado = false;
@@ -39,19 +40,20 @@ export class FormulariosPage implements OnInit {
   dismiss() {
     //this.today = new Date();
 
-    console.log(this.aceptado);
+    console.log("ACEPTADO: "+this.aceptado);
 
     if (this.aceptado) {
       sessionStorage.setItem("idUser",this.idUser);
       
       //let dateFormat = require("dateformat");
       let now = new Date();
-      this.today = formatDate(now, "dd/MM/yyyy h:mm:ss", 'es');
+      this.today = formatDate(now, "dd/MM/yyyy HH:mm:ss", 'es');
       //console.log(this.today);
       //console.log(now.toString());
 
       sessionStorage.setItem("date", this.today);
-      //console.log("date " + sessionStorage.getItem("date"));
+      console.log("date " + sessionStorage.getItem("date"));
+      console.log("idUser " + sessionStorage.getItem("idUser"));
 
       this.modalController.dismiss({
         dismissed: true,

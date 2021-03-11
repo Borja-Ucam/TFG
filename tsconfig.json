@@ -23,6 +23,8 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    //noseque era esto, creo que un bug que me pasaba en el idioma
+    "enableIvy":false
   }
 }

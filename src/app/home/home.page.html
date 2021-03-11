@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Blank </ion-title>
+    <ion-title> Home </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,18 +11,41 @@
     </ion-toolbar>
   </ion-header>
 
+  <div class="idioma" id="idioma">
+
+  <img id="btnFlag" (click)="cambioIdioma('es')"  src="assets/img/es.png">
+
+  <img id="btnFlag" (click)="cambioIdioma('en')"  src="assets/img/en.png">
+
+  </div>
+
+  
+  <div class="download" id="download">
+    <ion-button color="medium" (click)="open()">
+      <ion-icon name="cloud-download-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="bienvenido" id="bienvenido">
+    <h1>{{ 'BIENVENIDO' | translate }}</h1>
+  </div>
+
   <div id="container">
-    <ion-button (click)="openTest()" color="primary">Comenzar Test</ion-button>
+    <ion-button (click)="openTest()" color="primary">{{'COMENZAR TEST'|translate}}</ion-button>
     <ion-button (click)="openModuleS()" color="primary">SINGLE TEST</ion-button>
     <ion-button (click)="openModuleP()" color="primary">PAIRED TEST</ion-button>
+    <ion-button (click)="openModuleTutorial()" color="primary">TUTORIAL</ion-button>
     <ion-button (click)="openModuleF()" color="primary">FORMULARIOS</ion-button>
     <ion-button (click)="openModuleC()" color="primary"
-      >Configuración Test</ion-button
+      >{{'CONFIGURACION'|translate}}</ion-button
     >
-    <ion-button (click)="exportToExcel()" color="primary">Exportar Excel</ion-button>
-
-
-
+    <ion-button (click)="exportToExcel()" color="primary"
+      >Exportar Excel</ion-button
+    >
+ 
+    <ion-button (click)="exportToExcelPaciente()" color="primary"
+      >PACIENTE Excel</ion-button
+    >
     <p>
       Start
       <a

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/Services/auth.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -6,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { MenuController } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import {Location} from '@angular/common';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -21,15 +23,22 @@ export class AppComponent {
     private menu: MenuController,
     private _location: Location,
     private router: Router,
+    public authService: AuthService,
+    public translate: TranslateService,
+    public translateModule: TranslateModule
 
   ) {
     this.initializeApp();
+    
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.translate.setDefaultLang('en');
+      this.translate.use('es');
+      
     });
   }
 
@@ -47,6 +56,7 @@ export class AppComponent {
 
     sessionStorage.clear();
   }
+  
 
   
   

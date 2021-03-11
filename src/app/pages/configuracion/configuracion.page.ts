@@ -21,7 +21,7 @@ export class ConfiguracionPage implements OnInit {
 
 
   constructor(public imagenes: ImagesService,
-    private modalController: ModalController) { }
+    public modalController: ModalController) { }
 
   ngOnInit() {
 

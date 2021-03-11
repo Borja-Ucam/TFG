@@ -1,49 +1,61 @@
-<ion-content>
-  <ion-fab (click)="cerrar()" horizontal="end" vertical="top" slot="fixed">
-    <ion-fab-button color="danger">
-      <ion-icon name="close-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<ion-content class="content" id="content">
+<div class="my-modal">
+    <ion-fab (click)="cerrar()" horizontal="end" vertical="top" slot="fixed">
+      <ion-fab-button color="danger">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
-  <h1 id="header_1" class="form-header" data-component="header">
-    LFPQ
-  </h1>
-  <div id="subHeader_1" class="form-subHeader">
-    Por favor, antes de contestar a esta pregunta, lea con detenimiento la
-    información acerca de la privacidad y protección de datos de este estudio,
-    accesible desde el siguiente enlace:
+    <h1 id="header_1" class="form-header" data-component="header">LFPQ</h1>
+    <div id="subHeader_1" class="form-subHeader">
+      Por favor, antes de contestar a esta pregunta, lea con detenimiento la
+      información acerca de la privacidad y protección de datos de este estudio,
+      accesible desde el siguiente enlace:
+    </div>
+
+    <h1 id="header_1" class="form-header" data-component="header">
+      Ley de Protección de Datos (LOPD)
+    </h1>
+    <div id="subHeader_1" class="form-subHeader">
+      Aquí se pondrá toda la información sobre la LOPD.
+    </div>
+
+ <ion-item >
+      <ion-label >Paciente:</ion-label>
+      <ion-input
+        [(ngModel)]="idUser"
+        placeholder="Introduzca ID"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+<div float-left class="my-checkbox">
+<ion-checkbox [(ngModel)]="aceptado" name="terms">
+    </ion-checkbox>
+    <ion-label text-uppercase>He leido y acepto términos y condiciones</ion-label>
+    
   </div>
 
-  <ion-button id="continue-btn" class="btn" color="primary" (click)="enlace()"
-    >Enlace</ion-button
-  >
 
-  <h1 id="header_1" class="form-header" data-component="header">
-    Ley de Protección de Datos (LOPD)
-  </h1>
-  <div id="subHeader_1" class="form-subHeader">
-    Aquí se pondrá toda la información sobre la LOPD. BLABLA
-  </div>
+   
 
+    <pre>Valor de variable: {{idUser}}</pre>
 
-    <ion-label>Acepto terminos blabla</ion-label>
-        <ion-checkbox [(ngModel)]="aceptado" color="primary" ></ion-checkbox>
+    <div class="col text-center">
 
-    <ion-text color="dark" class="textoForm">
-      <h5>
-        Correo electrónico:
-        <input [(ngModel)]="idUser" type="email" name="email" size="50"/>
-      </h5>
-    </ion-text>
-
-<pre>Valor de variable: {{idUser}}</pre>
-
-    <center>
-      <button *ngIf='idUser' class="bt1" type="submit" value="Enviar" (click)="dismiss()">
+      <button
+        *ngIf="idUser"
+        class="bt1"
+        type="submit"
+        value="Enviar"
+        (click)="dismiss()"
+      >
         Empezar
       </button>
-    </center>
+    </div>
 
+    <div class="footer">
+        <!--<ion-router-link class="link" color="medium" (click)="enlace()" >Términos y condiciones</ion-router-link>-->
 
-
-</ion-content>
+    </div>
+  </div></ion-content>

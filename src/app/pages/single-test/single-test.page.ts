@@ -1,6 +1,7 @@
 import { FirebaseUploadService } from './../../Services/firebaseUpload.service';
 import { food } from "./../../Services/images.service";
 import { Respuesta } from "./../../Classes/Respuesta";
+import { RespuestaPac } from './../../Classes/RespuestaPac';
 import { Router } from "@angular/router";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { LoadingController } from "@ionic/angular";
@@ -212,6 +213,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
   mapLFSA = new Map();
 
   respuestas: Respuesta[];
+  respuestasPac: Object;
   respuestasGen: Object;
 
   async presentLoading() {
@@ -292,15 +294,17 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
     //let pregunta=this.contadorPreg % 2 == 0?'deseo':'gusto';
     //Sacar todas las respuestas
+    
     this.respuestas.push(
       new Respuesta(
         this.idImagen,
         this.idPregunta,
-        this.pregunta,
         this.value.toString()
       )
     );
+
     console.log("ESTO ES LA SALIDA: " + JSON.stringify(this.respuestas));
+
 
     this.sumaValue();
     
@@ -320,6 +324,13 @@ export class SingleTestPage implements OnInit, OnDestroy {
       console.log("El fin? meh oki ");
 
       this.calcularMedia();
+      this.respuestasPac = new RespuestaPac(
+        this.idUser,
+          this.fecha,
+          this.respuestas)
+      //const obj = Object.assign({},this.respuestas)
+      this.firebaseUpload.setRespuestasPaciente(this.respuestasPac);
+      //this.firebaseUpload.updateRespuestasPaciente(obj);
       //this.calcularSTD();
 
       //this.descanso= false;

@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { TranslateModule } from "@ngx-translate/core";
+import { FormulariosPage } from '../pages/formularios/formularios.page';
 
 
 @NgModule({
@@ -12,8 +14,12 @@ import { HomePageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    TranslateModule.forChild()
+
   ],
-  declarations: [HomePage]
+  //entryComponents: [FormulariosPage],
+  declarations: [HomePage
+    ]
 })
 export class HomePageModule {}
