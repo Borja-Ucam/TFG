@@ -6,6 +6,8 @@
 
 .my-modal {
     margin: 10% 5% 10% 5%;
+    height: fit-content;
+    width: auto;
 }
 
 fieldset {
@@ -26,6 +28,7 @@ label {
 
 .col {
     //align-content: center;
+    padding-top: 5px;
     text-align: center;
 }
 
@@ -49,4 +52,8 @@ label {
 
 .my-checkbox ion-checkbox {
     margin-right: 5px;
+}
+
+.item-paciente {
+    margin-top: 20px;
 }

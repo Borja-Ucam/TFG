@@ -108,8 +108,8 @@ export class HomePage {
   }
 
   openModuleTutorial() {
-    this.firebaseUpload.getPaciente();
-    //this.router.navigateByUrl("/tutorial");
+    //this.firebaseUpload.getPaciente();
+    this.router.navigateByUrl("/tutorial");
   }
 
   open() {
@@ -206,9 +206,29 @@ export class HomePage {
 
   exportToExcel() {
     let subscription: Subscription;
+    let subscriptionPaired: Subscription;
 
     this.allData = [];
-    //this.firebaseUpload.getAll();
+    this.allData1 = []
+
+    subscriptionPaired = this.firebaseUpload.getAllPaired().subscribe((reports1) => {
+      this.allData1 = reports1.filter((element)=> element.Paciente);
+      this.allData1.sort((a, b) =>
+        a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
+      );
+      
+      console.log("SORTED PAIRED: " + JSON.stringify(this.allData1));
+      let now = new Date();
+      this.fecha = formatDate(now, "dd/MM/yyyy", "es");
+      this.dataForExcel1 = [];
+
+      this.allData1.forEach((row: any) => {
+        this.dataForExcel1.push(Object.values(row));
+      });
+      console.log(this.dataForExcel1);
+      subscriptionPaired.unsubscribe();
+
+    });
     subscription = this.firebaseUpload.getAll().subscribe((reports) => {
       this.allData = reports.filter((element) => element.Paciente);
       console.log("ALLDATA: " + JSON.stringify(this.allData));
@@ -217,43 +237,19 @@ export class HomePage {
         a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
       );
       //tengo que hacer el sort de los datos alldata1
-      console.log("SORTED: " + JSON.stringify(this.allData));
+      console.log("SORTED SINGLE: " + JSON.stringify(this.allData));
 
       let now = new Date();
       this.fecha = formatDate(now, "dd/MM/yyyy", "es");
       this.dataForExcel = [];
-      this.allData1 = [
-        {
-          imagen: "Croquetas",
-          idPregunta: "preg1",
-          pregunta:
-            "¿Cuánto placer le daría comer algo de este alimento ahora?",
-          respuesta: "50",
-        },
-        {
-          imagen: "Fresas",
-          idPregunta: "preg2",
-          pregunta: "¿Cuánto le apetece comer de este alimento ahora?",
-          respuesta: "50",
-        },
-        {
-          imagen: "Tomate",
-          idPregunta: "preg1",
-          pregunta:
-            "¿Cuánto placer le daría comer algo de este alimento ahora?",
-          respuesta: "50",
-        },
-      ];
+      
 
       this.allData.forEach((row: any) => {
         this.dataForExcel.push(Object.values(row));
       });
-      console.log(this.dataForExcel);
-
-      this.allData1.forEach((row: any) => {
-        this.dataForExcel1.push(Object.values(row));
-      });
-      console.log(this.dataForExcel1);
+      console.log("DATA EXCEL : "+this.dataForExcel);
+      console.log("DATA EXCEL 1: "+this.dataForExcel1)
+     
 
       let reportData = {
         title: "Investigación UCAM Report",

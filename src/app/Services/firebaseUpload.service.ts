@@ -1,3 +1,4 @@
+import { RespuestaPaired } from 'src/app/Classes/RespuestaPaired';
 import { RespuestaRender } from "./../Classes/RespuestaRender";
 import { RespuestaPac } from "./../Classes/RespuestaPac";
 import { Injectable } from "@angular/core";
@@ -66,22 +67,82 @@ export class FirebaseUploadService {
 
   setRespuestasPaciente(data) {
     this.idUser = sessionStorage.getItem("idUser");
-    console.log("1 METEMOS: " + JSON.stringify(data));
+    //console.log("1 METEMOS: " + JSON.stringify(data));
 
     return this.db
       .collection("Ucam-Reports-Pacientes")
       .doc(this.idUser)
       .set(JSON.parse(JSON.stringify(data)));
   }
+  
   updateRespuestasPaciente(data) {
     this.idUser = sessionStorage.getItem("idUser");
-    console.log("2 METEMOS: " + JSON.stringify(data));
+    //console.log("2 METEMOS: " + JSON.stringify(data));
 
     return this.db
       .collection("Ucam-Reports-Pacientes")
       .doc(this.idUser)
       .update(JSON.parse(JSON.stringify(data)));
   }
+  setRespuestasPaired(data) {
+    this.idUser = sessionStorage.getItem("idUser");
+    console.log("1 METEMOS: " + JSON.stringify(data));
+    console.log("asdfasdfasdfsdfa");
+
+    return this.db
+      .collection("Ucam-Reports-Paired")
+      .doc(this.idUser)
+      .set(JSON.parse(JSON.stringify(data)));
+  }
+
+  getAllPaired() {
+    
+    return this.db
+      .collection("Ucam-Reports-Paired")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as reports;
+            data.Paciente == a.payload.doc.id;
+
+          
+            //console.log("RESPONSES ID:" + JSON.stringify(data));
+            const objeto = this.renderDataPaired(data);
+            console.log("NUEVO DATA PAIRED:" + JSON.stringify(objeto));
+
+            return objeto;
+          });
+        })
+      );
+  }
+  renderDataPaired(data){
+    const objetoRespuesta = new RespuestaPaired(
+      data.Paciente,
+      data.Fecha,
+      data.TiempoMedioRespuesta,
+      
+      data.CantidadTipoHFSA,
+      data.TiempoMedioHFSA,
+      data.FrecuenciaHFSA,
+
+      data.CantidadTipoHFSW,
+      data.TiempoMedioHFSW,
+      data.FrecuenciaHFSW,
+
+      data.CantidadTipoLFSA,
+      data.TiempoMedioLFSA,
+      data.FrecuenciaLFSA,
+
+      data.CantidadTipoLFSW,
+      data.TiempoMedioLFSW,
+      data.FrecuenciaLFSW
+    );
+
+    
+    return objetoRespuesta;
+  }
+
   getAll() {
     //let imagenes: food[] = new Array();
     //this.objeto = new Object();

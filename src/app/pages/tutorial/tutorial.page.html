@@ -5,32 +5,38 @@
 </ion-header>
 
 <ion-content class="justifycontent aligncenter">
-
-  <div >
-    <div >
+  <div *ngIf="!next && !nextTutorial">
+    <div>
       <!--CONTENEDOR PREGUNTA Y FOTO-->
-      <div class="question-container" id="question-container" *ngIf="showQuestion">
+      <div
+        class="question-container"
+        id="question-container"
+        *ngIf="showQuestion"
+      >
         <ion-text id="question-ion" class="ion-text-center" [color]="color">
           <h1>{{pregunta}}</h1>
         </ion-text>
-        
 
         <div class="justifycontent">
           <img id="image" [src]="url" />
         </div>
-          <!--BARRA RANGO-->
-            <ion-range
-              id="range"
-              [(ngModel)]="value"
-              min="0"
-              max="100"
-              class="slider"
-              pin
-              color="primary"
-            >
-              <ion-text class="text-range" slot="start" size="big">No demasiado</ion-text>
-              <ion-text class="text-range" slot="end" size="big">Extremadamente</ion-text>
-            </ion-range>
+        <!--BARRA RANGO-->
+        <ion-range
+          id="range"
+          [(ngModel)]="value"
+          min="0"
+          max="100"
+          class="slider"
+          pin
+          color="primary"
+        >
+          <ion-text class="text-range" slot="start" size="big"
+            >No demasiado</ion-text
+          >
+          <ion-text class="text-range" slot="end" size="big"
+            >Extremadamente</ion-text
+          >
+        </ion-range>
       </div>
 
       <!--CONTROL BUTTONS-->
@@ -53,10 +59,97 @@
         >
       </div>
     </div>
-
-    
   </div>
 
- 
+  <div *ngIf="next&&!nextTutorial&&!fin">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle></ion-card-subtitle>
+        <ion-card-title>Fin Tutorial Single-Test</ion-card-title>
+      </ion-card-header>
 
+      <ion-card-content>
+        <ion-button
+          id="continue-btn"
+          class="btn"
+          color="primary"
+          (click)="tutorial()"
+          >Siguiente tutorial</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="nextTutorial&&!fin">
+    <div id="question-container justifycontent" [class]="nomostrar">
+      <!--INFORMACION-->
+
+      <div class="cambioPreg" id="text-container" *ngIf="showNext1">
+        <ion-text class="next-txt" color="secondary">
+          <h2>{{enunciado}}</h2>
+        </ion-text>
+
+        <ion-button
+          id="next-btn"
+          class="next-btn1 btn"
+          color="primary"
+          *ngIf="showButtonNext1"
+          (click)="loadingImages()"
+          >O
+        </ion-button>
+      </div>
+
+      <ion-grid *ngIf="showImagenes" class="imagenes" id="image-container"
+        ><ion-col>
+          <img
+            class="p"
+            (click)="nextQuestionLeft()"
+            (click)="startTimer()"
+            *ngIf="urli"
+            [src]="urli"
+          />
+        </ion-col>
+
+        <ion-col>
+          <img
+            class="p"
+            (click)="nextQuestionRight()"
+            (click)="startTimer()"
+            *ngIf="urld"
+            [src]="urld"
+          />
+        </ion-col>
+      </ion-grid>
+    </div>
+
+    <!--NEXT BUTTON-->
+    <div class="controls" *ngIf="hideButtonComenzar">
+      <ion-button
+        id="start-btnP"
+        class="start-btn btn"
+        color="primary"
+        (click)="presentLoading()"
+        >Comenzar</ion-button
+      >
+    </div>
+  </div>
+
+   <div *ngIf="fin">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle></ion-card-subtitle>
+        <ion-card-title>Fin de la practica</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-button
+          id="continue-btn"
+          class="btn"
+          color="primary"
+          (click)="finAll()"
+          >FIN DEL TODO</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,5 +1,5 @@
 <ion-content class="content" id="content">
-<div class="my-modal">
+  <div class="my-modal">
     <ion-fab (click)="cerrar()" horizontal="end" vertical="top" slot="fixed">
       <ion-fab-button color="danger">
         <ion-icon name="close-outline"></ion-icon>
@@ -8,54 +8,55 @@
 
     <h1 id="header_1" class="form-header" data-component="header">LFPQ</h1>
     <div id="subHeader_1" class="form-subHeader">
-      Por favor, antes de contestar a esta pregunta, lea con detenimiento la
-      información acerca de la privacidad y protección de datos de este estudio,
-      accesible desde el siguiente enlace:
+      {{"LFPQ"|translate}} Implicit
+      wanting and explicit liking are markers for trait binge eating. A
+      susceptible phenotype for overeating.
+      https://doi.org/10.1016/j.appet.2011.08.012
     </div>
 
     <h1 id="header_1" class="form-header" data-component="header">
       Ley de Protección de Datos (LOPD)
     </h1>
     <div id="subHeader_1" class="form-subHeader">
-      Aquí se pondrá toda la información sobre la LOPD.
+     {{"LOPD"|translate}}
     </div>
 
- <ion-item >
-      <ion-label >Paciente:</ion-label>
+    <ion-item class="item-paciente">
+      <ion-label>Paciente:</ion-label>
       <ion-input
         [(ngModel)]="idUser"
-        placeholder="Introduzca ID"
+        placeholder="Introduzca Usuario/Email"
         type="text"
       ></ion-input>
     </ion-item>
 
-<div float-left class="my-checkbox">
-<ion-checkbox [(ngModel)]="aceptado" name="terms">
-    </ion-checkbox>
-    <ion-label text-uppercase>He leido y acepto términos y condiciones</ion-label>
-    
-  </div>
-
-
-   
-
-    <pre>Valor de variable: {{idUser}}</pre>
+    <div float-left class="my-checkbox">
+      <ion-item>
+        <ion-checkbox id="terms-check" [(ngModel)]="aceptado" name="terms">
+        </ion-checkbox>
+        <ion-label for="terms-check" text-uppercase
+          >He leido y acepto términos y condiciones</ion-label
+        >
+      </ion-item>
+    </div>
 
     <div class="col text-center">
-
-      <button
+      <ion-button
         *ngIf="idUser"
         class="bt1"
+        color="primary"
         type="submit"
         value="Enviar"
         (click)="dismiss()"
       >
         Empezar
-      </button>
+      </ion-button>
     </div>
 
     <div class="footer">
-        <!--<ion-router-link class="link" color="medium" (click)="enlace()" >Términos y condiciones</ion-router-link>-->
-
+      <a class="link" color="medium" (click)="enlace()"
+        >Términos y condiciones</a
+      >
     </div>
-  </div></ion-content>
+  </div></ion-content
+>

@@ -1,4 +1,5 @@
 import { DatePipe, formatDate, registerLocaleData } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Component, LOCALE_ID, NgModule, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 
@@ -32,7 +33,7 @@ export class FormulariosPage implements OnInit {
 
   enlace() {
     window.open(
-      "https://drive.google.com/file/d/1R115VmbKofXSOw6fqMdTneMvo0bQpNx7/view?usp=sharing",
+      "https://drive.google.com/file/d/14CCZLDrZjQGu6XYOdaDkd_zUoRy8yXUE/view?usp=sharing",
       "_system"
     );
   }

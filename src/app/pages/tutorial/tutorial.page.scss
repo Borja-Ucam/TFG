@@ -1,0 +1,166 @@
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    --hue: var(--hue-neutral);
+    border: 1px solid hsl(var(--hue), 100%, 30%);
+    background-color: hsl(var(--hue), 100%, 50%);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+.btn.correct {
+    --hue: var(--hue-correct);
+    color: black;
+}
+
+.btn.wrong {
+    --hue: var(--hue-wrong);
+}
+
+.start-btn,
+.next-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.next-btn {
+    margin-top: 3%;
+}
+
+.start-btn {
+    margin-top: 20%
+}
+
+.controls {
+    padding-top: 0%;
+    //margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-container {
+    width: 40%;
+    margin: auto;
+    padding: 1%;
+    margin-top: 1%;
+    display: block;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.justifycontent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-range {
+    --bar-height: 4px;
+    --knob-size: 30px;
+    opacity: 0.8;
+    border: 1px solid rgb(82, 82, 82);
+    border-radius: 20px;
+    //--height: 100%;
+}
+
+ion-range:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+.text-range {
+    font: icon;
+    //font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.cambioPreg {
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top: 40%;
+    //align-items: center;
+}
+
+.next-txt {
+    margin-top: 0;
+    //margin-bottom: auto;
+    position: relative;
+    text-align: center;
+    //vertical-align: text-top;
+}
+
+ion-col {
+    padding: 100px
+}
+
+.imagenes .btn {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    //position: absolute;
+    top: 50%;
+    //position: relative;
+    border: 3px solid green;
+}
+
+.hide {
+    display: none;
+}
+
+.p {
+    max-width: 100%;
+    width: 420px;
+    height: auto;
+    //display: block;
+    margin-left: auto;
+    margin-right: auto;
+    //margin-top: 10%;
+    //border: 1px solid #ddd;
+}
+
+.imagenes {
+    width: auto;
+    height: auto;
+    position: relative;
+    top: 50%;
+    // margin-top: 10%;
+    //border: 1px solid #999;
+    margin: 7% 0 0 0;
+    //padding: 2%;
+}
+
+.start-btn1,
+.next-btn1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: auto;
+    margin-bottom: auto;
+    //top: 50%;
+    position: relative;
+    top: 40%;
+    align-content: center;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.aligncenter {
+    text-align: center;
+    position: relative;
+}

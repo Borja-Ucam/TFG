@@ -32,11 +32,17 @@ export class ExcelService {
     worksheet.mergeCells("C1", "G6");
     let titleRow = worksheet.getCell("C1");
     titleRow.value = title;
+    titleRow.fill = {
+      type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "004379" },
+        bgColor: { argb: "" },
+    }
     titleRow.font = {
       name: "Calibri",
       size: 24,
       bold: true,
-      color: { argb: "004379" },
+      color: { argb: "EDAB00" },
     };
     titleRow.alignment = { vertical: "middle", horizontal: "center" };
     //Add Row and formatting W2
@@ -160,22 +166,17 @@ export class ExcelService {
 
     // Adding Data with Conditional Formatting W2
     data1.forEach((d) => {
-      let row1 = worksheet1.addRow(d);
+      let row1 = worksheet1.addRow(d);/*
       row1.eachCell(function (cell, colNumber) {
-        if (cell.value < 50.0) {
+        
           row1.getCell(colNumber).fill = {
             type: "pattern",
             pattern: "solid",
             fgColor: { argb: "FF7171" },
           };
-        } else if (cell.value > 50.0) {
-          row1.getCell(colNumber).fill = {
-            type: "pattern",
-            pattern: "solid",
-            fgColor: { argb: "A3FFA3" },
-          };
-        }
-      });
+         
+        
+      });*/
 
       /*
     let sales = row.getCell(4);
@@ -203,48 +204,7 @@ export class ExcelService {
       column.width = 18
     })
 
-    //Worksheet width W1
-    /*
-    worksheet.getColumn(1).width = 18;
-    worksheet.getColumn(2).width = 18;
-    worksheet.getColumn(3).width = 18;
-    worksheet.getColumn(4).width = 15;
-    worksheet.getColumn(5).width = 18;
-    worksheet.getColumn(6).width = 15;
-    worksheet.getColumn(7).width = 18;
-    worksheet.getColumn(8).width = 15;
-    worksheet.getColumn(9).width = 18;
-    worksheet.getColumn(10).width = 15;
-    worksheet.getColumn(11).width = 18;
-    worksheet.getColumn(12).width = 15;
-    worksheet.getColumn(13).width = 18;
-    worksheet.getColumn(14).width = 15;
-    worksheet.getColumn(15).width = 18;
-    worksheet.getColumn(16).width = 15;
-    worksheet.getColumn(17).width = 18;
-    worksheet.getColumn(18).width = 15;
-*/
-/*
-    //Worksheet width W2
-    worksheet1.getColumn(1).width = 18;
-    worksheet1.getColumn(2).width = 18;
-    worksheet1.getColumn(3).width = 18;
-    worksheet1.getColumn(4).width = 15;
-    worksheet1.getColumn(5).width = 18;
-    worksheet1.getColumn(6).width = 15;
-    worksheet1.getColumn(7).width = 18;
-    worksheet1.getColumn(8).width = 15;
-    worksheet1.getColumn(9).width = 18;
-    worksheet1.getColumn(10).width = 15;
-    worksheet1.getColumn(11).width = 18;
-    worksheet1.getColumn(12).width = 15;
-    worksheet1.getColumn(13).width = 18;
-    worksheet1.getColumn(14).width = 15;
-    worksheet1.getColumn(15).width = 18;
-    worksheet1.getColumn(16).width = 15;
-    worksheet1.getColumn(17).width = 18;
-    worksheet1.getColumn(18).width = 15;
-*/
+   
     worksheet.addRow([]);
     worksheet1.addRow([]);
 
