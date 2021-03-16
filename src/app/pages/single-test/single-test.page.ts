@@ -1,7 +1,7 @@
-import { FirebaseUploadService } from './../../Services/firebaseUpload.service';
+import { FirebaseUploadService } from "./../../Services/firebaseUpload.service";
 import { food } from "./../../Services/images.service";
 import { Respuesta } from "./../../Classes/Respuesta";
-import { RespuestaPac } from './../../Classes/RespuestaPac';
+import { RespuestaPac } from "./../../Classes/RespuestaPac";
 import { Router } from "@angular/router";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { LoadingController } from "@ionic/angular";
@@ -23,7 +23,7 @@ import { ImagesService, image } from "../../Services/images.service";
 import { identifierModuleUrl } from "@angular/compiler";
 import { RespuestaGeneral } from "src/app/Classes/RespuestaGeneral";
 import * as math from "mathjs";
-
+import { TranslateService } from "@ngx-translate/core";
 
 @NgModule({
   imports: [FormsModule],
@@ -78,10 +78,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
     this.sumaDeseoHFSW = new Array();
     this.sumaDeseoLFSA = new Array();
     this.sumaDeseoLFSW = new Array();
-
   }
   ngOnDestroy(): void {
-    //throw new Error('Method not implemented.');
     console.log("Saliendo...");
   }
 
@@ -90,12 +88,9 @@ export class SingleTestPage implements OnInit, OnDestroy {
       this.preguntasArr = pregunta;
     });
 
-    //USUARIO QUE VIENE DEL MODAL DE INICIOOOOO
     this.idUser = sessionStorage.getItem("idUser");
-    console.log("USUARIO DEL ID JEJEJE: "+this.idUser);
 
     this.fecha = sessionStorage.getItem("date");
-    console.log("Fecha session: "+this.fecha);
 
     if (sessionStorage.getItem("imageArrHFSA")) {
       this.imageArrHFSA = JSON.parse(sessionStorage.getItem("imageArrHFSA"));
@@ -105,7 +100,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
     } else {
       this.imagenes.getImageHFSA().subscribe((food) => {
         this.imageArrHFSA = food.filter((element) => element.available);
-        console.log("hfsa: " + JSON.stringify(this.imageArrHFSA));
       });
     }
 
@@ -149,19 +143,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
   url: string = "";
   tipo: string = "";
 
-
-  //CALCULOS NUEVOS
-  /*
-  sumaGustoHFSA: number = 0;
-  sumaGustoHFSW: number = 0;
-  sumaGustoLFSA: number = 0;
-  sumaGustoLFSW: number = 0;
-
-  sumaDeseoHFSA: number = 0;
-  sumaDeseoHFSW: number = 0;
-  sumaDeseoLFSA: number = 0;
-  sumaDeseoLFSW: number = 0;
-*/
   //media
   mediaGustoHFSA: number = 0;
   mediaGustoHFSW: number = 0;
@@ -183,7 +164,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
   stdDeseoHFSW: number = 0;
   stdDeseoLFSA: number = 0;
   stdDeseoLFSW: number = 0;
-
 
   //CALCULOS ANTES
   sumaGusto: number = 0;
@@ -225,17 +205,13 @@ export class SingleTestPage implements OnInit, OnDestroy {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log("Loading dismissed!");
 
     //llamada a funcion que empieza el test onclick()
     this.startTest();
   }
 
   startTest() {
-    console.log("Test started!");
     this.respuestas = new Array();
-
-    //console.log(JSON.stringify(this.preguntasArr[this.contadorPreg].text))
 
     //añadir pregunta al html
 
@@ -246,30 +222,12 @@ export class SingleTestPage implements OnInit, OnDestroy {
       Math.random() * Object.keys(this.imageArrHFSA).length
     );
     this.mapHFSA.set(this.imageArrHFSA[random], this.imageArrHFSA[random]);
-    console.log(
-      //JSON.stringify("QUE HAY DENTRO: " + this.imageArrHFSA[random].url)
-    );
-    
-    
 
     this.url = this.imageArrHFSA[random].url;
     this.idImagen = this.imageArrHFSA[random].id;
     this.tipo = this.imageArrHFSA[random].tipo;
-    //this.imageArrHFSA['imagen'+random]=null;
-    //this.contadorHFSA++;
 
-    //FUNCION IMAGEN DE ANTES
-    /*
-    //añadir imagen al html
-    let random:number = Math.floor((Math.random()*(Object.keys(this.imageArrHFSA).length-1)))+1;
-    this.mapHFSA.set(this.imageArrHFSA['imagen'+random],this.imageArrHFSA['imagen'+random]);
-    //console.log(JSON.stringify('aaaaaaa: '+this.selectedHFSA))
-    this.url = this.imageArrHFSA['imagen'+random];
-    //this.imageArrHFSA['imagen'+random]=null;
-    //this.contadorHFSA++;
-*/
     if (this.showButton == true) {
-      //console.log("entra 1");
       this.color = "danger";
 
       this.hideButtonComenzar = false;
@@ -278,11 +236,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
       return (this.showButton = false);
     } else {
-      //console.log("entra 2");
       this.hideButton = false;
       this.hideButtonComenzar = true;
-
-      //this.showQuestion = true;
 
       return (this.showButton = true);
     }
@@ -292,25 +247,15 @@ export class SingleTestPage implements OnInit, OnDestroy {
     this.idPregunta = this.preguntasArr[this.contadorPreg % 2].id;
     this.contadorPreg++;
 
-    //let pregunta=this.contadorPreg % 2 == 0?'deseo':'gusto';
     //Sacar todas las respuestas
-    
+
     this.respuestas.push(
-      new Respuesta(
-        this.idImagen,
-        this.idPregunta,
-        this.value.toString()
-      )
+      new Respuesta(this.idImagen, this.idPregunta, this.value.toString())
     );
 
-    console.log("ESTO ES LA SALIDA: " + JSON.stringify(this.respuestas));
-
-
     this.sumaValue();
-    
 
     if (this.contadorPreg == 16) {
-      console.log("quieres parar loco?");
       this.mapHFSA = new Map();
       this.mapLFSW = new Map();
       this.mapHFSW = new Map();
@@ -319,42 +264,25 @@ export class SingleTestPage implements OnInit, OnDestroy {
       this.descanso = true;
     }
 
-    console.log("CONTADOR ANTES BREAK: " + this.contadorPreg);
     if (this.contadorPreg == 32) {
-      console.log("El fin? meh oki ");
-
       this.calcularMedia();
       this.respuestasPac = new RespuestaPac(
         this.idUser,
-          this.fecha,
-          this.respuestas)
-      //const obj = Object.assign({},this.respuestas)
+        this.fecha,
+        this.respuestas
+      );
       this.firebaseUpload.setRespuestasPaciente(this.respuestasPac);
-      //this.firebaseUpload.updateRespuestasPaciente(obj);
-      //this.calcularSTD();
 
-      //this.descanso= false;
       this.fin = true;
-      //console.log("fin: "+ this.fin)
       return;
     }
-    //LOGS DE LOS MAPS
-    //console.log("MAPHFSA"+JSON.stringify(this.mapHFSA.get(this.imageArrHFSA[0])))
-    //console.log("MAPHFSA"+JSON.stringify(this.mapHFSA.get(this.imageArrHFSA[1])))
-    //console.log("MAPHFSA"+JSON.stringify(this.mapHFSA.get(this.imageArrHFSA[2])))
 
     switch (this.contadorPreg % 4) {
       case 0:
-        console.log("holaacase 0");
-
         //preguntas
         this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
 
-        //console.log(JSON.stringify(this.imageArrLFSA))
-        //console.log(JSON.stringify(this.imageArrLFSW))
-
         //imagen
-        console.log("contadorPREGG case 0: " + this.contadorPreg);
         if (this.contadorPreg < 16) {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSA).length
@@ -363,9 +291,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrHFSA).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapHFSA.set(
             this.imageArrHFSA[random],
             this.imageArrHFSA[random]
@@ -373,8 +299,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrHFSA[random].url;
           this.idImagen = this.imageArrHFSA[random].id;
           this.tipo = this.imageArrHFSA[random].tipo;
-
-
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSA).length
@@ -383,9 +307,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrLFSW).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapLFSW.set(
             this.imageArrLFSW[random],
             this.imageArrLFSW[random]
@@ -393,17 +315,13 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrLFSW[random].url;
           this.idImagen = this.imageArrLFSW[random].id;
           this.tipo = this.imageArrLFSW[random].tipo;
-
         }
 
         break;
 
       case 1:
-        console.log("holacase1");
-
         //preguntas
         this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
-        console.log("contadorPREGG case 1: " + this.contadorPreg);
 
         //imagen
         if (this.contadorPreg < 16) {
@@ -414,9 +332,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrLFSW).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapLFSW.set(
             this.imageArrLFSW[random],
             this.imageArrLFSW[random]
@@ -424,7 +340,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrLFSW[random].url;
           this.idImagen = this.imageArrLFSW[random].id;
           this.tipo = this.imageArrLFSW[random].tipo;
-
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSA).length
@@ -433,9 +348,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrHFSA).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapHFSA.set(
             this.imageArrHFSA[random],
             this.imageArrHFSA[random]
@@ -443,15 +356,12 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrHFSA[random].url;
           this.idImagen = this.imageArrHFSA[random].id;
           this.tipo = this.imageArrHFSA[random].tipo;
-
         }
         break;
 
       case 2:
-        console.log("holacase2");
         this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
 
-        console.log("contadorPREGG case 2: " + this.contadorPreg);
         if (this.contadorPreg < 16) {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrLFSA).length
@@ -460,9 +370,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrLFSA).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapLFSA.set(
             this.imageArrLFSA[random],
             this.imageArrLFSA[random]
@@ -470,7 +378,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrLFSA[random].url;
           this.idImagen = this.imageArrLFSA[random].id;
           this.tipo = this.imageArrLFSA[random].tipo;
-
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSW).length
@@ -479,9 +386,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrHFSW).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapHFSW.set(
             this.imageArrHFSW[random],
             this.imageArrHFSW[random]
@@ -489,15 +394,12 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrHFSW[random].url;
           this.idImagen = this.imageArrHFSW[random].id;
           this.tipo = this.imageArrHFSW[random].tipo;
-
         }
         break;
 
       case 3:
-        console.log("holacase3");
         this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
 
-        console.log("contadorPREGG case 2: " + this.contadorPreg);
         if (this.contadorPreg < 16) {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrHFSW).length
@@ -506,9 +408,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrHFSW).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapHFSW.set(
             this.imageArrHFSW[random],
             this.imageArrHFSW[random]
@@ -516,7 +416,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrHFSW[random].url;
           this.idImagen = this.imageArrHFSW[random].id;
           this.tipo = this.imageArrHFSW[random].tipo;
-
         } else {
           let random: number = Math.floor(
             Math.random() * Object.keys(this.imageArrLFSA).length
@@ -525,9 +424,7 @@ export class SingleTestPage implements OnInit, OnDestroy {
             random = Math.floor(
               Math.random() * Object.keys(this.imageArrLFSA).length
             );
-            console.log("calculando randommm...." + random);
           }
-          console.log("FUERA randommm...." + random);
           this.mapLFSA.set(
             this.imageArrLFSA[random],
             this.imageArrLFSA[random]
@@ -535,7 +432,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
           this.url = this.imageArrLFSA[random].url;
           this.idImagen = this.imageArrLFSA[random].id;
           this.tipo = this.imageArrLFSA[random].tipo;
-
         }
         break;
 
@@ -545,93 +441,62 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
     if (this.changeQuestion == 0) {
       this.color = "secondary";
-      console.log(this.value);
 
       this.changeQuestion = 1;
     } else {
       this.color = "danger";
-      console.log(this.value);
 
       this.changeQuestion = 0;
-    } //end else
-
+    }
 
     this.value = 50;
   }
 
-
-  sumaValue(){
-
-    if (this.idPregunta == "preg1" && this.tipo == "HFSA") {
+  sumaValue() {
+    if (this.idPregunta == "Gusto" && this.tipo == "HFSA") {
       //gusto
       this.sumaGustoHFSA.push(this.value);
-      //this.sumaGustoHFSA += this.value;
-      //console.log("SUMA GUSTO: " + this.sumaGustoHFSA);
-      console.log("ARRAY SUMA GUSTO: " + this.sumaGustoHFSA);
-
-    } else if(this.idPregunta == "preg2" && this.tipo == "HFSA"){
+    } else if (this.idPregunta == "Deseo" && this.tipo == "HFSA") {
       //deseo
       this.sumaDeseoHFSA.push(this.value);
-
-      //this.sumaDeseoHFSA += this.value;
-      //this.sumaDeseo += this.value;
-      //console.log("SUMA DESEO: " + this.sumaDeseoHFSA);
     }
 
-    if (this.idPregunta == "preg1" && this.tipo == "HFSW") {
+    if (this.idPregunta == "Gusto" && this.tipo == "HFSW") {
       //gusto
       this.sumaGustoHFSW.push(this.value);
-      //console.log("SUMA GUSTO: " + this.sumaGustoHFSW);
-    } else if(this.idPregunta == "preg2" && this.tipo == "HFSW"){
+    } else if (this.idPregunta == "Deseo" && this.tipo == "HFSW") {
       //deseo
       this.sumaDeseoHFSW.push(this.value);
-      //this.sumaDeseoHFSW += this.value;
-      //this.sumaDeseo += this.value;
-      //console.log("SUMA DESEO: " + this.sumaDeseoHFSW);
     }
 
-    if (this.idPregunta == "preg1" && this.tipo == "LFSA") {
+    if (this.idPregunta == "Gusto" && this.tipo == "LFSA") {
       //gusto
       this.sumaGustoLFSA.push(this.value);
-      //this.sumaGustoLFSA += this.value;
-      //console.log("SUMA GUSTO: " + this.sumaGustoLFSA);
-    } else if(this.idPregunta == "preg2" && this.tipo == "LFSA"){
+    } else if (this.idPregunta == "Deseo" && this.tipo == "LFSA") {
       //deseo
       this.sumaDeseoLFSA.push(this.value);
-      //this.sumaDeseoLFSA += this.value;
-      //this.sumaDeseo += this.value;
-      //console.log("SUMA DESEO: " + this.sumaDeseoLFSA);
     }
 
-    if (this.idPregunta == "preg1" && this.tipo == "LFSW") {
+    if (this.idPregunta == "Gusto" && this.tipo == "LFSW") {
       //gusto
       this.sumaGustoLFSW.push(this.value);
-      //this.sumaGustoLFSW += this.value;
-      //console.log("SUMA GUSTO: " + this.sumaGustoLFSW);
-    } else if(this.idPregunta == "preg2" && this.tipo == "LFSW"){
+    } else if (this.idPregunta == "Deseo" && this.tipo == "LFSW") {
       //deseo
       this.sumaDeseoLFSW.push(this.value);
-      //this.sumaDeseoLFSW += this.value;
-      //this.sumaDeseo += this.value;
-      //console.log("SUMA DESEO: " + this.sumaDeseoLFSW);
     }
-
   }
 
-
   calcularMedia() {
-    
-      this.mediaGustoHFSA = math.mean(this.sumaGustoHFSA);
-      this.mediaGustoHFSW = math.mean(this.sumaGustoHFSW);
-      this.mediaGustoLFSA = math.mean(this.sumaGustoLFSA);
-      this.mediaGustoLFSW = math.mean(this.sumaGustoLFSW);
-  
-      this.mediaDeseoHFSA = math.mean(this.sumaDeseoHFSA);
-      this.mediaDeseoHFSW = math.mean(this.sumaDeseoHFSW);
-      this.mediaDeseoLFSA = math.mean(this.sumaDeseoLFSA);
-      this.mediaDeseoLFSW = math.mean(this.sumaDeseoLFSW);
-      this.calcularSTD();
+    this.mediaGustoHFSA = math.mean(this.sumaGustoHFSA);
+    this.mediaGustoHFSW = math.mean(this.sumaGustoHFSW);
+    this.mediaGustoLFSA = math.mean(this.sumaGustoLFSA);
+    this.mediaGustoLFSW = math.mean(this.sumaGustoLFSW);
 
+    this.mediaDeseoHFSA = math.mean(this.sumaDeseoHFSA);
+    this.mediaDeseoHFSW = math.mean(this.sumaDeseoHFSW);
+    this.mediaDeseoLFSA = math.mean(this.sumaDeseoLFSA);
+    this.mediaDeseoLFSW = math.mean(this.sumaDeseoLFSW);
+    this.calcularSTD();
 
     this.respuestasGen = new RespuestaGeneral(
       this.idUser,
@@ -648,7 +513,6 @@ export class SingleTestPage implements OnInit, OnDestroy {
       this.mediaGustoLFSW.toFixed(2).toString(),
       this.stdGustoLFSW.toFixed(2).toString(),
 
-
       this.mediaDeseoHFSA.toFixed(2).toString(),
       this.stdDeseoHFSA.toFixed(2).toString(),
 
@@ -660,50 +524,12 @@ export class SingleTestPage implements OnInit, OnDestroy {
 
       this.mediaDeseoLFSW.toFixed(2).toString(),
       this.stdDeseoLFSW.toFixed(2).toString()
-      );
-
-    //Sacar media respuesta
-    /*this.respuestasGen.push(
-      new RespuestaGeneral(
-        this.idUser,
-        this.fecha,
-        this.mediaGustoHFSA.toFixed(2).toString(),
-        this.stdGustoHFSA.toFixed(2).toString(),
-
-        this.mediaGustoHFSW.toFixed(2).toString(),
-        this.stdGustoHFSW.toFixed(2).toString(),
-
-        this.mediaGustoLFSA.toFixed(2).toString(),
-        this.stdGustoLFSA.toFixed(2).toString(),
-
-        this.mediaGustoLFSW.toFixed(2).toString(),
-        this.stdGustoLFSW.toFixed(2).toString(),
-
-
-        this.mediaDeseoHFSA.toFixed(2).toString(),
-        this.stdDeseoHFSA.toFixed(2).toString(),
-
-        this.mediaDeseoHFSW.toFixed(2).toString(),
-        this.stdDeseoHFSW.toFixed(2).toString(),
-
-        this.mediaDeseoLFSA.toFixed(2).toString(),
-        this.stdDeseoLFSA.toFixed(2).toString(),
-
-        this.mediaDeseoLFSW.toFixed(2).toString(),
-        this.stdDeseoLFSW.toFixed(2).toString(),
-
-
-      )
-    );*/
-    this.firebaseUpload.setRespuestas(this.respuestasGen);
-    //this.firebaseUpload.getRespuestas();
-    console.log(
-      "ESTO ES LA SALIDA GENERAL 2.0: " + JSON.stringify(this.respuestasGen)
     );
+
+    this.firebaseUpload.setRespuestas(this.respuestasGen);
   }
 
   calcularSTD() {
-
     this.stdGustoHFSA = math.std(this.sumaGustoHFSA);
     this.stdGustoHFSW = math.std(this.sumaGustoHFSW);
     this.stdGustoLFSA = math.std(this.sumaGustoLFSA);
@@ -719,8 +545,12 @@ export class SingleTestPage implements OnInit, OnDestroy {
     this.descanso = false;
     //this.startTest();
   }
-
+  nextTest() {
+    this.router.navigateByUrl("/pages/paired-test");
+  }
+  /*
   salir() {
+
     if (this.checkClose) {
       this.router.navigateByUrl("home");
       sessionStorage.clear();
@@ -738,4 +568,5 @@ export class SingleTestPage implements OnInit, OnDestroy {
   save() {
     this.checkClose = true;
   }
+  */
 }

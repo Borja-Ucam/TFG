@@ -15,17 +15,17 @@
     </div>
 
     <h1 id="header_1" class="form-header" data-component="header">
-      Ley de Protección de Datos (LOPD)
+      {{"LOPD2"|translate}}
     </h1>
     <div id="subHeader_1" class="form-subHeader">
      {{"LOPD"|translate}}
     </div>
 
     <ion-item class="item-paciente">
-      <ion-label>Paciente:</ion-label>
+      <ion-label>{{"PACIENTE"|translate}}</ion-label>
       <ion-input
         [(ngModel)]="idUser"
-        placeholder="Introduzca Usuario/Email"
+        placeholder="User"
         type="text"
       ></ion-input>
     </ion-item>
@@ -35,7 +35,7 @@
         <ion-checkbox id="terms-check" [(ngModel)]="aceptado" name="terms">
         </ion-checkbox>
         <ion-label for="terms-check" text-uppercase
-          >He leido y acepto términos y condiciones</ion-label
+          >{{"ACCEPTCONDITIONS"|translate}}</ion-label
         >
       </ion-item>
     </div>
@@ -49,13 +49,13 @@
         value="Enviar"
         (click)="dismiss()"
       >
-        Empezar
+        {{"ACCEPT"|translate}}
       </ion-button>
     </div>
 
     <div class="footer">
       <a class="link" color="medium" (click)="enlace()"
-        >Términos y condiciones</a
+        >{{"TERMS"|translate}}</a
       >
     </div>
   </div></ion-content

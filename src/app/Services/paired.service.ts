@@ -21,7 +21,6 @@ export class PairedService {
   nonsumaLFSA: number = 0;
   nonsumaLFSW: number = 0;
 
-
   public sumatiempoHFSA: any[] = [];
   public sumatiempoHFSW: any[] = [];
   public sumatiempoLFSA: any[] = [];
@@ -31,7 +30,6 @@ export class PairedService {
   tiempoHFSW: string = "";
   tiempoLFSA: string = "";
   tiempoLFSW: string = "";
-  //sumaTotal: string;
 
   tiempoFreqHFSA: string = "";
   tiempoFreqHFSW: string = "";
@@ -46,12 +44,10 @@ export class PairedService {
         return "0";
       } else {
         this.tiempoFreqHFSA = math.sum(tiempo);
-        //console.log("TIEMPO MEDIO HFSA: "+this.tiempoHFSA)
         return this.tiempoFreqHFSA;
       }
     }
     if (tipo == "HFSW") {
-      //console.log("TIEMPO MEDIO HFSw: "+this.tiempoHFSW)
       if (tiempo == "") {
         return "0";
       } else {
@@ -87,12 +83,10 @@ export class PairedService {
         return "0";
       } else {
         this.tiempoHFSA = math.mean(tiempo);
-        //console.log("TIEMPO MEDIO HFSA: "+this.tiempoHFSA)
         return this.tiempoHFSA;
       }
     }
     if (tipo == "HFSW") {
-      //console.log("TIEMPO MEDIO HFSw: "+this.tiempoHFSW)
       if (tiempo == "") {
         return "0";
       } else {
@@ -123,7 +117,6 @@ export class PairedService {
 
   //funciona
   cantidad(tipo) {
-    //console.log("DENTRO SERVICE: "+tipo)
     if (tipo == "HFSA") {
       this.sumaHFSA++;
       return String(this.sumaHFSA);
@@ -144,7 +137,6 @@ export class PairedService {
 
   //nonchoice suma
   nonChoiceCantidad(tipo) {
-    //console.log("DENTRO SERVICE: "+tipo)
     if (tipo == "HFSA") {
       this.nonsumaHFSA++;
       return String(this.nonsumaHFSA);
@@ -166,7 +158,6 @@ export class PairedService {
   calculateTiempoMedio(tiempoIzq, tiempoDer) {
     this.sumaTotal = math.sum(tiempoIzq) + math.sum(tiempoDer);
     this.tiempoMedio = String(this.sumaTotal / 96);
-    //console.log("TIEMPO MEDIO: " + this.tiempoMedio);
     return this.tiempoMedio;
   }
 }

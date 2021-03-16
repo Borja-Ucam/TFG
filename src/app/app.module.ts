@@ -23,12 +23,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { IonicSelectableModule } from 'ionic-selectable';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 export function httpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
+  
   declarations: [	AppComponent,
     FormulariosPage,
     ConfiguracionPage
@@ -46,6 +48,7 @@ export function httpLoaderFactory(http: HttpClient) {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     HttpClientModule,
+    IonicSelectableModule,
     
     TranslateModule.forRoot({
       loader: {
@@ -58,6 +61,7 @@ export function httpLoaderFactory(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PreguntasService, ImagesService, AuthService
   ],

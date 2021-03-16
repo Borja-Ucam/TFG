@@ -1,3 +1,113 @@
+.outer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.row1 {
+    height: 50%;
+    //background: -moz-linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    //background: -webkit-linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    //background: linear-gradient(45deg, #004379 0%, #0070cc 100%);
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+}
+
+.card {
+    height: 100%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    //text-align: center;
+}
+
+ion-item {
+    height: auto;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-col {
+    //background-color: #f7f7f7;
+    //border: solid 1px #ddd;
+    //padding: 10px;
+    margin: 10px 10px 10px 10px;
+}
+
+.row2 {
+    padding: 10px;
+    height: 50%;
+    //background: -moz-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    //background: -webkit-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    //background: linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    border-radius: 5px;
+    //-webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    //-moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    //box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+}
+
+.row3 {
+    padding: 10px;
+    height: 50%;
+    width: fit-content;
+    //background: -moz-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    //background: -webkit-linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+    //background: linear-gradient(45deg, #ffd900 0%, #EDAB00 100%);
+}
+
+.download-button {}
+
+.btn-registrar {
+    position: relative;
+    float: right;
+    //font-size: 32px;
+    margin-top: 1%;
+    margin-right: 2%;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    --hue: var(--hue-neutral);
+    border: 1px solid hsl(var(--hue), 100%, 30%);
+    background-color: hsl(var(--hue), 100%, 50%);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: black;
+}
+
+.btn.correct {
+    --hue: var(--hue-correct);
+    color: black;
+}
+
+.titles {
+    height: auto;
+    width: auto;
+    position: relative;
+    text-align: center;
+    vertical-align: text-top;
+    margin-top: 100px;
+}
+
+.footer {
+    //position: relative;
+    bottom: 10px;
+}
+
 .inner-adjust {
     padding: 0 20px;
 }

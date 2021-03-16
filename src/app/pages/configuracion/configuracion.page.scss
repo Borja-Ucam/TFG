@@ -1,6 +1,20 @@
 .bt1 {
-    padding: 6px;
+    //padding: 6px;
     border-radius: 10px;
-    width: 20.33%;
+    //width: 20.33%;
     cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    //top: 50%;
+}
+
+.controls {
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: 5px;
+    padding-top: 0%;
+    //margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

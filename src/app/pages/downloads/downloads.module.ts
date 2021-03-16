@@ -1,3 +1,4 @@
+import { IonicSelectableModule } from 'ionic-selectable';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import { DownloadsPage } from './downloads.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    DownloadsPageRoutingModule
+    DownloadsPageRoutingModule,
+    IonicSelectableModule
   ],
   declarations: [DownloadsPage]
 })

@@ -1,14 +1,10 @@
-import { RespuestaPaired } from 'src/app/Classes/RespuestaPaired';
-import { RespuestaRender } from "./../Classes/RespuestaRender";
-import { RespuestaPac } from "./../Classes/RespuestaPac";
+import { RespuestaPaired } from "src/app/Classes/RespuestaPaired";
 import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
   DocumentData,
   QuerySnapshot,
 } from "@angular/fire/firestore";
-import { sort } from "mathjs";
-import { Interface } from "readline";
 import { map } from "rxjs/operators";
 import { RespuestaGeneral } from "src/app/Classes/RespuestaGeneral";
 import { Respuesta } from "../Classes/Respuesta";
@@ -51,8 +47,6 @@ export interface reportsPaciente {
 })
 export class FirebaseUploadService {
   idUser: string = null;
-  //objeto: Object;
-  //respuestasGen: Object;
 
   constructor(private db: AngularFirestore) {}
 
@@ -67,17 +61,15 @@ export class FirebaseUploadService {
 
   setRespuestasPaciente(data) {
     this.idUser = sessionStorage.getItem("idUser");
-    //console.log("1 METEMOS: " + JSON.stringify(data));
 
     return this.db
       .collection("Ucam-Reports-Pacientes")
       .doc(this.idUser)
       .set(JSON.parse(JSON.stringify(data)));
   }
-  
+
   updateRespuestasPaciente(data) {
     this.idUser = sessionStorage.getItem("idUser");
-    //console.log("2 METEMOS: " + JSON.stringify(data));
 
     return this.db
       .collection("Ucam-Reports-Pacientes")
@@ -86,8 +78,6 @@ export class FirebaseUploadService {
   }
   setRespuestasPaired(data) {
     this.idUser = sessionStorage.getItem("idUser");
-    console.log("1 METEMOS: " + JSON.stringify(data));
-    console.log("asdfasdfasdfsdfa");
 
     return this.db
       .collection("Ucam-Reports-Paired")
@@ -95,8 +85,23 @@ export class FirebaseUploadService {
       .set(JSON.parse(JSON.stringify(data)));
   }
 
+  async getPruebaPaciente() {
+    return this.db
+      .collection("Ucam-Reports-Pacientes")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as reports;
+            data.Paciente == a.payload.doc.id;
+
+            return data.Paciente;
+          });
+        })
+      );
+  }
+
   getAllPaired() {
-    
     return this.db
       .collection("Ucam-Reports-Paired")
       .snapshotChanges()
@@ -106,22 +111,19 @@ export class FirebaseUploadService {
             const data = a.payload.doc.data() as reports;
             data.Paciente == a.payload.doc.id;
 
-          
-            //console.log("RESPONSES ID:" + JSON.stringify(data));
             const objeto = this.renderDataPaired(data);
-            console.log("NUEVO DATA PAIRED:" + JSON.stringify(objeto));
 
             return objeto;
           });
         })
       );
   }
-  renderDataPaired(data){
+  renderDataPaired(data) {
     const objetoRespuesta = new RespuestaPaired(
       data.Paciente,
       data.Fecha,
       data.TiempoMedioRespuesta,
-      
+
       data.CantidadTipoHFSA,
       data.TiempoMedioHFSA,
       data.FrecuenciaHFSA,
@@ -139,13 +141,10 @@ export class FirebaseUploadService {
       data.FrecuenciaLFSW
     );
 
-    
     return objetoRespuesta;
   }
 
   getAll() {
-    //let imagenes: food[] = new Array();
-    //this.objeto = new Object();
     return this.db
       .collection("Ucam-Reports")
       .snapshotChanges()
@@ -155,20 +154,7 @@ export class FirebaseUploadService {
             const data = a.payload.doc.data() as reports;
             data.Paciente == a.payload.doc.id;
 
-            /*
-            let objetoRespuesta = new Respuesta(data.id,data.url);
-            console.log("ADaa: "+objetoRespuesta.id)
-            console.log("ADddd: "+objetoRespuesta.url)
-            */
-            //imagenes.push(data);
-            //console.log("asdfasdf"+JSON.stringify(imagenes));
-            console.log("RESPONSES ID:" + JSON.stringify(data));
-            //console.log("MEDIA GUSTO HFSA:" + JSON.stringify(data.mediaGustoHFSA));
             const objeto = this.renderData(data);
-            //objeto = this.renderData(data);
-            console.log("NUEVO DATA.IDDDDD:" + JSON.stringify(objeto));
-            //this.i++;
-            //return data;
 
             return objeto;
           });
@@ -177,32 +163,21 @@ export class FirebaseUploadService {
   }
   getPrueba() {}
 
-
-  
- async getPaciente(): Promise<any> {
+  async getPaciente(id): Promise<any> {
     let promise: Promise<any> = new Promise((resolve, reject) => {
-      var docRef = this.db
-        .collection("Ucam-Reports-Pacientes")
-        .doc("holafunciona");
+      var docRef = this.db.collection("Ucam-Reports-Pacientes").doc(id);
 
       docRef
         .get()
         .toPromise()
         .then((doc) => {
           if (doc.exists) {
-            console.log("Document data:", doc.data());
-            
-
             resolve(doc.data());
           } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
             reject();
           }
         })
-        .catch((error) => {
-          console.log("Error getting document:", error);
-        });
+        .catch((error) => {});
     });
     return promise;
   }
@@ -213,27 +188,7 @@ export class FirebaseUploadService {
       data.idPregunta,
       data.respuesta
     );
-    //console.log("RESPUESTAS : "+ JSON.stringify(data.respuestas[1]));
-    /* var res;
-    objetoRespuesta.respuestas.forEach((x)=>{
-      res.push(x);
-      console.log("1"+res)
 
-    });
-    console.log("2"+res)*/
-    // console.log("RESPUESTAS : "+ JSON.stringify(objetoRespuesta.respuestas[1]));
-    //console.log("RESPUESTAS : "+ JSON.stringify(objetoRespuesta.respuestas[2]));
-
-    /*
-    var objetoRespuestaPac;
-    data.respuestas.forEach((row:any) =>{
-      objetoRespuestaPac.push(Object.values(row))
-    })
-    
-
-    console.log("OBJETO RESPUESTAS : "+ JSON.stringify(objetoRespuestaPac));
-*/
-    //console.log("DATA.fecha : "+ JSON.stringify(data.Fecha));
     return objetoRespuesta;
     //data
   }
@@ -244,8 +199,6 @@ export class FirebaseUploadService {
       .toPromise()
       .then((querySnapshot: QuerySnapshot<DocumentData>) => {
         querySnapshot.forEach((doc: any) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log("WEWEWE: " + doc.id, " => ", doc.data());
           return doc.data;
         });
       });
@@ -280,9 +233,6 @@ export class FirebaseUploadService {
       data.stdDeseoLFSW
     );
 
-    //console.log("DATA objeto : "+ JSON.stringify(objetoRespuesta));
-
-    //console.log("DATA.fecha : "+ JSON.stringify(data.Fecha));
     return objetoRespuesta;
     //data
   }

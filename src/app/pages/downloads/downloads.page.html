@@ -1,41 +1,102 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Descargar</ion-title>
-   
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="authService.isLoggedIn">
-  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-    <div class="inner-adjust">
-      <div class="pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">User Profile</h1>
-      </div>
+  <span class="btn-registrar">
+    <ion-button
+      color="danger"
+      fill="solid"
+      expand="block"
+      routerLink="/sign-up"
+    >
+      Registrarse
+    </ion-button></span
+  >
+  <main role="main" class="outer">
+    <div class="inner">
       <!-- Show user data when logged in -->
       <div class="row" *ngIf="authService.userData as user">
         <div class="col-md-12">
           <div class="media">
-            <img
-              class="align-self-start mr-5 img-thumbnail rounded-circle"
-              alt="{{user.displayName}}"
-            />
             <div class="media-body">
-              <h1>
-                Hola:
-                <strong
-                  >{{(user.displayName) ? user.displayName : 'User'}}</strong
-                >
-              </h1>
+              <div class="titles">
+                <h1>Perfil Privado</h1>
 
-              <p>Email: <strong>{{user.email}}</strong></p>
-              <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
-              <ion-button (click)="exportToExcel()" color="primary"
-                >Descargar Informe General</ion-button
-              >
+                <h1>
+                  Hola:
+                  <strong
+                    >{{(user.displayName) ? user.displayName : 'User'}}</strong
+                  >
+                </h1>
+              </div>
+              <ion-grid>
+                <ion-row class="row1">
+                  <ion-col class="col">
+                    <ion-card class="card">
+                      <ion-card-header>
+                        <ion-card-title
+                          >Descargar informe general</ion-card-title
+                        >
+                        <ion-card-subtitle
+                          >Single/Paired test</ion-card-subtitle
+                        >
+                      </ion-card-header>
+                      <ion-card-content>
+                        <div class="footer">
+                          <ion-button
+                            id="download-btn"
+                            class="download-btn btn"
+                            color="primary"
+                            (click)="exportToExcel()"
+                            >Informe General</ion-button
+                          >
+                        </div>
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
 
-              <ion-button (click)="exportToExcelPaciente()" color="primary"
-                >Descargar Informe Paciente</ion-button
-              >
+                  <ion-col class="col">
+                    <ion-card class="card">
+                      <ion-card-header>
+                        <ion-card-title
+                          >Descargar informe Paciente</ion-card-title
+                        >
+                        <ion-card-subtitle>Single test</ion-card-subtitle>
+                      </ion-card-header>
+                      <ion-card-content>
+                        <ion-item>
+                          <ion-label>Seleccione el paciente</ion-label>
+                          <ionic-selectable
+                            [(ngModel)]="idSelected"
+                            (ngModelChange)="onSelectChange(idSelected)"
+                            [items]="ids"
+                            [canSearch]="true"
+                          >
+                            
+                            
+                          </ionic-selectable>
+                        </ion-item>
+                        <div class="footer">
+                          <ion-button
+                            id="download-btn"
+                            class="download-btn btn"
+                            color="primary"
+                            (click)="exportToExcelPaciente(idSelected)"
+                            >Informe Paciente</ion-button
+                          >
+                        </div>
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="controls">
+                  <ion-col class="row3"> </ion-col>
+                  <ion-col class="row3"> </ion-col>
+                </ion-row>
+              </ion-grid>
             </div>
           </div>
         </div>

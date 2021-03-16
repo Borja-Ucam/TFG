@@ -1,33 +1,37 @@
-import { ExcelPacienteService } from './../../Services/excelPaciente.service';
-import { forEach } from 'mathjs';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/Services/auth.service';
-import { ExcelService } from 'src/app/Services/excel.service';
-import { FirebaseUploadService } from 'src/app/Services/firebaseUpload.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ExcelPacienteService } from "./../../Services/excelPaciente.service";
+import { forEach } from "mathjs";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { formatDate } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ModalController, NavController } from "@ionic/angular";
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/Services/auth.service";
+import { ExcelService } from "src/app/Services/excel.service";
+import { FirebaseUploadService } from "src/app/Services/firebaseUpload.service";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { Respuesta } from "src/app/Classes/Respuesta";
+import { IonicSelectableModule } from "ionic-selectable";
 
 @Component({
-  selector: 'app-downloads',
-  templateUrl: './downloads.page.html',
-  styleUrls: ['./downloads.page.scss'],
-
-  
+  selector: "app-downloads",
+  templateUrl: "./downloads.page.html",
+  styleUrls: ["./downloads.page.scss"],
 })
 export class DownloadsPage implements OnInit {
-
   title = "angular-export-to-excel";
 
+  ids: any;
+  idSelected: String;
+
+  allDataPac: Respuesta[];
+
+  now1 = new Date();
   dataForExcel = [];
   dataForExcel1 = [];
 
-  allData = [];
-  allData1 = [];
-
+  allData: any = [];
+  allData1: any = [];
 
   public fecha: string = null;
 
@@ -39,49 +43,72 @@ export class DownloadsPage implements OnInit {
     public etePac: ExcelPacienteService,
     public firebaseUpload: FirebaseUploadService,
     public authService: AuthService,
-
+    public ionicSelectableModule: IonicSelectableModule
   ) {}
 
   ngOnInit() {
+    this.ids = [];
     this.fecha = sessionStorage.getItem("date");
+    this.idSelected = "";
+    this.getIdDoc();
   }
 
-
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log("prueba:"+JSON.stringify(localStorage.getItem('user')))
-    return (user !== null && user.emailVerified !== false) ? true : false;
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null && user.emailVerified !== false ? true : false;
+  }
+
+  async getIdDoc() {
+    let subscription: Subscription;
+
+    subscription = (await this.firebaseUpload.getPruebaPaciente()).subscribe(
+      (reports1) => {
+        this.ids = reports1;
+      }
+    );
+  }
+
+  onSelectChange(value) {
+    this.idSelected = value;
   }
 
   exportToExcel() {
-
     let subscription: Subscription;
-    
-    this.allData = [];
-    //this.firebaseUpload.getAll();
-    subscription = this.firebaseUpload.getAll().subscribe((reports) => {
+    let subscriptionPaired: Subscription;
 
+    this.allData = [];
+    this.allData1 = [];
+
+    subscriptionPaired = this.firebaseUpload
+      .getAllPaired()
+      .subscribe((reports1) => {
+        this.allData1 = reports1.filter((element) => element.Paciente);
+        this.allData1.sort((a, b) =>
+          a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
+        );
+
+        let now = new Date();
+        this.fecha = formatDate(now, "dd/MM/yyyy", "es");
+        this.dataForExcel1 = [];
+
+        this.allData1.forEach((row: any) => {
+          this.dataForExcel1.push(Object.values(row));
+        });
+        subscriptionPaired.unsubscribe();
+      });
+    subscription = this.firebaseUpload.getAll().subscribe((reports) => {
       this.allData = reports.filter((element) => element.Paciente);
-      console.log("ALLDATA: " + JSON.stringify(this.allData));
-      //const sorted = this.allData.sort(function(o){ return o.Fecha});
-      this.allData.sort((a,b) => (a.Fecha < b.Fecha) ? 1 : ((b.Fecha < a.Fecha) ? -1 : 0))
-      //tengo que hacer el sort de los datos alldata1
-      console.log("SORTED: " + JSON.stringify(this.allData));
+      this.allData.sort((a, b) =>
+        a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
+      );
 
       let now = new Date();
       this.fecha = formatDate(now, "dd/MM/yyyy", "es");
       this.dataForExcel = [];
-      this.allData1 = [{"imagen":"Croquetas","idPregunta":"preg1","pregunta":"¿Cuánto placer le daría comer algo de este alimento ahora?","respuesta":"50"},{"imagen":"Fresas","idPregunta":"preg2","pregunta":"¿Cuánto le apetece comer de este alimento ahora?","respuesta":"50"},{"imagen":"Tomate","idPregunta":"preg1","pregunta":"¿Cuánto placer le daría comer algo de este alimento ahora?","respuesta":"50"}];
 
       this.allData.forEach((row: any) => {
         this.dataForExcel.push(Object.values(row));
       });
-      console.log(this.dataForExcel)
-
-      this.allData1.forEach((row: any) => {
-        this.dataForExcel1.push(Object.values(row));
-      });
-      console.log(this.dataForExcel1)
 
       let reportData = {
         title: "Investigación UCAM Report",
@@ -94,51 +121,44 @@ export class DownloadsPage implements OnInit {
         headers1: Object.keys(this.allData1[0]),
       };
       //uncomment this
-      this.ete.exportExcel(reportData,reportData1);
+      this.ete.exportExcel(reportData, reportData1);
       subscription.unsubscribe();
     });
-    
   }
 
-  exportToExcelPaciente(){
-    
+  exportToExcelPaciente(id) {
     let subscription: Subscription;
-    
-    this.allData = [];
-    //this.firebaseUpload.getAll();
-    subscription = this.firebaseUpload.getAll().subscribe((reports) => {
 
-      this.allData = reports.filter((element) => element.Paciente);
-      console.log("ALLDATA: " + JSON.stringify(this.allData));
-      //const sorted = this.allData.sort(function(o){ return o.Fecha});
-      /*this.allData.sort((a,b) => (a.Fecha < b.Fecha) ? 1 : ((b.Fecha < a.Fecha) ? -1 : 0))
-      //tengo que hacer el sort de los datos alldata1
-      console.log("SORTED: " + JSON.stringify(this.allData));
-      */
-      let now = new Date();
-      var Paciente = this.allData.length ? this.allData[0].Paciente : null;
-      this.fecha = formatDate(now, "dd/MM/yyyy", "es");
+    this.allDataPac = new Array();
+    this.fecha = "";
+    this.firebaseUpload.getPaciente(id).then((reports) => {
+      for (let index = 0; index < reports.respuestas.length; index++) {
+        const respuesta = reports.respuestas[index];
+        this.allDataPac.push(
+          new Respuesta(
+            respuesta.imagen,
+            respuesta.idPregunta,
+            respuesta.respuesta
+          )
+        );
+      }
+
+      this.fecha = reports.Fecha;
+      let Paciente = reports.Paciente;
       this.dataForExcel = [];
-      //this.allData1 = [{"imagen":"Croquetas","idPregunta":"preg1","pregunta":"¿Cuánto placer le daría comer algo de este alimento ahora?","respuesta":"50"},{"imagen":"Fresas","idPregunta":"preg2","pregunta":"¿Cuánto le apetece comer de este alimento ahora?","respuesta":"50"},{"imagen":"Tomate","idPregunta":"preg1","pregunta":"¿Cuánto placer le daría comer algo de este alimento ahora?","respuesta":"50"}];
 
-
-      this.allData.forEach((row: any) => {
+      this.allDataPac.forEach((row: any) => {
         this.dataForExcel.push(Object.values(row));
       });
-      console.log(this.dataForExcel)
 
-     
       let reportData = {
-        title: "Investigación UCAM Report - " +Paciente,
+        title: "Investigación UCAM Report - " + Paciente,
         data: this.dataForExcel,
-        headers: Object.keys(this.allData[0]),
+        headers: Object.keys(this.allDataPac[0]),
+        fecha: this.fecha,
       };
-     
-      //uncomment this
-      this.etePac.exportExcelPaciente(reportData);
-      subscription.unsubscribe();
-    });
-    
-  }
 
+      this.etePac.exportExcelPaciente(reportData);
+    });
+  }
 }

@@ -3,13 +3,14 @@
 <!--toolbar-->
 <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-menu-button autoHide="false"></ion-menu-button>
+    <!--menu<ion-menu-button autoHide="false"></ion-menu-button>-->
       <ion-button (click)="navigateBack()"> <ion-icon name="arrow-back-outline"></ion-icon> </ion-button>
 
   </ion-buttons>
   
 
-  <ion-label [routerLink]="['/home']">Borja Sepulveda - TFG</ion-label>
+
+  <ion-label [routerLink]="['/home']">Inicio</ion-label>
 
   <ion-buttons slot="secondary">
       <ion-button (click)="closeSession()"> <ion-icon name="close-outline"></ion-icon> </ion-button>
@@ -24,6 +25,7 @@
 
 
 <!--menu-->
+<!--
 <ion-menu side="start" contentId="first">
    <ion-header>
         <ion-toolbar color="primary">
@@ -39,6 +41,6 @@
         </ion-list>
     </ion-content>
 </ion-menu>
-
+-->
   <ion-router-outlet id="first"></ion-router-outlet>
 </ion-app>

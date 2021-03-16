@@ -20,14 +20,14 @@ export class TutorialPage implements OnInit {
     public loadingController: LoadingController,
     public preguntas: PreguntasService,
     public imagenes: ImagesService,
-    private router: Router,
-
+    private router: Router
   ) {
     this.imageArrHFSW = new Array();
     this.imageArrLFSA = new Array();
-
   }
-
+  ngOnDestroy(): void {
+    console.log("Saliendo...");
+  }
   ngOnInit() {
     this.preguntas.getText().subscribe((pregunta) => {
       this.preguntasArr = pregunta;
@@ -55,18 +55,18 @@ export class TutorialPage implements OnInit {
       });
     }
   }
+  
   showButton = true;
   showQuestion = false;
   hideButton = false;
   hideButtonComenzar = true;
   changeQuestion: number = 0;
-  next:Boolean= false;
-  nextTutorial:Boolean= false;
-  paired:Boolean= false;
-  showNext:Boolean= true;
-  fin:Boolean= false;
+  next: Boolean = false;
+  nextTutorial: Boolean = false;
+  paired: Boolean = false;
+  showNext: Boolean = true;
+  fin: Boolean = false;
 
-  
   enunciado = "";
   nomostrar = "hide";
   urli = "";
@@ -89,21 +89,16 @@ export class TutorialPage implements OnInit {
 
   startTest() {
     this.pregunta = this.preguntasArr[this.contadorPreg].text;
-    //console.log(JSON.stringify(this.preguntasArr[this.contadorPreg].text))
 
     //añadir imagen al html
     let random: number = Math.floor(
       Math.random() * Object.keys(this.imageArrHFSW).length
     );
     this.mapHFSW.set(this.imageArrHFSW[random], this.imageArrHFSW[random]);
-    
 
     this.url = this.imageArrHFSW[random].url;
-    //this.idImagen = this.imageArrHFSW[random].id;
-    //this.tipo = this.imageArrHFSW[random].tipo;
 
     if (this.showButton == true) {
-      //console.log("entra 1");
       this.color = "danger";
 
       this.hideButtonComenzar = false;
@@ -112,28 +107,21 @@ export class TutorialPage implements OnInit {
 
       return (this.showButton = false);
     } else {
-      //console.log("entra 2");
       this.hideButton = false;
       this.hideButtonComenzar = true;
-
-      //this.showQuestion = true;
 
       return (this.showButton = true);
     }
   }
 
   nextQuestion() {
-
     this.contadorPreg++;
 
-
-
     if (this.contadorPreg == 4) {
-      console.log("quieres parar loco?");
       this.mapHFSW = new Map();
       this.next = true;
     }
-    
+
     this.pregunta = this.preguntasArr[this.contadorPreg % 2].text;
 
     //añadir imagen al html
@@ -144,45 +132,32 @@ export class TutorialPage implements OnInit {
       random = Math.floor(
         Math.random() * Object.keys(this.imageArrHFSW).length
       );
-      console.log("calculando randommm...." + random);
     }
     this.mapHFSW.set(this.imageArrHFSW[random], this.imageArrHFSW[random]);
-    
-      this.url = this.imageArrHFSW[random].url;
 
+    this.url = this.imageArrHFSW[random].url;
 
+    if (this.changeQuestion == 0) {
+      this.color = "secondary";
 
-      if (this.changeQuestion == 0) {
-        this.color = "secondary";
-        console.log(this.value);
-  
-        this.changeQuestion = 1;
-      } else {
-        this.color = "danger";
-        console.log(this.value);
-  
-        this.changeQuestion = 0;
-      } //end else
-  
+      this.changeQuestion = 1;
+    } else {
+      this.color = "danger";
+
+      this.changeQuestion = 0;
+    }
+
     this.value = 50;
   }
 
-  tutorial(){
-    //this.next = false;
+  tutorial() {
     this.nextTutorial = true;
 
-      console.log("Test Comenzado!");
-  
-      this.nomostrar = "block";
-      this.enunciado = "Elija el alimento que  desee más comer ahora";
-  
-      this.hideButtonComenzar = false;
-      this.showButtonNext1 = true;
-  
-      //this.calculateImage();
-  
-      //console.time("t1");
-    
+    this.nomostrar = "block";
+    this.enunciado = "Elija el alimento que  desee más comer ahora";
+
+    this.hideButtonComenzar = false;
+    this.showButtonNext1 = true;
   }
 
   nextPaired() {
@@ -190,25 +165,21 @@ export class TutorialPage implements OnInit {
     this.showNext1 = false;
     this.calculateImage();
 
-
     this.contadorPreg1++;
   }
 
   nextQuestionLeft() {
     this.showImagenes = false;
     this.showNext1 = true;
-    //console.log("hola izquierda");
 
-    
     if (this.contadorPreg1 == 3) {
       this.fin = true;
       this.nextTutorial = false;
-      this.next = false;
+      this.showImagenes = false;
+      this.showNext1 = false;
 
       return;
-      //this.descanso = true;
-    } 
-    
+    }
   }
   nextQuestionRight() {
     this.showImagenes = false;
@@ -216,20 +187,17 @@ export class TutorialPage implements OnInit {
     if (this.contadorPreg1 == 3) {
       this.fin = true;
       this.nextTutorial = false;
-return;
-    
+      this.showImagenes = false;
+      this.showNext1 = false;
+
+      return;
+    }
   }
-}
 
   calculateImage() {
-  
-
     let randomImagenIzq: number;
     let randomImagenDer: number;
 
-    //let urli: string;
-    //let urld: string;
-    //randomGrupoIzq = Math.floor(Math.random() * 4);
     randomImagenIzq = Math.floor(Math.random() * 4);
     randomImagenDer = Math.floor(Math.random() * 4);
 
@@ -238,8 +206,6 @@ return;
 
     this.urli = this.imageArrHFSW[randomImagenIzq].url;
     this.urld = this.imageArrLFSA[randomImagenDer].url;
-    console.log("AQUI"+this.urli)
-
   }
 
   async loadingImages() {
@@ -252,17 +218,14 @@ return;
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log("Loading dismissed!");
     this.nextPaired();
   }
 
-
-  pairedOpen(){
+  pairedOpen() {
     this.paired = true;
   }
 
-  finAll(){
+  finAll() {
     this.router.navigateByUrl("");
-
   }
 }

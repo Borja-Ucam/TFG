@@ -92,7 +92,6 @@ export class PairedTestPage implements OnInit {
     private router: Router,
     public pairedService: PairedService,
     public firebaseUpload: FirebaseUploadService
-
   ) {
     this.imageArrHFSA = new Array();
     this.imageArrHFSW = new Array();
@@ -108,10 +107,8 @@ export class PairedTestPage implements OnInit {
   ngOnInit() {
     //USUARIO QUE VIENE DEL MODAL DE INICIOOOOO
     this.idUser = sessionStorage.getItem("idUser");
-    console.log("USUARIO DEL ID JEJEJE: " + this.idUser);
 
     this.fecha = sessionStorage.getItem("date");
-    console.log("Fecha session: " + this.fecha);
 
     //inicializar datos
     this.tiempoMedio = "";
@@ -152,7 +149,6 @@ export class PairedTestPage implements OnInit {
     } else {
       this.imagenes.getImageHFSA().subscribe((food) => {
         this.imageArrHFSA = food.filter((element) => element.available);
-        console.log("hfsa: " + JSON.stringify(this.imageArrHFSA));
       });
     }
 
@@ -202,10 +198,14 @@ export class PairedTestPage implements OnInit {
 
   //plantillas
   descanso: boolean = false;
+  descanso1: boolean = false;
+
+  descanso2: boolean = false;
+
   fin: boolean = false;
   checkClose: boolean = false;
 
-  contadorPreg: number = 0;
+  contadorPreg: number = 63;
 
   //mediciones de tiempo
   //before=null;
@@ -230,25 +230,19 @@ export class PairedTestPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log("Loading dismissed!");
 
     //llamada a funcion que empieza el test onclick()
     this.startTest();
   }
 
   startTest() {
-    console.log("Test Comenzado!");
-
     this.nomostrar = "block";
     this.enunciado = "Elija el alimento que  desee más comer ahora";
 
     this.hideButtonComenzar = false;
     this.showButtonNext = true;
 
-    //this.calculateImage();
-
     this.startTimer();
-    //console.time("t1");
   }
 
   startTimer() {
@@ -259,17 +253,11 @@ export class PairedTestPage implements OnInit {
   nextQuestionLeft() {
     this.showImagenes = false;
     this.showNext = true;
-    console.log("hola izquierda");
 
     this.after = Date.now();
     this.tiempo = (this.after - this.before2) / 1000;
-    console.log(this.tiempo);
-    //console.log((this.after-this.before)/1000);
-    console.log("tiempooo IZQQQ: " + this.tiempo);
-    this.tiempoIzq.push(this.tiempo);
-    //this.nonChoiceDer.push(this.tiempo);
 
-    console.log("TIPO izq: " + this.tipoi);
+    this.tiempoIzq.push(this.tiempo);
 
     if (this.tipoi == "HFSA") {
       this.CantidadTipoHFSA = this.pairedService.cantidad(this.tipoi);
@@ -306,7 +294,7 @@ export class PairedTestPage implements OnInit {
       this.nonChoiceLFSW = this.pairedService.nonChoiceCantidad(this.tipod);
       this.nonChoiceTimeLFSW.push(this.tiempo);
     }
-
+    /*
     console.log(
       "TIEMPO ELEGIDO: " +
         this.tiempoTipoHFSA +
@@ -356,26 +344,16 @@ export class PairedTestPage implements OnInit {
         " cantidad NO ELEGIDO: " +
         this.nonChoiceLFSW
     );
-
+*/
     if (this.contadorPreg == 32) {
-      console.log("quieres parar loco?");
-      /* this.mapHFSA = new Map();
-      this.mapLFSW = new Map();
-      this.mapHFSW = new Map();
-      this.mapLFSA = new Map();*/
-
       this.descanso = true;
+      this.descanso1 = true;
+      this.descanso2 = false;
     } else if (this.contadorPreg == 64) {
-      console.log("quieres parar loco?");
-      /*this.mapHFSA = new Map();
-      this.mapLFSW = new Map();
-      this.mapHFSW = new Map();
-      this.mapLFSA = new Map();*/
-
       this.descanso = true;
+      this.descanso1 = false;
+      this.descanso2 = true;
     } else if (this.contadorPreg == 96) {
-      console.log("Fin");
-      //console.log("TIEMPO IZQ "+ this.tiempoIzq+ "tiempo der"+this.tiempoDer)
       this.tiempoMedio = this.pairedService.calculateTiempoMedio(
         this.tiempoIzq,
         this.tiempoDer
@@ -428,50 +406,28 @@ export class PairedTestPage implements OnInit {
         this.tiempoMedio *
         (1 / this.tiempoMedioLFSW - 1 / this.totalNonTimeLFSW);
 
-      console.log("Tiempo medio: " + this.tiempoMedio);
+      this.respuestas = new RespuestaPaired(
+        this.idUser,
+        this.fecha,
+        Number(this.tiempoMedio).toFixed(2),
+        this.CantidadTipoHFSA,
+        Number(this.tiempoMedioHFSA).toFixed(2),
+        Number(this.freqHFSA).toFixed(2),
 
-      console.log("freq veces hfsa: " + this.freqHFSA);
-      console.log("freq veces hfsw: " + this.freqHFSW);
-      console.log("freq veces lfsa: " + this.freqLFSA);
-      console.log("freq veces lfsw: " + this.freqLFSW);
+        this.CantidadTipoHFSW,
+        Number(this.tiempoMedioHFSW).toFixed(2),
+        Number(this.freqHFSW).toFixed(2),
 
-      console.log("Cantidad veces hfsa: " + this.CantidadTipoHFSA);
-      console.log("Cantidad veces hfsw: " + this.CantidadTipoHFSW);
-      console.log("Cantidad veces lfsa: " + this.CantidadTipoLFSA);
-      console.log("Cantidad veces lfsw: " + this.CantidadTipoLFSW);
-      /*
-      console.log("TIEMPO MEDIO PAIRED: "+this.tiempoMedio)
-      console.log("TIEMPO MEDIO hfsa: "+this.tiempoMedioHFSA)
-      console.log("TIEMPO MEDIO hfsw: "+this.tiempoMedioHFSW)
-      console.log("TIEMPO MEDIO lfsa: "+this.tiempoMedioLFSA)
-      console.log("TIEMPO MEDIO lfsw: "+this.tiempoMedioLFSW)
-*/
-this.respuestas = new RespuestaPaired(
-  this.idUser,
-  this.fecha,
-  Number(this.tiempoMedio).toFixed(2),
-  this.CantidadTipoHFSA,
-  Number(this.tiempoMedioHFSA).toFixed(2),
-  Number(this.freqHFSA).toFixed(2),
+        this.CantidadTipoLFSA,
+        Number(this.tiempoMedioLFSA).toFixed(2),
+        Number(this.freqLFSA).toFixed(2),
 
-  this.CantidadTipoHFSW,
-  Number(this.tiempoMedioHFSW).toFixed(2),
-  Number(this.freqHFSW).toFixed(2),
+        this.CantidadTipoLFSW,
+        Number(this.tiempoMedioLFSW).toFixed(2),
+        Number(this.freqLFSW).toFixed(2)
+      );
 
-  this.CantidadTipoLFSA,
-  Number(this.tiempoMedioLFSA).toFixed(2),
-  Number(this.freqLFSA).toFixed(2),
-
-  this.CantidadTipoLFSW,
-  Number(this.tiempoMedioLFSW).toFixed(2),
-  Number(this.freqLFSW).toFixed(2)
-
-
-  );
-
-//const obj = Object.assign({},this.respuestas)
-console.log("RESPUESTAS: ",this.respuestas)
-this.firebaseUpload.setRespuestasPaired(this.respuestas);
+      this.firebaseUpload.setRespuestasPaired(this.respuestas);
       this.fin = true;
       return;
       //fin
@@ -480,44 +436,29 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
   nextQuestionRight() {
     this.showImagenes = false;
     this.showNext = true;
-    console.log("hola derecha");
 
     this.after = Date.now();
     this.tiempo = (this.after - this.before2) / 1000;
-    console.log(this.tiempo);
-    console.log("tiempooo DERECC: " + this.tiempo);
     this.tiempoDer.push(this.tiempo);
-    //console.log("TIPO der: " + this.tipod);
 
     if (this.tipod == "HFSA") {
-      //console.log("entra hfsa")
       this.CantidadTipoHFSA = this.pairedService.cantidad(this.tipod);
       this.tiempoTipoHFSA.push(this.tiempo);
-
-      //console.log("HFSA: "+this.CantidadTipoHFSA)
     }
     if (this.tipod == "HFSW") {
-      //console.log("entra hfsw")
       this.CantidadTipoHFSW = this.pairedService.cantidad(this.tipod);
       this.tiempoTipoHFSW.push(this.tiempo);
-
-      //console.log("HFSW: "+this.CantidadTipoHFSW)
     }
     if (this.tipod == "LFSA") {
       this.CantidadTipoLFSA = this.pairedService.cantidad(this.tipod);
       this.tiempoTipoLFSA.push(this.tiempo);
-
-      //console.log("LFSA: "+this.CantidadTipoLFSA)
     }
     if (this.tipod == "LFSW") {
       this.CantidadTipoLFSW = this.pairedService.cantidad(this.tipod);
       this.tiempoTipoLFSW.push(this.tiempo);
-
-      //console.log("LFSW: "+this.CantidadTipoLFSW)
     }
 
     //non choice
-    console.log("SE METE: " + this.tipoi);
     if (this.tipoi == "HFSA") {
       this.nonChoiceHFSA = this.pairedService.nonChoiceCantidad(this.tipoi);
       this.nonChoiceTimeHFSA.push(this.tiempo);
@@ -535,66 +476,17 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
       this.nonChoiceTimeLFSW.push(this.tiempo);
     }
 
-    console.log(
-      "TIEMPO ELEGIDO: " +
-        this.tiempoTipoHFSA +
-        " TIEMPO NO ELEGIDO: " +
-        this.nonChoiceTimeHFSA
-    );
-    console.log(
-      "TIEMPO ELEGIDO: " +
-        this.tiempoTipoHFSW +
-        " TIEMPO NO ELEGIDO: " +
-        this.nonChoiceTimeHFSW
-    );
-    console.log(
-      "TIEMPO ELEGIDO: " +
-        this.tiempoTipoLFSA +
-        " TIEMPO NO ELEGIDO: " +
-        this.nonChoiceTimeLFSA
-    );
-    console.log(
-      "TIEMPO ELEGIDO: " +
-        this.tiempoTipoLFSW +
-        " TIEMPO NO ELEGIDO: " +
-        this.nonChoiceTimeLFSW
-    );
-
-    console.log(
-      "cantidad ELEGIDO: " +
-        this.CantidadTipoHFSA +
-        " cantidad NO ELEGIDO: " +
-        this.nonChoiceHFSA
-    );
-    console.log(
-      "cantidad ELEGIDO: " +
-        this.CantidadTipoHFSW +
-        " cantidad NO ELEGIDO: " +
-        this.nonChoiceHFSW
-    );
-    console.log(
-      "cantidad ELEGIDO: " +
-        this.CantidadTipoLFSA +
-        " cantidad NO ELEGIDO: " +
-        this.nonChoiceLFSA
-    );
-    console.log(
-      "cantidad ELEGIDO: " +
-        this.CantidadTipoLFSW +
-        " cantidad NO ELEGIDO: " +
-        this.nonChoiceLFSW
-    );
-
     if (this.contadorPreg == 32) {
-      console.log("quieres parar loco?");
-
       this.descanso = true;
+      this.descanso1 = true;
+      this.descanso2 = false;
+
     } else if (this.contadorPreg == 64) {
-      console.log("quieres parar loco?");
-
       this.descanso = true;
+      this.descanso1 = false;
+      this.descanso2 = true;
+
     } else if (this.contadorPreg == 96) {
-      console.log("Fin");
       this.tiempoMedio = this.pairedService.calculateTiempoMedio(
         this.tiempoIzq,
         this.tiempoDer
@@ -647,50 +539,27 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
         this.tiempoMedio *
         (1 / this.tiempoMedioLFSW - 1 / this.totalNonTimeLFSW);
 
-      console.log("Tiempo medio: " + this.tiempoMedio);
-
-      console.log("freq veces hfsa: " + this.freqHFSA);
-      console.log("freq veces hfsw: " + this.freqHFSW);
-      console.log("freq veces lfsa: " + this.freqLFSA);
-      console.log("freq veces lfsw: " + this.freqLFSW);
-
-      console.log("Cantidad veces hfsa: " + this.CantidadTipoHFSA);
-      console.log("Cantidad veces hfsw: " + this.CantidadTipoHFSW);
-      console.log("Cantidad veces lfsa: " + this.CantidadTipoLFSA);
-      console.log("Cantidad veces lfsw: " + this.CantidadTipoLFSW);
-      /*
-      console.log("TIEMPO MEDIO PAIRED: "+this.tiempoMedio)
-      console.log("TIEMPO MEDIO hfsa: "+this.tiempoMedioHFSA)
-      console.log("TIEMPO MEDIO hfsw: "+this.tiempoMedioHFSW)
-      console.log("TIEMPO MEDIO lfsa: "+this.tiempoMedioLFSA)
-      console.log("TIEMPO MEDIO lfsw: "+this.tiempoMedioLFSW)
-*/
-
       this.respuestas = new RespuestaPaired(
         this.idUser,
-  this.fecha,
-  Number(this.tiempoMedio).toFixed(2),
-  this.CantidadTipoHFSA,
-  Number(this.tiempoMedioHFSA).toFixed(2),
-  Number(this.freqHFSA).toFixed(2),
+        this.fecha,
+        Number(this.tiempoMedio).toFixed(2),
+        this.CantidadTipoHFSA,
+        Number(this.tiempoMedioHFSA).toFixed(2),
+        Number(this.freqHFSA).toFixed(2),
 
-  this.CantidadTipoHFSW,
-  Number(this.tiempoMedioHFSW).toFixed(2),
-  Number(this.freqHFSW).toFixed(2),
+        this.CantidadTipoHFSW,
+        Number(this.tiempoMedioHFSW).toFixed(2),
+        Number(this.freqHFSW).toFixed(2),
 
-  this.CantidadTipoLFSA,
-  Number(this.tiempoMedioLFSA).toFixed(2),
-  Number(this.freqLFSA).toFixed(2),
+        this.CantidadTipoLFSA,
+        Number(this.tiempoMedioLFSA).toFixed(2),
+        Number(this.freqLFSA).toFixed(2),
 
-  this.CantidadTipoLFSW,
-  Number(this.tiempoMedioLFSW).toFixed(2),
-  Number(this.freqLFSW).toFixed(2)
+        this.CantidadTipoLFSW,
+        Number(this.tiempoMedioLFSW).toFixed(2),
+        Number(this.freqLFSW).toFixed(2)
+      );
 
-
-        );
-
-      //const obj = Object.assign({},this.respuestas)
-      console.log("RESPUESTAS: "+this.respuestas)
       this.firebaseUpload.setRespuestasPaired(this.respuestas);
 
       this.fin = true;
@@ -704,8 +573,6 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
     this.showNext = false;
     this.calculateImage();
     this.startTimer();
-
-    console.log("CONTADOR PREGUNTA: " + this.contadorPreg);
 
     this.contadorPreg++;
   }
@@ -761,18 +628,13 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
       this.urld = "";
       this.tipoi = "";
       this.tipod = "";
-      //console.log("calculando random IZQUIERDA...." + randomGrupoIzq);
 
       randomGrupoDer = Math.floor(Math.random() * 4);
       randomImagenDer = Math.floor(Math.random() * 4);
-      //console.log("calculando random DERECHA...." + randomGrupoDer);
 
       while (randomGrupoDer == randomGrupoIzq) {
         randomGrupoDer = Math.floor(Math.random() * 4);
-
-        console.log("calculando random DENTRO DERECHA...." + randomGrupoDer);
       }
-      console.log("Random DENTRO DERECHA...." + randomGrupoDer);
 
       switch (randomGrupoIzq) {
         //HFSA
@@ -782,20 +644,12 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
         case 0: {
           urli = this.imageArrHFSA[randomImagenIzq].url;
           tipoi = this.imageArrHFSA[randomImagenIzq].tipo;
-          console.log(
-            "Array mostrado izq: " +
-              JSON.stringify(this.imageArrHFSA[randomImagenIzq].id)
-          );
+
           break;
         }
         case 1: {
           urli = this.imageArrHFSW[randomImagenIzq].url;
           tipoi = this.imageArrHFSW[randomImagenIzq].tipo;
-
-          console.log(
-            "Array mostrado izq: " +
-              JSON.stringify(this.imageArrHFSW[randomImagenIzq].id)
-          );
 
           break;
         }
@@ -803,21 +657,11 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
           urli = this.imageArrLFSA[randomImagenIzq].url;
           tipoi = this.imageArrLFSA[randomImagenIzq].tipo;
 
-          console.log(
-            "Array mostrado izq: " +
-              JSON.stringify(this.imageArrLFSA[randomImagenIzq].id)
-          );
-
           break;
         }
         case 3: {
           urli = this.imageArrLFSW[randomImagenIzq].url;
           tipoi = this.imageArrLFSW[randomImagenIzq].tipo;
-
-          console.log(
-            "Array mostrado izq: " +
-              JSON.stringify(this.imageArrLFSW[randomImagenIzq].id)
-          );
 
           break;
         }
@@ -828,20 +672,11 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
           urld = this.imageArrHFSA[randomImagenDer].url;
           tipod = this.imageArrHFSA[randomImagenDer].tipo;
 
-          console.log(
-            "Array mostrado der: " +
-              JSON.stringify(this.imageArrHFSA[randomImagenDer].id)
-          );
           break;
         }
         case 1: {
           urld = this.imageArrHFSW[randomImagenDer].url;
           tipod = this.imageArrHFSW[randomImagenDer].tipo;
-
-          console.log(
-            "Array mostrado der: " +
-              JSON.stringify(this.imageArrHFSW[randomImagenDer].id)
-          );
 
           break;
         }
@@ -849,21 +684,11 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
           urld = this.imageArrLFSA[randomImagenDer].url;
           tipod = this.imageArrLFSA[randomImagenDer].tipo;
 
-          console.log(
-            "Array mostrado der: " +
-              JSON.stringify(this.imageArrLFSA[randomImagenDer].id)
-          );
-
           break;
         }
         case 3: {
           urld = this.imageArrLFSW[randomImagenDer].url;
           tipod = this.imageArrLFSW[randomImagenDer].tipo;
-
-          console.log(
-            "Array mostrado der: " +
-              JSON.stringify(this.imageArrLFSW[randomImagenDer].id)
-          );
 
           break;
         }
@@ -874,19 +699,14 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
         this.respuestaMap.get(urld + urli) != undefined
       ) {
         recalculate = true;
-        console.log("rECALCULATE TRUE: ");
         continue;
       } else {
-        console.log("rECALCULATE fALSE: ");
-
         this.respuestaMap.set(urli + urld, 1);
         recalculate = false;
         this.urli = urli;
         this.urld = urld;
         this.tipoi = tipoi;
         this.tipod = tipod;
-        console.log("ADSFASDFASDF  " + this.tipoi);
-        console.log("ADSFASDFASDF  " + this.tipod);
 
         return;
       }
@@ -897,13 +717,12 @@ this.firebaseUpload.setRespuestasPaired(this.respuestas);
     const loading = await this.loadingController.create({
       cssClass: "my-custom-class",
       spinner: "dots",
-      duration: 2,
+      duration: 500,
       keyboardClose: false,
     });
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log("Loading dismissed!");
     this.next();
   }
 }

@@ -33,17 +33,14 @@ export class HomePage {
   dataForExcel1 = [];
   dataForExcel2 = [];
 
-  public paciente = [];
 
+  
   allData: any = [];
   allData1: any = [];
-  //allData2:any = [];
 
-  //prueba: Object;
   allDataPac: Respuesta[];
 
   public fecha: string = null;
-  //public activeLang= 'en';
 
   @ViewChild("mySelect") selectRef: IonSelect;
   showList = true;
@@ -65,32 +62,20 @@ export class HomePage {
   }
 
   cambioIdioma(selectedValue) {
-    console.log("llega esto: " + JSON.stringify(selectedValue));
     this.translate.use(selectedValue);
-    //this.translate.use('en');
   }
   openSelect() {
     this.selectRef.open();
   }
 
-  openTest() {
-    //boton para configurar random test
-  }
-
   async openModuleS() {
     this.checkPoliticies().then(
       (resultado) => {
-        console.log("AAAAresultado:  " + resultado);
         if (resultado) {
-          console.log("AAAAresultado:  ");
-
           this.router.navigateByUrl("/pages/single-test");
         }
       },
       (rejected) => {
-        console.log("AAAArejected:  " + rejected);
-
-        //this.navController.back();
         this.router.navigateByUrl("");
       }
     );
@@ -108,7 +93,6 @@ export class HomePage {
   }
 
   openModuleTutorial() {
-    //this.firebaseUpload.getPaciente();
     this.router.navigateByUrl("/tutorial");
   }
 
@@ -124,7 +108,7 @@ export class HomePage {
     const modal = await this.modalController.create({
       component: ConfiguracionPage,
     });
-    console.log("llega");
+    ("llega");
 
     await modal.present();
   }
@@ -138,10 +122,6 @@ export class HomePage {
       });
 
       modal.onDidDismiss().then((data) => {
-        console.log("AQUI EIASJEFIAS " + JSON.stringify(data));
-
-        console.log("RESULTADO " + JSON.stringify(data.data.resultado));
-
         if (data.data.resultado) {
           resolve(true);
           sessionStorage.setItem("accept", "OK");
@@ -160,15 +140,9 @@ export class HomePage {
       if (!sessionStorage.getItem("accept")) {
         this.presentModal().then(
           (resultado) => {
-            console.log("modal llega");
-
-            console.log("checkpoliticies  " + JSON.stringify(resultado));
-
             resolve(true);
           },
           (rejected) => {
-            console.log("rejected  ");
-
             reject(true);
           }
         );
@@ -177,79 +151,44 @@ export class HomePage {
 
     return resultado;
   }
-  //FUNCIONA BUENA
-  /*
-  exportToExcel() {
-    //this.firebaseUpload.getRespuestas().subscribe()
-      
-    this.firebaseUpload.getAll().subscribe((reports) => {
-      this.allData = reports;
-
-    console.log("ALLDATA: "+JSON.stringify(this.allData))
-    let now = new Date();
-    this.fecha = formatDate(now, "dd/MM/yyyy", 'es');
-
-    this.allData.forEach((row: any) => {
-      this.dataForExcel.push(Object.values(row))
-    })
-
-    let reportData = {
-      title: 'Investigación UCAM Report - '+this.fecha,
-      data: this.dataForExcel,
-      headers: Object.keys(this.allData[0])
-    }
-    this.ete.exportExcel(reportData);
-  });
-
-
-}*/
 
   exportToExcel() {
     let subscription: Subscription;
     let subscriptionPaired: Subscription;
 
     this.allData = [];
-    this.allData1 = []
+    this.allData1 = [];
 
-    subscriptionPaired = this.firebaseUpload.getAllPaired().subscribe((reports1) => {
-      this.allData1 = reports1.filter((element)=> element.Paciente);
-      this.allData1.sort((a, b) =>
-        a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
-      );
-      
-      console.log("SORTED PAIRED: " + JSON.stringify(this.allData1));
-      let now = new Date();
-      this.fecha = formatDate(now, "dd/MM/yyyy", "es");
-      this.dataForExcel1 = [];
+    subscriptionPaired = this.firebaseUpload
+      .getAllPaired()
+      .subscribe((reports1) => {
+        this.allData1 = reports1.filter((element) => element.Paciente);
+        this.allData1.sort((a, b) =>
+          a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
+        );
 
-      this.allData1.forEach((row: any) => {
-        this.dataForExcel1.push(Object.values(row));
+        let now = new Date();
+        this.fecha = formatDate(now, "dd/MM/yyyy", "es");
+        this.dataForExcel1 = [];
+
+        this.allData1.forEach((row: any) => {
+          this.dataForExcel1.push(Object.values(row));
+        });
+        subscriptionPaired.unsubscribe();
       });
-      console.log(this.dataForExcel1);
-      subscriptionPaired.unsubscribe();
-
-    });
     subscription = this.firebaseUpload.getAll().subscribe((reports) => {
       this.allData = reports.filter((element) => element.Paciente);
-      console.log("ALLDATA: " + JSON.stringify(this.allData));
-      //const sorted = this.allData.sort(function(o){ return o.Fecha});
       this.allData.sort((a, b) =>
         a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
       );
-      //tengo que hacer el sort de los datos alldata1
-      console.log("SORTED SINGLE: " + JSON.stringify(this.allData));
 
       let now = new Date();
       this.fecha = formatDate(now, "dd/MM/yyyy", "es");
       this.dataForExcel = [];
-      
 
       this.allData.forEach((row: any) => {
         this.dataForExcel.push(Object.values(row));
       });
-      console.log("DATA EXCEL : "+this.dataForExcel);
-      console.log("DATA EXCEL 1: "+this.dataForExcel1)
-     
 
       let reportData = {
         title: "Investigación UCAM Report",
@@ -267,17 +206,12 @@ export class HomePage {
     });
   }
 
-  exportToExcelPaciente() {
+  exportToExcelPaciente(id) {
     let subscription: Subscription;
 
     this.allDataPac = new Array();
 
-    this.firebaseUpload.getPaciente().then((reports) => {
-      /*console.log("fasdfasdfasdfasdfasdfasdfasd");
-      console.log(JSON.stringify(reports.respuestas));
-      console.log(reports.respuestas.length)
-*/
-
+    this.firebaseUpload.getPaciente(id).then((reports) => {
       for (let index = 0; index < reports.respuestas.length; index++) {
         const respuesta = reports.respuestas[index];
 
@@ -289,8 +223,6 @@ export class HomePage {
           )
         );
       }
-
-      //console.log("PRUEBAAAAAA: " ,JSON.stringify(this.allDataPac));
 
       let now = new Date();
       let Paciente = reports.Paciente;

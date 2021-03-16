@@ -42,7 +42,7 @@
           color="primary"
           *ngIf="hideButtonComenzar"
           (click)="presentLoading()"
-          >Comenzar</ion-button
+          >Comenzar Test</ion-button
         >
         <ion-button
           id="next-btn"
@@ -56,14 +56,14 @@
     </div>
 
     <ng-template #descansoPlantilla>
-      <ion-card>
+      <ion-card class="card">
         <ion-card-header>
           <ion-card-subtitle>Tomate tu tiempo</ion-card-subtitle>
-          <ion-card-title>Necesitas un descanso?</ion-card-title>
+          <ion-card-title>¿Necesitas un descanso?</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-          <ion-label>Default at 50%</ion-label>
+          <ion-label>50% realizado</ion-label>
 
           <ion-progress-bar value="0.5"></ion-progress-bar>
           <ion-button
@@ -80,29 +80,23 @@
 
  
   <div *ngIf="fin">
-    <ion-card>
+    <ion-card class="card">
       <ion-card-header>
         <ion-card-subtitle>LLama al tutor</ion-card-subtitle>
         <ion-card-title>Final del test</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-label>Final del test 100%</ion-label>
+        <ion-label>100% Completado</ion-label>
 
         <ion-progress-bar value="1"></ion-progress-bar>
-         <ion-button
-          id="continue-btn"
-          class="btn"
-          color="primary"
-          (click)="save()"
-          >Guardar</ion-button
-        >
+         
         <ion-button
           id="continue-btn"
           class="btn"
           color="primary"
-          (click)="salir()"
-          >Salir</ion-button>
+          (click)="nextTest()"
+          >Paired Test</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

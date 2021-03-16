@@ -13,7 +13,7 @@ export class ExcelService {
 
   public fecha: string = null;
 
-  exportExcel(excelData,excelData1) {
+  exportExcel(excelData, excelData1) {
     //Title, Header & Data
     const title = excelData.title;
     const header = excelData.headers;
@@ -34,10 +34,10 @@ export class ExcelService {
     titleRow.value = title;
     titleRow.fill = {
       type: "pattern",
-        pattern: "solid",
-        fgColor: { argb: "004379" },
-        bgColor: { argb: "" },
-    }
+      pattern: "solid",
+      fgColor: { argb: "004379" },
+      bgColor: { argb: "" },
+    };
     titleRow.font = {
       name: "Calibri",
       size: 24,
@@ -51,10 +51,10 @@ export class ExcelService {
     titleRow1.value = title1;
     titleRow1.fill = {
       type: "pattern",
-        pattern: "solid",
-        fgColor: { argb: "004379" },
-        bgColor: { argb: "" },
-    }
+      pattern: "solid",
+      fgColor: { argb: "004379" },
+      bgColor: { argb: "" },
+    };
     titleRow1.font = {
       name: "Calibri",
       size: 24,
@@ -101,10 +101,7 @@ export class ExcelService {
     worksheet.addImage(myLogoImage, "A1:B6");
 
     //Add Image W2
-    /*let myLogoImage1 = workbook.addImage({
-      base64: logo.imgBase64,
-      extension: "jpeg",
-    });*/
+
     worksheet1.mergeCells("A1:B6");
     worksheet1.addImage(myLogoImage, "A1:B6");
 
@@ -166,45 +163,16 @@ export class ExcelService {
 
     // Adding Data with Conditional Formatting W2
     data1.forEach((d) => {
-      let row1 = worksheet1.addRow(d);/*
-      row1.eachCell(function (cell, colNumber) {
-        
-          row1.getCell(colNumber).fill = {
-            type: "pattern",
-            pattern: "solid",
-            fgColor: { argb: "FF7171" },
-          };
-         
-        
-      });*/
-
-      /*
-    let sales = row.getCell(4);
-    let color = 'FF99FF99';
-    
-    if (+sales.value < 50.00) {
-      color = 'FF0000'
-    }else{
-      color = '0AFF1B'
-    }
-
-    sales.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: color }
-    }*/
+      let row1 = worksheet1.addRow(d);
     });
 
+    worksheet.columns.forEach((column) => {
+      column.width = 18;
+    });
+    worksheet1.columns.forEach((column) => {
+      column.width = 18;
+    });
 
-  
-    worksheet.columns.forEach(column =>{
-      column.width = 18
-    })
-    worksheet1.columns.forEach(column =>{
-      column.width = 18
-    })
-
-   
     worksheet.addRow([]);
     worksheet1.addRow([]);
 

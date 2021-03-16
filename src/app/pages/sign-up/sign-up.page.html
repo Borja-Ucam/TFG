@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="authService.isLoggedIn">
   <ion-grid class="grid1">
     <ion-row class="row1">
       <ion-col class="img-container">
@@ -31,8 +31,18 @@
               <ion-list>
                 <ion-item>
                   <ion-icon name="person" class="icon-login"></ion-icon>
+                  <ion-input
+                    name="name"
+                    type="text"
+                    #userName
+                    required
+                    placeholder="Nombre"
+                  ></ion-input>
+                </ion-item>
+                <br />
 
-                  
+                <ion-item>
+                  <ion-icon name="at-outline"></ion-icon>
                   <ion-input
                     name="user"
                     type="text"
@@ -50,14 +60,11 @@
                   <ion-input
                     name="password"
                     type="password"
-
                     #userPwd
                     required
                     placeholder="Contraseña"
                   ></ion-input>
-                <br />
-
-                  
+                  <br />
                 </ion-item>
               </ion-list>
             </ion-col>
@@ -65,7 +72,7 @@
           <ion-row>
             <ion-col>
               <ion-button
-                (click)="authService.SignUp(userEmail.value, userPwd.value)"
+                (click)="authService.SignUp(userName.value, userEmail.value, userPwd.value)"
                 type="submit"
                 fill="solid"
                 expand="full"
@@ -94,5 +101,4 @@
       </ion-grid>
     </div>
   </ion-slide>
-
 </ion-content>

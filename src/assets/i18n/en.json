@@ -5,5 +5,16 @@
     "COMENZAR TEST": "Start Test",
     "CONFIGURACION": "Test Configuration",
     "LFPQ": "This questionnaire will ask questions about your food liking and wanting. For detailed information, see the document:",
-    "LOPD": "Dear participant. We ask for your collaboration to carry out a study about your eating habits and your relationship with food. To do this, enter your e-mail address in the box below. With this information, you confirm your consent to take part in said study. Likewise, by entering my e-mail address, I give permission for the main researcher of the project (Dr. Juan José Hernández Morante) to contact me, if necessary, to carry out a more in-depth assessment of my eating habits."
+    "LOPD": "Dear participant. We ask for your collaboration to carry out a study about your eating habits and your relationship with food. To do this, enter your e-mail address in the box below. With this information, you confirm your consent to take part in said study. Likewise, by entering my e-mail address, I give permission for the main researcher of the project (Dr. Juan José Hernández Morante) to contact me, if necessary, to carry out a more in-depth assessment of my eating habits.",
+    "TERMS": "Terms and conditions",
+    "LOPD2": "Law of Personal Data Protection",
+    "ACCEPTCONDITIONS": "I have read and accept the terms and conditions",
+    "ACCEPT": "Agree",
+    "PACIENTE": "Patient",
+    "USUARIO": "User",
+    "SIGUIENTE": "Next"
+
+
+
+
 }
