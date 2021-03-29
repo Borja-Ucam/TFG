@@ -97,7 +97,7 @@ body.wrong {
 }
 
 .next-btn {
-    margin-top: 3%;
+    margin-top: 15px;
 }
 
 .start-btn {
@@ -177,7 +177,7 @@ ion-range:hover {
 @media(min-width:1200px) {
     img {
         max-width: 100%;
-        width: 650px;
+        width: 480px;
         height: auto;
     }
     .card {
@@ -193,7 +193,7 @@ ion-range:hover {
 @media(min-width:1080px) {
     img {
         max-width: 100%;
-        width: 440px;
+        width: 380px;
         height: auto;
     }
     .card {

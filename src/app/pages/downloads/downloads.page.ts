@@ -142,7 +142,9 @@ export class DownloadsPage implements OnInit {
           )
         );
       }
-
+      this.allDataPac.sort((a, b) =>
+          a.imagen > b.imagen ? 1 : b.imagen > a.imagen ? -1 : 0
+        );
       this.fecha = reports.Fecha;
       let Paciente = reports.Paciente;
       this.dataForExcel = [];

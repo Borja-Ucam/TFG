@@ -205,7 +205,7 @@ export class PairedTestPage implements OnInit {
   fin: boolean = false;
   checkClose: boolean = false;
 
-  contadorPreg: number = 63;
+  contadorPreg: number = 0;
 
   //mediciones de tiempo
   //before=null;
