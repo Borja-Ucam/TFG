@@ -1,6 +1,7 @@
 import { ImagesService } from "./../../Services/images.service";
 import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-configuracion",
@@ -20,7 +21,8 @@ export class ConfiguracionPage implements OnInit {
 
   constructor(
     public imagenes: ImagesService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -89,31 +91,19 @@ export class ConfiguracionPage implements OnInit {
     );
 
     if (this.auximageArrHFSA.length != 4) {
-      alert(
-        "El grupo HFSA debe tener 4 alimentos. Elegidos HFSA: " +
-          this.auximageArrHFSA.length
-      );
+      alert(this.translate.instant("GRUPO HFSA") + this.auximageArrHFSA.length);
       return;
     }
     if (this.auximageArrHFSW.length != 4) {
-      alert(
-        "El grupo HFSW debe tener 4 alimentos. Elegidos HFSW: " +
-          this.auximageArrHFSW.length
-      );
+      alert(this.translate.instant("GRUPO HFSW") + this.auximageArrHFSW.length);
       return;
     }
     if (this.auximageArrLFSA.length != 4) {
-      alert(
-        "El grupo LFSA debe tener 4 alimentos. Elegidos LFSA: " +
-          this.auximageArrLFSA.length
-      );
+      alert(this.translate.instant("GRUPO LFSA") + this.auximageArrLFSA.length);
       return;
     }
     if (this.auximageArrLFSW.length != 4) {
-      alert(
-        "El grupo LFSW debe tener 4 alimentos. Elegidos LFSW: " +
-          this.auximageArrLFSW.length
-      );
+      alert(this.translate.instant("GRUPO LFSW") + this.auximageArrLFSW.length);
       return;
     }
 

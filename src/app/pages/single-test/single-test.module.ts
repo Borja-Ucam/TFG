@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SingleTestPageRoutingModule } from './single-test-routing.module';
 
 import { SingleTestPage } from './single-test.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import { SingleTestPage } from './single-test.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SingleTestPageRoutingModule
+    SingleTestPageRoutingModule,
+    TranslateModule.forChild()
+
   ],
   declarations: [SingleTestPage]
 })

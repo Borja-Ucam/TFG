@@ -7,32 +7,35 @@
 <ion-content fullscreen="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">UCAM-Health</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div class="idioma" id="idioma">
+    <img id="spain" (click)="cambioIdioma('es')" src="assets/img/spain.png" />
 
-  <img id="btnFlag" (click)="cambioIdioma('es')"  src="assets/img/es.png">
+    <img id="english" (click)="cambioIdioma('en')" src="assets/img/english.png" />
 
-  <img id="btnFlag" (click)="cambioIdioma('en')"  src="assets/img/en.png">
-
-  </div>
-
-  
-  <div class="download" id="download">
-    <ion-button color="medium" (click)="open()">
-      <ion-icon name="cloud-download-outline"></ion-icon>
+    <ion-button id="login" color="medium" (click)="open()">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+    </ion-button>
+    <ion-button id="settings" color="medium" (click)="openModuleC()">
+      <ion-icon name="settings-outline"></ion-icon>
     </ion-button>
   </div>
 
+  
 
+  <div class="welcome" id="welcome">
+    <ion-text>{{"BIENVENIDO"|translate}} </ion-text>
+  </div>
   <div id="container">
-    <ion-button (click)="openModuleS()" color="primary">{{'COMENZAR TEST'|translate}}</ion-button>
-    <ion-button (click)="openModuleTutorial()" color="primary">TUTORIAL</ion-button>
-    <ion-button (click)="openModuleC()" color="primary"
-      >{{'CONFIGURACION'|translate}}</ion-button
+    <ion-button size="medium" id="btnStart" (click)="openModuleS()" color="primary"
+      >{{'COMENZAR TEST'|translate}}</ion-button
     >
-   
+    <ion-button size="medium" id="btnTutorial" (click)="openModuleTutorial()" color="primary"
+      >TUTORIAL</ion-button
+    >
+    
   </div>
 </ion-content>

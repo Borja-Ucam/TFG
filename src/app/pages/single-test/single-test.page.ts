@@ -62,7 +62,8 @@ export class SingleTestPage implements OnInit, OnDestroy {
     public preguntas: PreguntasService,
     public imagenes: ImagesService,
     private router: Router,
-    public firebaseUpload: FirebaseUploadService
+    public firebaseUpload: FirebaseUploadService,
+    public translate: TranslateService
   ) {
     this.imageArrHFSA = new Array();
     this.imageArrHFSW = new Array();
@@ -453,37 +454,72 @@ export class SingleTestPage implements OnInit, OnDestroy {
   }
 
   sumaValue() {
-    if (this.idPregunta == "Gusto" && this.tipo == "HFSA") {
-      //gusto
-      this.sumaGustoHFSA.push(this.value);
-    } else if (this.idPregunta == "Deseo" && this.tipo == "HFSA") {
-      //deseo
-      this.sumaDeseoHFSA.push(this.value);
+    if(this.translate.currentLang == 'es'){
+      if (this.idPregunta == "Gusto" && this.tipo == "HFSA") {
+        //gusto
+        this.sumaGustoHFSA.push(this.value);
+      } else if (this.idPregunta == "Deseo" && this.tipo == "HFSA") {
+        //deseo
+        this.sumaDeseoHFSA.push(this.value);
+      }
+  
+      if (this.idPregunta == "Gusto" && this.tipo == "HFSW") {
+        //gusto
+        this.sumaGustoHFSW.push(this.value);
+      } else if (this.idPregunta == "Deseo" && this.tipo == "HFSW") {
+        //deseo
+        this.sumaDeseoHFSW.push(this.value);
+      }
+  
+      if (this.idPregunta == "Gusto" && this.tipo == "LFSA") {
+        //gusto
+        this.sumaGustoLFSA.push(this.value);
+      } else if (this.idPregunta == "Deseo" && this.tipo == "LFSA") {
+        //deseo
+        this.sumaDeseoLFSA.push(this.value);
+      }
+  
+      if (this.idPregunta == "Gusto" && this.tipo == "LFSW") {
+        //gusto
+        this.sumaGustoLFSW.push(this.value);
+      } else if (this.idPregunta == "Deseo" && this.tipo == "LFSW") {
+        //deseo
+        this.sumaDeseoLFSW.push(this.value);
+      }
+    }else{
+      if (this.idPregunta == "Liking" && this.tipo == "HFSA") {
+        //gusto
+        this.sumaGustoHFSA.push(this.value);
+      } else if (this.idPregunta == "Wanting" && this.tipo == "HFSA") {
+        //deseo
+        this.sumaDeseoHFSA.push(this.value);
+      }
+  
+      if (this.idPregunta == "Liking" && this.tipo == "HFSW") {
+        //gusto
+        this.sumaGustoHFSW.push(this.value);
+      } else if (this.idPregunta == "Wanting" && this.tipo == "HFSW") {
+        //deseo
+        this.sumaDeseoHFSW.push(this.value);
+      }
+  
+      if (this.idPregunta == "Liking" && this.tipo == "LFSA") {
+        //gusto
+        this.sumaGustoLFSA.push(this.value);
+      } else if (this.idPregunta == "Wanting" && this.tipo == "LFSA") {
+        //deseo
+        this.sumaDeseoLFSA.push(this.value);
+      }
+  
+      if (this.idPregunta == "Liking" && this.tipo == "LFSW") {
+        //gusto
+        this.sumaGustoLFSW.push(this.value);
+      } else if (this.idPregunta == "Wanting" && this.tipo == "LFSW") {
+        //deseo
+        this.sumaDeseoLFSW.push(this.value);
+      }
     }
-
-    if (this.idPregunta == "Gusto" && this.tipo == "HFSW") {
-      //gusto
-      this.sumaGustoHFSW.push(this.value);
-    } else if (this.idPregunta == "Deseo" && this.tipo == "HFSW") {
-      //deseo
-      this.sumaDeseoHFSW.push(this.value);
-    }
-
-    if (this.idPregunta == "Gusto" && this.tipo == "LFSA") {
-      //gusto
-      this.sumaGustoLFSA.push(this.value);
-    } else if (this.idPregunta == "Deseo" && this.tipo == "LFSA") {
-      //deseo
-      this.sumaDeseoLFSA.push(this.value);
-    }
-
-    if (this.idPregunta == "Gusto" && this.tipo == "LFSW") {
-      //gusto
-      this.sumaGustoLFSW.push(this.value);
-    } else if (this.idPregunta == "Deseo" && this.tipo == "LFSW") {
-      //deseo
-      this.sumaDeseoLFSW.push(this.value);
-    }
+    
   }
 
   calcularMedia() {

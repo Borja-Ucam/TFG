@@ -25,7 +25,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h1>Iniciar Sesión</h1>
+            <h1>{{"LOGIN"|translate}}</h1>
           </ion-col>
         </ion-row>
         <form
@@ -58,7 +58,7 @@
                     type="password"
                     #userPassword
                     required
-                    placeholder="Contraseña"
+                    placeholder="{{'PASS'|translate}}"
                   ></ion-input>
                 </ion-item>
               </ion-list>
@@ -67,22 +67,21 @@
           <ion-row>
             <ion-col>
               <ion-button type="submit" fill="solid" expand="full">
-                Entrar
+                {{"ENTRAR"|translate}}
               </ion-button>
-
-              
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-label class="forget-label">
-                <h3 routerLink="/forgot-password" class="forget small-text">
-                  Olvidó su contraseña?
-                </h3>
-              </ion-label>
             </ion-col>
           </ion-row>
         </form>
+
+        <ion-row>
+          <ion-col>
+            <ion-label class="forget-label">
+              <h3 routerLink="/forgot-password" class="forget small-text">
+                {{'OLVIDAR CONTRASEÑA'|translate}}
+              </h3>
+            </ion-label>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </div>
   </ion-slide>

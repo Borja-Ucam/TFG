@@ -51,3 +51,37 @@
     //margin-top: 2%;
     //margin-left: 2%;
 }
+
+#welcome {
+    font-size: x-large;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10%;
+    transform: translateY(-50%);
+}
+
+#spain {
+    width: 3%;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+#english {
+    width: 3%;
+    cursor: pointer;
+}
+
+#login {
+    float: right;
+    margin-right: 2%;
+}
+
+#settings {
+    float: right;
+    margin-right: 8px;
+}
+
+#btnStart,
+#btnTutorial {}

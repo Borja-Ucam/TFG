@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireList } from "@angular/fire/database";
 import { map } from "rxjs/operators";
+import { TranslateService } from "@ngx-translate/core";
 
 export interface image {
   image1: string;
@@ -24,10 +25,13 @@ class Respuesta {
 
 @Injectable()
 export class ImagesService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore,
+    public translate: TranslateService,
+    ) {}
 
   getImageHFSA() {
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("HFSA")
       .snapshotChanges()
       .pipe(
@@ -40,10 +44,27 @@ export class ImagesService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("HFSA-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as food;
+            data.id = a.payload.doc.id;
+
+            return data;
+          });
+        })
+      );
+    }
+   
   }
 
   getImageHFSW() {
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("HFSW")
       .snapshotChanges()
       .pipe(
@@ -56,10 +77,27 @@ export class ImagesService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("HFSW-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as food;
+            data.id = a.payload.doc.id;
+
+            return data;
+          });
+        })
+      );
+    }
+   
   }
 
   getImageLFSA() {
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("LFSA")
       .snapshotChanges()
       .pipe(
@@ -72,10 +110,27 @@ export class ImagesService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("LFSA-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as food;
+            data.id = a.payload.doc.id;
+
+            return data;
+          });
+        })
+      );
+    }
+    
   }
 
   getImageLFSW() {
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("LFSW")
       .snapshotChanges()
       .pipe(
@@ -88,5 +143,21 @@ export class ImagesService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("LFSW-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as food;
+            data.id = a.payload.doc.id;
+
+            return data;
+          });
+        })
+      );
+    }
+    
   }
 }

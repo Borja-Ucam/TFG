@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PairedTestPageRoutingModule } from './paired-test-routing.module';
 
 import { PairedTestPage } from './paired-test.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PairedTestPageRoutingModule
+    PairedTestPageRoutingModule,
+    TranslateModule.forChild()
+
   ],
   declarations: [PairedTestPage]
 })

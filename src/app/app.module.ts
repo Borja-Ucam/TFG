@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { ConfiguracionPage } from './pages/configuracion/configuracion.page';
 import { FormulariosPage } from './pages/formularios/formularios.page';
 import { AuthService } from 'src/app/Services/auth.service';
@@ -40,6 +41,7 @@ export function httpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     FormsModule,
+    
     ReactiveFormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -65,6 +67,7 @@ export function httpLoaderFactory(http: HttpClient) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PreguntasService, ImagesService, AuthService
   ],
+  exports:[TranslateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

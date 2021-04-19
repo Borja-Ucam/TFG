@@ -27,19 +27,39 @@
           min="0"
           max="100"
           class="slider"
-          pin
+          
           color="primary"
         >
           <ion-text class="text-range" slot="start" size="big"
-            >No demasiado</ion-text
+            >{{'NO DEMASIADO'|translate}}</ion-text
           >
           <ion-text class="text-range" slot="end" size="big"
-            >Extremadamente</ion-text
+            >{{'EXTREMO'|translate}}</ion-text
           >
         </ion-range>
       </div>
 
       <!--CONTROL BUTTONS-->
+      <div class="info" *ngIf="hideButtonComenzar">
+        <ion-text color="warning">
+          <h1 class="h1a">{{'TUTORIAL1'|translate}}</h1>
+        </ion-text>
+        <ion-text>
+          <h5>{{'TUTORIAL2'|translate}}</h5>
+        </ion-text>
+
+        <ion-text color="warning">
+          <h5>
+            {{'TUTORIAL3'|translate}}
+          </h5>
+          <h5>{{'EJEMPLO'|translate}}</h5>
+        </ion-text>
+        <ion-img class="image" src="assets/img/tutorial.jpg"></ion-img>
+
+        <ion-text>
+          <h5>{{'READYTUTO'|translate}}</h5>
+        </ion-text>
+      </div>
       <div class="controls">
         <ion-button
           id="start-btn"
@@ -47,7 +67,7 @@
           color="primary"
           *ngIf="hideButtonComenzar"
           (click)="startTest()"
-          >Comenzar</ion-button
+          >{{'COMENZAR TUTORIAL'|translate}}</ion-button
         >
         <ion-button
           id="next-btn"
@@ -55,7 +75,7 @@
           color="primary"
           *ngIf="hideButton"
           (click)="nextQuestion()"
-          >Siguiente</ion-button
+          >{{'SIGUIENTE'|translate}}</ion-button
         >
       </div>
     </div>
@@ -65,7 +85,7 @@
     <ion-card class="card">
       <ion-card-header>
         <ion-card-subtitle></ion-card-subtitle>
-        <ion-card-title>Fin Tutorial Single-Test</ion-card-title>
+        <ion-card-title>{{'END PRACTICE SINGLE'|translate}}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
@@ -74,19 +94,53 @@
           class="btn"
           color="primary"
           (click)="tutorial()"
-          >Siguiente tutorial</ion-button
+          >{{'NEXT TUTORIAL'|translate}}</ion-button
         >
       </ion-card-content>
     </ion-card>
   </div>
+  <div class="info" *ngIf="nextTutorial2&&!fin">
+    <ion-text color="warning">
+      <h1 class="h1a">{{'TUTORIAL4'|translate}}</h1>
+    </ion-text>
+    <ion-text>
+      <h5>{{'TUTORIAL5'|translate}}</h5>
+    </ion-text>
 
-  <div *ngIf="nextTutorial&&!fin">
+    <ion-text color="warning">
+      <h5>{{'TUTORIAL6'|translate}}</h5>
+      <h5>
+        {{'TUTORIAL7'|translate}}
+      </h5>
+    </ion-text>
+
+    <ion-text>
+      <h5>{{'TUTORIAL8'|translate}}</h5>
+    </ion-text>
+    <ion-text>
+      <h5>{{'TUTORIAL9'|translate}}</h5>
+    </ion-text>
+    
+    <ion-text>
+      <h5>{{'READYTUTO'|translate}}</h5>
+    </ion-text>
+    <ion-button
+      id="start-btn"
+      class="start-btn btn"
+      color="primary"
+      *ngIf="nextTutorial2"
+      (click)="tutorial2()"
+      >{{'COMENZAR TUTORIAL'|translate}}</ion-button
+    >
+  </div>
+
+  <div *ngIf="nextTutorial&&!fin&&!nextTutorial2">
     <div id="question-container justifycontent" [class]="nomostrar">
       <!--INFORMACION-->
 
       <div class="cambioPreg" id="text-container" *ngIf="showNext1">
         <ion-text class="next-txt" color="secondary">
-          <h2>{{enunciado}}</h2>
+          <h2>{{"ENUNCIADO"|translate}}</h2>
         </ion-text>
 
         <ion-button
@@ -104,7 +158,6 @@
           <img
             class="p"
             (click)="nextQuestionLeft()"
-            (click)="startTimer()"
             *ngIf="urli"
             [src]="urli"
           />
@@ -114,7 +167,6 @@
           <img
             class="p"
             (click)="nextQuestionRight()"
-            (click)="startTimer()"
             *ngIf="urld"
             [src]="urld"
           />
@@ -129,16 +181,15 @@
         class="start-btn btn"
         color="primary"
         (click)="presentLoading()"
-        >Comenzar</ion-button
+        >{{'COMENZAR TUTORIAL'|translate}}</ion-button
       >
     </div>
   </div>
 
-   <div *ngIf="fin">
+  <div *ngIf="fin">
     <ion-card class="card">
       <ion-card-header>
-        <ion-card-subtitle></ion-card-subtitle>
-        <ion-card-title>Fin de la practica</ion-card-title>
+        <ion-card-title>{{'END PRACTICE'|translate}}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
@@ -147,7 +198,7 @@
           class="btn"
           color="primary"
           (click)="finAll()"
-          >FINAL</ion-button
+          >{{'SALIR'|translate}}</ion-button
         >
       </ion-card-content>
     </ion-card>

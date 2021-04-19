@@ -3,6 +3,11 @@
     "IDIOMA": "Language",
     "BIENVENIDO": "Welcome",
     "COMENZAR TEST": "Start Test",
+    "COMENZAR TUTORIAL": "Start Tutorial",
+    "NEXT TUTORIAL": "Next Tutorial",
+
+    "SALIR": "Go back",
+    "CONTINUAR": "Continue",
     "CONFIGURACION": "Test Configuration",
     "LFPQ": "This questionnaire will ask questions about your food liking and wanting. For detailed information, see the document:",
     "LOPD": "Dear participant. We ask for your collaboration to carry out a study about your eating habits and your relationship with food. To do this, enter your e-mail address in the box below. With this information, you confirm your consent to take part in said study. Likewise, by entering my e-mail address, I give permission for the main researcher of the project (Dr. Juan José Hernández Morante) to contact me, if necessary, to carry out a more in-depth assessment of my eating habits.",
@@ -12,7 +17,79 @@
     "ACCEPT": "Agree",
     "PACIENTE": "Patient",
     "USUARIO": "User",
-    "SIGUIENTE": "Next"
+    "SIGUIENTE": "Next",
+    "GRUPO HFSA": "Group HFSA need 4 foods. Choosen: ",
+    "GRUPO HFSW": "Group HFSW need 4 foods. Choosen: ",
+    "GRUPO LFSA": "Group LFSA need 4 foods. Choosen: ",
+    "GRUPO LFSW": "Group LFSW need 4 foods. Choosen: ",
+    "GUARDAR BUTTON": "Save configuration",
+    "ALERGIA": "Allergens",
+    "NOMBRE": "Name",
+    "LOGIN": "Log in",
+    "SINGUP": "Sign-up",
+    "REG": "Sign-up",
+    "PASS": "Password",
+    "ENTRAR": "Log in",
+    "OLVIDAR CONTRASEÑA": "Forgot password?",
+    "NO DEMASIADO": "Not at all",
+    "EXTREMO": "Extremely",
+    "REST": "Would you like a rest?",
+    "REST1": "Take your time",
+    "50%": "50% done",
+    "32%": "32% done",
+    "64%": "64% done",
+    "100%": "100% done",
+    "END": "End of Questionnaire",
+    "END PRACTICE": "End of tutorial",
+    "END PRACTICE SINGLE": "End of tutorial Single Test",
+    "THANKS": "Thank you",
+    "ENG-REPORT": "English Report",
+    "ESP-REPORT": "Spanish Report",
+    "GENERAL": "General Report",
+    "PACIENTE-REP": "Patient Report",
+    "DESC-GEN": "Download General Report",
+    "DESC-PAC": "Download Patient Report",
+    "SEL-PAC": "Select patient",
+    "PERFIL": "Private Profile",
+    "SALUDO": "Hi:",
+    "RESET-PASS": "Reset your password",
+    "ENVIAR": "Send",
+    "RESET-PASS-DESC": "Please provide the email address you use to log in and you will we will send an email to reset the password.",
+    "PAIRED": "Paired foods",
+    "SINGLE": "Single foods",
+    "LISTO": "READY FOR...",
+    "READY": "Click on button 'Start Test' when you're ready",
+    "READYTUTO": "Click on button 'Start Tutorial' when you're ready",
+    "INTRO": "Please note that the question may change",
+    "RESTSINGLE": "You will have the option to rest half way through the task",
+    "RESTPAIRED": "You will have the option to rest every 32 questions",
+    "INTROPAIRED": "Please be as fast and accurate as possible",
+    "ENUNCIADO": "Which food do you most want to eat now?",
+    "TUTORIAL1": "INSTRUCTIONS SINGLE FOODS",
+    "TUTORIAL2": "You will be shown photographs of the real food",
+    "TUTORIAL3": "You will have to click on the bar to represent your feeling (It will depend on the question) at that moment.",
+    "EJEMPLO": "For example...",
+    "TUTORIAL4": "INSTRUCTIONS PAIRED TEST",
+    "TUTORIAL5": "You will be shown two photographs of the real food",
+    "TUTORIAL6": "You must click the middle button",
+    "TUTORIAL7": "A loading screen will appear and two types of food will be displayed.",
+    "TUTORIAL8": "You must choose one by clicking on it according to which one you want more at that moment.",
+    "TUTORIAL9": "Imagine that you can eat as much or as little of your chosen food as you want."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

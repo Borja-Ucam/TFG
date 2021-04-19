@@ -24,7 +24,7 @@
 }
 
 .controls {
-    padding-top: 20%;
+    padding-top: 0%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,6 +55,10 @@
     align-content: center;
 }
 
+.start-btn {
+    margin-top: 6%
+}
+
 .justifycontent {
     display: flex;
     justify-content: center;
@@ -80,12 +84,12 @@
     top: 50%;
     // margin-top: 10%;
     //border: 1px solid #999;
-    margin: 2% 0 0 0;
+    margin: 6% 0 0 0;
     //padding: 2%;
 }
 
 ion-col {
-    padding: 100px
+    padding: 80px
 }
 
 .imagenes .btn {
@@ -127,6 +131,13 @@ ion-col {
     box-shadow: 0px 9px 28px 6px rgba(0, 0, 0, 0.54);
 }
 
+.h1a {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
 @media(min-width:600px) {
     .p {
         max-width: 100%;
@@ -162,7 +173,7 @@ ion-col {
 @media(min-width:1200px) {
     .p {
         max-width: 100%;
-        width: 560px;
+        width: 480px;
         height: auto;
     }
     .card {
@@ -178,7 +189,7 @@ ion-col {
 @media(min-width:1080px) {
     .p {
         max-width: 100%;
-        width: 480px;
+        width: 420px;
         height: auto;
     }
     .card {

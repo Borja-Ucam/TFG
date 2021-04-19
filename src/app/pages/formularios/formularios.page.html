@@ -1,7 +1,7 @@
 <ion-content class="content" id="content">
   <div class="my-modal">
     <ion-fab (click)="cerrar()" horizontal="end" vertical="top" slot="fixed">
-      <ion-fab-button color="danger">
+      <ion-fab-button size="small" color="danger">
         <ion-icon name="close-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -19,13 +19,16 @@
     </h1>
     <div id="subHeader_1" class="form-subHeader">
      {{"LOPD"|translate}}
+      <a class="link" color="medium" (click)="enlace()"
+        >{{"TERMS"|translate}}</a
+      >
     </div>
 
     <ion-item class="item-paciente">
       <ion-label>{{"PACIENTE"|translate}}</ion-label>
       <ion-input
         [(ngModel)]="idUser"
-        placeholder="User"
+        placeholder="{{'NOMBRE'|translate}}"
         type="text"
       ></ion-input>
     </ion-item>
@@ -40,7 +43,7 @@
       </ion-item>
     </div>
 
-    <div class="col text-center">
+    <div class="col">
       <ion-button
         *ngIf="idUser"
         class="bt1"
@@ -53,10 +56,6 @@
       </ion-button>
     </div>
 
-    <div class="footer">
-      <a class="link" color="medium" (click)="enlace()"
-        >{{"TERMS"|translate}}</a
-      >
-    </div>
+   
   </div></ion-content
 >

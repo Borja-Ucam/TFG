@@ -55,7 +55,7 @@ export class TutorialPage implements OnInit {
       });
     }
   }
-  
+
   showButton = true;
   showQuestion = false;
   hideButton = false;
@@ -63,6 +63,8 @@ export class TutorialPage implements OnInit {
   changeQuestion: number = 0;
   next: Boolean = false;
   nextTutorial: Boolean = false;
+  nextTutorial2: Boolean = false;
+
   paired: Boolean = false;
   showNext: Boolean = true;
   fin: Boolean = false;
@@ -152,14 +154,25 @@ export class TutorialPage implements OnInit {
 
   tutorial() {
     this.nextTutorial = true;
+    this.nextTutorial2 = true;
 
     this.nomostrar = "block";
-    this.enunciado = "Elija el alimento que  desee más comer ahora";
+    this.enunciado = "¿Cuál de estas comidas te apetece más comer ahora?";
 
     this.hideButtonComenzar = false;
     this.showButtonNext1 = true;
   }
+  tutorial2(){
+    this.nextTutorial = true;
+    this.nextTutorial2 = false;
 
+    this.nomostrar = "block";
+    this.enunciado = "¿Cuál de estas comidas te apetece más comer ahora?";
+
+    this.hideButtonComenzar = false;
+    this.showButtonNext1 = true;
+
+  }
   nextPaired() {
     this.showImagenes = true;
     this.showNext1 = false;

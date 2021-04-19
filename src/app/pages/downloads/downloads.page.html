@@ -12,7 +12,7 @@
       expand="block"
       routerLink="/sign-up"
     >
-      Registrarse
+      {{'SINGUP'|translate}}
     </ion-button></span
   >
   <main role="main" class="outer">
@@ -23,10 +23,10 @@
           <div class="media">
             <div class="media-body">
               <div class="titles">
-                <h1>Perfil Privado</h1>
+                <h1>{{'PERFIL'|translate}}</h1>
 
                 <h1>
-                  Hola:
+                  {{'SALUDO'|translate}}
                   <strong
                     >{{(user.displayName) ? user.displayName : 'User'}}</strong
                   >
@@ -38,7 +38,7 @@
                     <ion-card class="card">
                       <ion-card-header>
                         <ion-card-title
-                          >Descargar informe general</ion-card-title
+                          >{{'DESC-GEN'|translate}}</ion-card-title
                         >
                         <ion-card-subtitle
                           >Single/Paired test</ion-card-subtitle
@@ -51,32 +51,46 @@
                             class="download-btn btn"
                             color="primary"
                             (click)="exportToExcel()"
-                            >Informe General</ion-button
+                            >{{'GENERAL'|translate}}</ion-button
                           >
                         </div>
                       </ion-card-content>
                     </ion-card>
                   </ion-col>
+                  <ion-col class="col">
+                    <ion-card class="cardIdiom">
+                      <div class="idioma" id="idioma">
+                        <ion-radio-group value="es" (ionChange)="onRadioChange($event)">
+                          <ion-item>
+                            <ion-label>{{'ESP-REPORT'|translate}}</ion-label>
+                            <ion-radio checked="checked" slot="start" value="es"></ion-radio>
+                          </ion-item>
 
+                          <ion-item>
+                            <ion-label>{{'ENG-REPORT'|translate}}</ion-label>
+                            <ion-radio slot="start" value="en"></ion-radio>
+                          </ion-item>
+                        </ion-radio-group>
+                      </div>
+                    </ion-card>
+                  </ion-col>
                   <ion-col class="col">
                     <ion-card class="card">
                       <ion-card-header>
                         <ion-card-title
-                          >Descargar informe Paciente</ion-card-title
+                          >{{'DESC-PAC'|translate}}</ion-card-title
                         >
                         <ion-card-subtitle>Single test</ion-card-subtitle>
                       </ion-card-header>
                       <ion-card-content>
                         <ion-item>
-                          <ion-label>Seleccione el paciente</ion-label>
+                          <ion-label>{{'SEL-PAC'|translate}}</ion-label>
                           <ionic-selectable
                             [(ngModel)]="idSelected"
                             (ngModelChange)="onSelectChange(idSelected)"
                             [items]="ids"
                             [canSearch]="true"
                           >
-                            
-                            
                           </ionic-selectable>
                         </ion-item>
                         <div class="footer">
@@ -85,7 +99,7 @@
                             class="download-btn btn"
                             color="primary"
                             (click)="exportToExcelPaciente(idSelected)"
-                            >Informe Paciente</ion-button
+                            >{{'PACIENTE-REP'|translate}}</ion-button
                           >
                         </div>
                       </ion-card-content>

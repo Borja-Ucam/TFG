@@ -22,10 +22,12 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h1>Registro</h1>
+            <h1>{{"REG"|translate}}</h1>
           </ion-col>
         </ion-row>
-        <form>
+        <form
+          (ngSubmit)="authService.SignUp(userName.value, userEmail.value, userPwd.value)"
+        >
           <ion-row>
             <ion-col>
               <ion-list>
@@ -71,13 +73,8 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button
-                (click)="authService.SignUp(userName.value, userEmail.value, userPwd.value)"
-                type="submit"
-                fill="solid"
-                expand="full"
-              >
-                Registrarse
+              <ion-button type="submit" fill="solid" expand="full">
+                {{"SINGUP"|translate}}
               </ion-button>
 
               <div class="redirectToLogin">
@@ -86,12 +83,11 @@
                 <span>
                   <ion-button
                     color="danger"
-                    type="submit"
                     fill="solid"
                     expand="block"
                     routerLink="/login"
                   >
-                    Entrar
+                    {{"ENTRAR"|translate}}
                   </ion-button></span
                 >
               </div>

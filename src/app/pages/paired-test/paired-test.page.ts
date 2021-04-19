@@ -237,7 +237,7 @@ export class PairedTestPage implements OnInit {
 
   startTest() {
     this.nomostrar = "block";
-    this.enunciado = "Elija el alimento que  desee más comer ahora";
+    this.enunciado = "¿Cuál de estas comidas te apetece más comer ahora ?";
 
     this.hideButtonComenzar = false;
     this.showButtonNext = true;
@@ -582,26 +582,12 @@ export class PairedTestPage implements OnInit {
     //this.startTest();
   }
   salir() {
-    if (this.checkClose) {
       this.router.navigateByUrl("home");
       sessionStorage.clear();
-    } else {
-      if (
-        window.confirm(
-          "No ha guardado los cambios, ¿Está seguro que quiere salir?"
-        )
-      ) {
-        this.checkClose = true;
-        sessionStorage.clear();
-        this.router.navigateByUrl("");
-      }
-    }
+    
   }
 
-  save() {
-    this.checkClose = true;
-  }
-
+ 
   // no se que es esto
   focusInput(input) {
     input.setFocus();

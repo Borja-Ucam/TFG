@@ -19,10 +19,18 @@ import { IonicSelectableModule } from "ionic-selectable";
   styleUrls: ["./downloads.page.scss"],
 })
 export class DownloadsPage implements OnInit {
+
+  public idiomas = [
+    { idioma: 'Español', isChecked: true },
+    { idioma: 'English', isChecked: false }
+  ];
+
   title = "angular-export-to-excel";
 
   ids: any;
   idSelected: String;
+  //idiomSelected: any;
+  public idiomSelected: string = "es";
 
   allDataPac: Respuesta[];
 
@@ -50,7 +58,9 @@ export class DownloadsPage implements OnInit {
     this.ids = [];
     this.fecha = sessionStorage.getItem("date");
     this.idSelected = "";
+    sessionStorage.setItem("idiomSelected", this.idiomSelected);
     this.getIdDoc();
+
   }
 
   get isLoggedIn(): boolean {
@@ -64,12 +74,22 @@ export class DownloadsPage implements OnInit {
     subscription = (await this.firebaseUpload.getPruebaPaciente()).subscribe(
       (reports1) => {
         this.ids = reports1;
+        console.log("here: "+this.ids)
+        console.log("here1: "+JSON.stringify(this.ids))
+
       }
     );
   }
 
   onSelectChange(value) {
     this.idSelected = value;
+  }
+
+  onRadioChange($event:any){
+    this.idiomSelected = $event.detail.value;
+    sessionStorage.setItem("idiomSelected", this.idiomSelected);
+    this.getIdDoc();
+    //console.log(sessionStorage.getItem("idiomSelected"));
   }
 
   exportToExcel() {
@@ -127,7 +147,6 @@ export class DownloadsPage implements OnInit {
   }
 
   exportToExcelPaciente(id) {
-    let subscription: Subscription;
 
     this.allDataPac = new Array();
     this.fecha = "";

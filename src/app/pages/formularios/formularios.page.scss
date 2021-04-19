@@ -5,7 +5,7 @@
 }
 
 .my-modal {
-    margin: 10% 5% 10% 5%;
+    margin: 8% 3% 2% 3%;
     height: fit-content;
     width: auto;
 }
@@ -38,10 +38,19 @@ label {
 }
 
 .footer {
-    position: absolute;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-bottom: 5px;
     bottom: 10px;
-    width: 90%;
-    text-align: center;
+    padding-top: 0%;
+    //margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //position: absolute;
+    //bottom: 10px;
+    //width: 90%;
+    //text-align: center;
 }
 
 .my-checkbox {

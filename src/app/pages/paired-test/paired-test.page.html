@@ -15,7 +15,7 @@
 
       <div class="cambioPreg" id="text-container" *ngIf="showNext">
         <ion-text class="next-txt" color="secondary">
-          <h2>{{enunciado}}</h2>
+          <h2>{{"ENUNCIADO"|translate}}</h2>
         </ion-text>
 
         <ion-button
@@ -52,15 +52,15 @@
     </div>
 
     <div>
-      <ng-template  #descansoPlantilla>
+      <ng-template #descansoPlantilla>
         <ion-card class="card">
           <ion-card-header>
-            <ion-card-subtitle>Tomate tu tiempo</ion-card-subtitle>
-            <ion-card-title>¿Necesitas un descanso?</ion-card-title>
+            <ion-card-subtitle>{{'REST1'|translate}}</ion-card-subtitle>
+            <ion-card-title>{{'REST'|translate}}</ion-card-title>
           </ion-card-header>
 
           <ion-card-content *ngIf="descanso1">
-            <ion-label>32% realizado</ion-label>
+            <ion-label>{{'32%'|translate}}</ion-label>
 
             <ion-progress-bar value="0.32"></ion-progress-bar>
             <ion-button
@@ -68,11 +68,11 @@
               class="btn"
               color="primary"
               (click)="continuar()"
-              >Continuar</ion-button
+              >{{'CONTINUAR'|translate}}</ion-button
             >
           </ion-card-content>
           <ion-card-content *ngIf="descanso2">
-            <ion-label>64% realizado</ion-label>
+            <ion-label>{{'64%'|translate}}</ion-label>
 
             <ion-progress-bar value="0.64"></ion-progress-bar>
             <ion-button
@@ -80,50 +80,61 @@
               class="btn"
               color="primary"
               (click)="continuar()"
-              >Continuar</ion-button
+              >{{'CONTINUAR'|translate}}</ion-button
             >
           </ion-card-content>
         </ion-card>
       </ng-template>
     </div>
-    
+
     <!--NEXT BUTTON-->
+    <div class="info" *ngIf="hideButtonComenzar">
+      <ion-text color="danger">
+        <h2>{{'LISTO'|translate}}</h2>
+      </ion-text>
+      <ion-text color="warning">
+        <h1 class="h1a">{{'PAIRED'|translate}}</h1>
+      </ion-text>
+      <ion-text>
+        <h5>{{'INTROPAIRED'|translate}}</h5>
+      </ion-text>
+      <ion-text color="warning">
+        <h5>{{'RESTPAIRED'|translate}}</h5>
+      </ion-text>
+      <ion-text>
+        <h5>{{'READY'|translate}}</h5>
+      </ion-text>
+    </div>
+
     <div class="controls" *ngIf="hideButtonComenzar">
       <ion-button
         id="start-btnP"
         class="start-btn btn"
         color="primary"
         (click)="presentLoading()"
-        >Comenzar</ion-button
+        >{{'COMENZAR TEST'|translate}}</ion-button
       >
     </div>
   </div>
-  
-  
+
   <div *ngIf="fin">
     <ion-card class="card">
       <ion-card-header>
-        <ion-card-subtitle>LLama al tutor</ion-card-subtitle>
-        <ion-card-title>Final del test</ion-card-title>
+        <ion-card-title>{{'END'|translate}}</ion-card-title>
+        <ion-card-subtitle>{{'THANKS'|translate}}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-label>100% Completado</ion-label>
+        <ion-label>{{'100%'|translate}}</ion-label>
 
         <ion-progress-bar value="1"></ion-progress-bar>
-        <ion-button
-          id="continue-btn"
-          class="btn"
-          color="primary"
-          (click)="save()"
-          >Guardar</ion-button
-        >
+
         <ion-button
           id="continue-btn"
           class="btn"
           color="primary"
           (click)="salir()"
-          >Salir</ion-button
+          >{{'SALIR'|translate}}</ion-button
         >
       </ion-card-content>
     </ion-card>

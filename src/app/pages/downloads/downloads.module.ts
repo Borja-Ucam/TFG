@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { DownloadsPageRoutingModule } from './downloads-routing.module';
 
 import { DownloadsPage } from './downloads.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,9 @@ import { DownloadsPage } from './downloads.page';
     FormsModule,
     IonicModule,
     DownloadsPageRoutingModule,
-    IonicSelectableModule
+    IonicSelectableModule,
+    TranslateModule.forChild()
+
   ],
   declarations: [DownloadsPage]
 })

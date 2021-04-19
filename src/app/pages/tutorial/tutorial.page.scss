@@ -38,7 +38,7 @@
 }
 
 .start-btn {
-    margin-top: 20%
+    margin-top: 5px
 }
 
 .controls {
@@ -50,7 +50,7 @@
 }
 
 .question-container {
-    width: 40%;
+    width: 50%;
     margin: auto;
     padding: 1%;
     margin-top: 1%;
@@ -65,8 +65,8 @@
 }
 
 ion-range {
-    --bar-height: 4px;
-    --knob-size: 30px;
+    --bar-height: 5px;
+    --knob-size: 1px;
     opacity: 0.8;
     border: 1px solid rgb(82, 82, 82);
     border-radius: 20px;
@@ -171,6 +171,27 @@ ion-col {
     -webkit-box-shadow: 0px 9px 28px 6px rgba(0, 0, 0, 0.54);
     -moz-box-shadow: 0px 9px 28px 6px rgba(0, 0, 0, 0.54);
     box-shadow: 0px 9px 28px 6px rgba(0, 0, 0, 0.54);
+}
+
+.h1a {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 3rem;
+    border-color: black;
+}
+
+.image {
+    border: 4px dashed rgb(0, 0, 0);
+}
+
+ion-img {
+    width: 20%;
+    height: auto;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
 }
 
 @media(min-width:600px) {

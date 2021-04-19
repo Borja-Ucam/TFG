@@ -44,7 +44,7 @@ body.wrong {
 }
 
 .question-container {
-    width: 40%;
+    width: 50%;
     margin: auto;
     padding: 1%;
     margin-top: 1%;
@@ -101,7 +101,7 @@ body.wrong {
 }
 
 .start-btn {
-    margin-top: 20%
+    margin-top: 6%
 }
 
 img {
@@ -139,8 +139,8 @@ img {
 }
 
 ion-range {
-    --bar-height: 4px;
-    --knob-size: 30px;
+    --bar-height: 5px;
+    --knob-size: 1px;
     opacity: 0.8;
     border: 1px solid rgb(82, 82, 82);
     border-radius: 20px;
@@ -156,6 +156,13 @@ ion-range:hover {
     font: icon;
     //font-size: 1.5rem;
     font-weight: bold;
+}
+
+.h1a {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    font-weight: bold;
+    font-size: 3rem;
 }
 
 @media(min-width:600px) {

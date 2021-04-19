@@ -8,6 +8,7 @@ import {
 import { map } from "rxjs/operators";
 import { RespuestaGeneral } from "src/app/Classes/RespuestaGeneral";
 import { Respuesta } from "../Classes/Respuesta";
+import { TranslateService } from "@ngx-translate/core";
 
 export interface reports {
   Paciente: string;
@@ -48,24 +49,41 @@ export interface reportsPaciente {
 export class FirebaseUploadService {
   idUser: string = null;
 
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore,
+    public translate: TranslateService,) {}
 
   setRespuestas(data) {
     this.idUser = sessionStorage.getItem("idUser");
-
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("Ucam-Reports")
       .doc(this.idUser)
       .set(JSON.parse(JSON.stringify(data)));
+    }else{
+      return this.db
+      .collection("Ucam-Reports-en")
+      .doc(this.idUser)
+      .set(JSON.parse(JSON.stringify(data)));
+    }
+    
   }
 
   setRespuestasPaciente(data) {
-    this.idUser = sessionStorage.getItem("idUser");
 
-    return this.db
+    this.idUser = sessionStorage.getItem("idUser");
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("Ucam-Reports-Pacientes")
       .doc(this.idUser)
       .set(JSON.parse(JSON.stringify(data)));
+    }else{
+      return this.db
+      .collection("Ucam-Reports-Pacientes-en")
+      .doc(this.idUser)
+      .set(JSON.parse(JSON.stringify(data)));
+
+    }
+    
   }
 
   updateRespuestasPaciente(data) {
@@ -78,15 +96,23 @@ export class FirebaseUploadService {
   }
   setRespuestasPaired(data) {
     this.idUser = sessionStorage.getItem("idUser");
-
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("Ucam-Reports-Paired")
       .doc(this.idUser)
       .set(JSON.parse(JSON.stringify(data)));
+    }else{
+      return this.db
+      .collection("Ucam-Reports-Paired-en")
+      .doc(this.idUser)
+      .set(JSON.parse(JSON.stringify(data)));
+    }
+    
   }
 
   async getPruebaPaciente() {
-    return this.db
+    if(sessionStorage.getItem("idiomSelected") == 'es'){
+      return this.db
       .collection("Ucam-Reports-Pacientes")
       .snapshotChanges()
       .pipe(
@@ -99,10 +125,27 @@ export class FirebaseUploadService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("Ucam-Reports-Pacientes-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as reports;
+            data.Paciente == a.payload.doc.id;
+
+            return data.Paciente;
+          });
+        })
+      );
+    }
+    
   }
 
   getAllPaired() {
-    return this.db
+    if(sessionStorage.getItem("idiomSelected") == 'es'){
+      return this.db
       .collection("Ucam-Reports-Paired")
       .snapshotChanges()
       .pipe(
@@ -117,6 +160,25 @@ export class FirebaseUploadService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("Ucam-Reports-Paired-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as reports;
+            data.Paciente == a.payload.doc.id;
+
+            const objeto = this.renderDataPaired(data);
+
+            return objeto;
+          });
+        })
+      );
+
+    }
+    
   }
   renderDataPaired(data) {
     const objetoRespuesta = new RespuestaPaired(
@@ -145,7 +207,8 @@ export class FirebaseUploadService {
   }
 
   getAll() {
-    return this.db
+    if(sessionStorage.getItem("idiomSelected") == 'es'){
+      return this.db
       .collection("Ucam-Reports")
       .snapshotChanges()
       .pipe(
@@ -160,26 +223,63 @@ export class FirebaseUploadService {
           });
         })
       );
+    }else{
+      return this.db
+      .collection("Ucam-Reports-en")
+      .snapshotChanges()
+      .pipe(
+        map((quest) => {
+          return quest.map((a) => {
+            const data = a.payload.doc.data() as reports;
+            data.Paciente == a.payload.doc.id;
+
+            const objeto = this.renderData(data);
+
+            return objeto;
+          });
+        })
+      );
+    }
+    
   }
-  getPrueba() {}
 
   async getPaciente(id): Promise<any> {
-    let promise: Promise<any> = new Promise((resolve, reject) => {
-      var docRef = this.db.collection("Ucam-Reports-Pacientes").doc(id);
-
-      docRef
-        .get()
-        .toPromise()
-        .then((doc) => {
-          if (doc.exists) {
-            resolve(doc.data());
-          } else {
-            reject();
-          }
-        })
-        .catch((error) => {});
-    });
-    return promise;
+    if(sessionStorage.getItem("idiomSelected") == 'es'){
+      let promise: Promise<any> = new Promise((resolve, reject) => {
+        var docRef = this.db.collection("Ucam-Reports-Pacientes").doc(id);
+  
+        docRef
+          .get()
+          .toPromise()
+          .then((doc) => {
+            if (doc.exists) {
+              resolve(doc.data());
+            } else {
+              reject();
+            }
+          })
+          .catch((error) => {});
+      });
+      return promise;
+    }else{
+      let promise: Promise<any> = new Promise((resolve, reject) => {
+        var docRef = this.db.collection("Ucam-Reports-Pacientes-en").doc(id);
+  
+        docRef
+          .get()
+          .toPromise()
+          .then((doc) => {
+            if (doc.exists) {
+              resolve(doc.data());
+            } else {
+              reject();
+            }
+          })
+          .catch((error) => {});
+      });
+      return promise;
+    }
+   
   }
 
   renderDataPaciente(data) {
@@ -193,7 +293,8 @@ export class FirebaseUploadService {
     //data
   }
   getRespuestas() {
-    return this.db
+    if(this.translate.currentLang == 'es'){
+      return this.db
       .collection("Ucam-Reports")
       .get()
       .toPromise()
@@ -202,6 +303,18 @@ export class FirebaseUploadService {
           return doc.data;
         });
       });
+    }else{
+      return this.db
+      .collection("Ucam-Reports-en")
+      .get()
+      .toPromise()
+      .then((querySnapshot: QuerySnapshot<DocumentData>) => {
+        querySnapshot.forEach((doc: any) => {
+          return doc.data;
+        });
+      });
+    }
+    
   }
 
   renderData(data) {

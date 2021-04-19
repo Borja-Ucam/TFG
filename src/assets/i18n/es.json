@@ -3,6 +3,10 @@
     "IDIOMA": "Idioma",
     "BIENVENIDO": "Bienvenido",
     "COMENZAR TEST": "Comenzar Test",
+    "COMENZAR TUTORIAL": "Comenzar Tutorial",
+    "NEXT TUTORIAL": "Siguiente Tutorial",
+    "SALIR": "Volver al inicio",
+    "CONTINUAR": "Continuar",
     "CONFIGURACION": "Configuracion Test",
     "LFPQ": "Este cuestionario realizará preguntas sobre sus gustos y deseos alimentarios. Para información detallada, consulte el documento:",
     "LOPD": "Estimado participante. Le pedimos su colaboración para realizar un estudio acerca de sus hábitos alimentarios y su relación con la comida. Para ello, introduzca su dirección de e-mail en la siguiente casilla. Con esta información, confirma su consentimiento para formar parte en dicho estudio. Asimismo, al introducir mi dirección e-mail doy permiso para que, en caso de que sea necesario, el investigador principal del proyecto (Dr. Juan José Hernández Morante) contacte conmigo para realizar una valoración más profunda de mis hábitos alimentarios.",
@@ -12,7 +16,77 @@
     "ACCEPT": "Aceptar",
     "PACIENTE": "Paciente",
     "USUARIO": "Usuario",
-    "SIGUIENTE": "Siguiente"
+    "SIGUIENTE": "Siguiente",
+    "GRUPO HFSA": "El grupo HFSA debe tener 4 alimentos. Elegidos: ",
+    "GRUPO HFSW": "El grupo HFSW debe tener 4 alimentos. Elegidos: ",
+    "GRUPO LFSA": "El grupo LFSA debe tener 4 alimentos. Elegidos: ",
+    "GRUPO LFSW": "El grupo LFSW debe tener 4 alimentos. Elegidos: ",
+    "GUARDAR BUTTON": "Guardar configuración",
+    "ALERGIA": "Alergenos",
+    "NOMBRE": "Nombre",
+    "LOGIN": "Iniciar Sesión",
+    "SINGUP": "Registrarse",
+    "REG": "Registro",
+    "PASS": "Contraseña",
+    "ENTRAR": "Entrar",
+    "OLVIDAR CONTRASEÑA": "¿Olvidó su contraseña?",
+    "NO DEMASIADO": "No demasiado",
+    "EXTREMO": "Extremadamente",
+    "REST": "¿Te gustaría un descanso?",
+    "REST1": "Tomate tu tiempo",
+    "50%": "50% realizado",
+    "32%": "32% realizado",
+    "64%": "64% realizado",
+    "100%": "100% realizado",
+    "END": "Fin del cuestionario",
+    "END PRACTICE SINGLE": "Fin del tutorial Single Test",
+    "END PRACTICE": "Fin del tutorial",
+
+    "THANKS": "Muchas gracias",
+    "ENG-REPORT": "Informe Inglés",
+    "ESP-REPORT": "Informe Español",
+    "GENERAL": "Informe General",
+    "PACIENTE-REP": "Informe Paciente",
+    "DESC-GEN": "Descargar informe General",
+    "DESC-PAC": "Descargar informe Paciente",
+    "SEL-PAC": "Selecciona el paciente",
+    "PERFIL": "Perfil Privado",
+    "SALUDO": "Hola:",
+    "RESET-PASS": "Reestablece tu contraseña",
+    "ENVIAR": "Enviar",
+    "RESET-PASS-DESC": "Por favor, proporciona la dirección de correo que utilice para entrar y le enviaremos un correo para reestablecer la contraseña.",
+    "PAIRED": "Parejas de comidas",
+    "SINGLE": "Comidas individuales",
+    "LISTO": "LISTO PARA...",
+    "READY": "Haz click en el boton 'Comenzar Test' cuando este listo",
+    "READYTUTO": "Haz click en el boton 'Comenzar Tutorial' cuando este listo",
+    "INTRO": "Por favor, presta atención a las preguntas ya que pueden cambiar",
+    "RESTSINLE": "Tendras opcion de descansar a mitad del test",
+    "RESTPAIRED": "Tendras opcion de descansar cada 32 preguntas",
+    "INTROPAIRED": "Por favor, contesta lo más rápido y preciso posible",
+    "ENUNCIADO": "¿Cuál de estas comidas te apetece más comer ahora?",
+    "TUTORIAL1": "INSTRUCCIONES COMIDAS INDIVIDUALES",
+    "TUTORIAL2": "Se te mostraran imágenes individuales de comida",
+    "TUTORIAL3": "Deberás hacer clic en la barra para representar tu sensación (Dependerá de la pregunta) en ese momento.",
+    "EJEMPLO": "Por ejemplo...",
+    "TUTORIAL4": "INSTRUCCIONES TEST PAREJAS",
+    "TUTORIAL5": "Se te mostraran dos imágenes de comida",
+    "TUTORIAL6": "Debes hacer clic al botón central",
+    "TUTORIAL7": "Aparecerá una pantalla de carga y se mostrarán dos tipos de comida.",
+    "TUTORIAL8": "Debes elegir una haciendo clic sobre ella en función de la que prefieras comer en ese momento.",
+    "TUTORIAL9": "Imagina que puedes comer lo que quieras (poco O mucho) de la comida elegida."
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
