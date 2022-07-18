@@ -92,6 +92,16 @@ export class DownloadsPage implements OnInit {
     //console.log(sessionStorage.getItem("idiomSelected"));
   }
 
+  formatValue(value) {
+    if (value == 'Infinity' || parseFloat(value) > 1.0) {
+      return "100";
+    } else if (value == '-Infinity' || parseFloat(value) < -1.0) {
+      return "-100";
+    } else {
+      return Math.round(value*100).toString();
+    }
+  }
+
   exportToExcel() {
     let subscription: Subscription;
     let subscriptionPaired: Subscription;
@@ -106,6 +116,14 @@ export class DownloadsPage implements OnInit {
         this.allData1.sort((a, b) =>
           a.Fecha < b.Fecha ? 1 : b.Fecha < a.Fecha ? -1 : 0
         );
+
+        this.allData1 = this.allData1.map(row => {
+          row.FrecuenciaHFSA = this.formatValue(row.FrecuenciaHFSA);
+          row.FrecuenciaHFSW = this.formatValue(row.FrecuenciaHFSW);
+          row.FrecuenciaLFSA = this.formatValue(row.FrecuenciaLFSA);
+          row.FrecuenciaLFSW = this.formatValue(row.FrecuenciaLFSW);
+          return row;
+        });
 
         let now = new Date();
         this.fecha = formatDate(now, "dd/MM/yyyy", "es");
@@ -140,6 +158,10 @@ export class DownloadsPage implements OnInit {
         data1: this.dataForExcel1,
         headers1: Object.keys(this.allData1[0]),
       };
+
+//console.log(this.allData1);
+
+
       //uncomment this
       this.ete.exportExcel(reportData, reportData1);
       subscription.unsubscribe();
